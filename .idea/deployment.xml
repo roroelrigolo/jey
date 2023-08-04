@@ -7,6 +7,11 @@
           <mappings>
             <mapping deploy="/sites/jey.xokola.fr/jey" local="$PROJECT_DIR$" web="/" />
           </mappings>
+          <excludedPaths>
+            <excludedPath path="/sites/jey.xokola.fr/jey/var" />
+            <excludedPath path="/sites/jey.xokola.fr/jey/vendor" />
+            <excludedPath path="/sites/jey.xokola.fr/jey/node_modules" />
+          </excludedPaths>
         </serverdata>
       </paths>
     </serverData>
