@@ -1,5 +1,18 @@
-@import "~bootstrap/scss/bootstrap";
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+:root {
+    /* COLORS */
+    --main-gold: #FFD700;
+    --main-blue: #2113B0;
+    --main-white: #F5F5F5;
+    --main-dark: #131313;
+
+    /* COLORS */
+    --main--font-title : "Roboto";
+    --main-font-body: "Poppins"
+}
 
 body {
     background-color: lightgray;
+    font-family: var(--main-font-body)!important;
 }
