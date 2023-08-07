@@ -1,0 +1,22 @@
+.btn-blue-plein {
+    background-color: var(--main-blue);
+    color: var(--main-white);
+    border-radius: 5px;
+    text-decoration: none;
+    padding: 0.5em 1em;
+    font-size: 14px;
+    margin: 0 0.5em;
+}
+.btn-gold-plein {
+    background-color: var(--main-gold);
+    color: var(--main-blue);
+    border-radius: 5px;
+    text-decoration: none;
+    padding: 0.5em 1em;
+    font-size: 14px;
+    margin: 0 0.5em;
+}
+.btn-gold-plein:hover {
+    background-color: var(--main-dark);
+    color: var(--main-gold);
+}

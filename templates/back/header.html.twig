@@ -1,0 +1,17 @@
+{% set currentPage = app.request.pathinfo|split('/') %}
+<nav class="menu h-100 py-3 px-4">
+    <div class="d-flex align-items-center px-3 mt-3 mb-5">
+        <img width="70px" src="/img/logo_carre_jaune.png">
+        <h1 class="title-header-back mx-3">Jey.</h1>
+    </div>
+    <ul class="list-unstyled px-3">
+        <li class="element-menu {% if currentPage[2] == "dashboard" %}active-menu{% endif %} bd-radius-15 fs-16 p-3 my-3">
+            <i class="fa-regular fa-gauge me-3"></i>
+            <a href="{{ path('app_back_dashboard') }}">Dashboard</a>
+        </li>
+        <li class="element-menu {% if currentPage[2] == "product" %}active-menu{% endif %} bd-radius-15 fs-16 p-3 my-3">
+            <i class="fa-regular fa-coins me-3"></i>
+            <a href="{{ path('app_back_product') }}">Produits</a>
+        </li>
+    </ul>
+</nav>

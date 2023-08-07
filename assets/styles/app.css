@@ -4,6 +4,7 @@
     /* COLORS */
     --main-gold: #FFD700;
     --main-blue: #2113B0;
+    --main-blue-hover : rgba(33, 19, 176, 0.4);
     --main-white: #F5F5F5;
     --main-dark: #131313;
 
@@ -15,4 +16,23 @@
 body {
     background-color: lightgray;
     font-family: var(--main-font-body)!important;
+}
+
+/*OVERRIDE BOOTSTRAP*/
+p{
+    margin-bottom: 0!important;
+}
+.container {
+    max-width: none!important;
+}
+.row {
+    --bs-gutter-x: 0!important;
+}
+
+.text-overflow-2l {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
 }

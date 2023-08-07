@@ -1,0 +1,38 @@
+/*BASE CSS */
+.global-content-back{
+    margin-left: 300px;
+    min-height: 100%;
+    background-color: var(--main-white);
+}
+
+.nav-bar-back {
+    background-color: #FFFFFF;
+}
+
+/*TABLEAUX*/
+.table-back {
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    font-size: 14px;
+}
+.table-back .header {
+    background-color: var(--main-blue);
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    padding: 2em;
+}
+.table-back .container div {
+    margin: 0 0.25em;
+}
+.table-back .container div div{
+    margin: auto;
+}
+.first-line {
+    background-color: var(--main-gold);
+}
+.other-line {
+    background-color: var(--main-white);
+}
+.other-line:hover {
+    background-color: var(--main-blue-hover);
+}

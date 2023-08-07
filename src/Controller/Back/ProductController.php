@@ -7,13 +7,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-
-class BackController extends AbstractController
+#[Route('/back/product')]
+class ProductController extends AbstractController
 {
-    #[Route('/back/dashboard', name: 'app_back_dashboard')]
-    public function back(): Response
+    #[Route('/', name: 'app_back_product')]
+    public function index(): Response
     {
-        return $this->render('back/back.html.twig', []);
+        return $this->render('back/product/product.html.twig', []);
     }
 
 }

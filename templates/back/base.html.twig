@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html class="h-100">
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
@@ -15,7 +15,15 @@
             {{ encore_entry_script_tags('app') }}
         {% endblock %}
     </head>
-    <body>
-        {% block body %}{% endblock %}
+    <body class="d-flex h-100">
+        {{ include('back/header.html.twig') }}
+        <div class="global-content-back w-100">
+            <div class="nav-bar-back w-100 py-3 px-5">
+                <h2>Dashboard</h2>
+            </div>
+            <div class="content-back py-4 px-5">
+                {% block body %}{% endblock %}
+            </div>
+        </div>
     </body>
 </html>
