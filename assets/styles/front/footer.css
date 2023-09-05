@@ -1,0 +1,8 @@
+footer {
+    background: var(--main-gold);
+    color: var(--main-blue);
+}
+footer a,footer a i{
+    text-decoration: none;
+    color: var(--main-blue);
+}

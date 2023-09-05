@@ -1,0 +1,16 @@
+<div class="col-2 p-3">
+    <div class="card-product">
+        {% for image in product.images|slice(0,1) %}
+            <img class="w-100" height="300px" src="/upload/product/img/{{ image.url }}">
+        {% endfor %}
+        <div class="p-2">
+            <div>
+                <p>{{ product.player.name }}, {{ product.team.title }}</p>
+            </div>
+            <div class="d-flex align-items-center justify-content-between">
+                <p>{{ product.size }}, {{ product.brand.title }}</p>
+                <p>{{ product.price }}€</p>
+            </div>
+        </div>
+    </div>
+</div>

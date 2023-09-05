@@ -1,0 +1,18 @@
+/* FORM PLAYER */
+.select-team, #listTeam {
+    border: solid 1px black;
+    min-height: 55px;
+}
+#listTeam {
+    border-top: none;
+}
+.list-team-li:hover{
+    background: var(--main-gray);
+}
+.list-team-li.active{
+    background: var(--main-gold);
+}
+.li-select-team {
+    background: var(--main-gold);
+    border-radius: 5px;
+}

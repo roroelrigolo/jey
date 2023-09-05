@@ -2,10 +2,55 @@
 
 {% block title %}Jey{% endblock %}
 
-{% block javascripts %}
-
-{% endblock %}
-
 {% block body %}
-    <h1>Le Back</h1>
+    <h2 class="fs-22 mb-4">Tableau de bord</h2>
+    <div class="table-back mb-4">
+        <div class="header-blue d-flex align-items-center">
+            <h2 class="fs-22">Produits</h2>
+        </div>
+        <div class="container d-flex flex-wrap w-100 py-3 px-5 m-0">
+            <a href="{{ path('app_back_product') }}" class="w-25">
+                <p class="element-menu bd-radius-15 fs-16 p-3 my-3">
+                    <i class="fa-regular fa-coins me-3"></i>Produits
+                </p>
+            </a>
+            <a href="{{ path('app_back_sport') }}" class="w-25">
+                <p class="element-menu bd-radius-15 fs-16 p-3 my-3">
+                    <i class="fa-regular fa-basketball me-3"></i>Sports
+                </p>
+            </a>
+            <a href="{{ path('app_back_league') }}" class="w-25">
+                <p class="element-menu bd-radius-15 fs-16 p-3 my-3">
+                    <i class="fa-regular fa-trophy me-3"></i>Ligues
+                </p>
+            </a>
+            <a href="{{ path('app_back_team') }}" class="w-25">
+                <p class="element-menu bd-radius-15 fs-16 p-3 my-3">
+                    <i class="fa-sharp fa-regular fa-people-group me-3"></i>Équipes
+                </p>
+            </a>
+            <a href="{{ path('app_back_player') }}" class="w-25">
+                <p class="element-menu bd-radius-15 fs-16 p-3 my-3">
+                    <i class="fa-regular fa-person-running me-3"></i>Joueurs
+                </p>
+            </a>
+            <a href="{{ path('app_back_brand') }}" class="w-25">
+                <p class="element-menu bd-radius-15 fs-16 p-3 my-3">
+                    <i class="fa-regular fa-tag me-3"></i>Marques
+                </p>
+            </a>
+        </div>
+    </div>
+    <div class="table-back mb-4">
+        <div class="header-blue d-flex align-items-center">
+            <h2 class="fs-22">Administration</h2>
+        </div>
+        <div class="container d-flex flex-wrap w-100 py-3 px-5 m-0">
+            <a href="{{ path('app_back_user') }}" class="w-25">
+                <p class="element-menu bd-radius-15 fs-16 p-3 my-3">
+                    <i class="fa-regular fa-user me-3"></i>Utilisateurs
+                </p>
+            </a>
+        </div>
+    </div>
 {% endblock %}

@@ -1,0 +1,70 @@
+<ul class="nav nav-tabs mb-3" id="myTab" role="tablist">
+    <li class="nav-item">
+        <a class="nav-link active" id="caracteristiques-tab" onclick="displayPageFrom('caracteristiques')">Général</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="a-propos-tab" onclick="displayPageFrom('a-propos')">A propos</a>
+    </li>
+</ul>
+{{ form_start(form) }}
+<div class="content-form" id="caracteristiques">
+    <div class="mb-3">
+        {{ form_row(form.name,{ 'attr': {
+            'class' : 'p-2 w-100'}}) }}
+    </div>
+    <div class="mb-3">
+        {{ form_row(form.firstName,{ 'attr': {
+            'class' : 'p-2 w-100'}}) }}
+    </div>
+</div>
+<div class="content-form d-none" id="a-propos">
+    <div class="mb-3">
+        {{ form_row(form.sport,{ 'attr': {
+            'class' : 'p-2 w-100'}}) }}
+    </div>
+    <div class="mb-3">
+        {{ form_row(form.league,{ 'attr': {
+            'class' : 'p-2 w-100'}}) }}
+    </div>
+    <div class="mb-3">
+        <label class="w-100">Equipes</label>
+        <ul class="select-team list-unstyled d-flex mb-0 p-2 w-100" onclick="displayListTeam()">
+            {% if player.teams %}
+                {% for value in player.teams %}
+                    {% for team in teams %}
+                        {% if value == team.id %}
+                            <li class="li-select-team p-2 me-2" value="{{ team.id }}" onclick="deleteTeam('{{ team.id }}')">{{ team.title }}</li>
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+            {% endif %}
+        </ul>
+        <ul id="listTeam" class="list-unstyled d-none">
+            {% for team in teams %}
+                {% set active = false %}
+                {% if player.teams %}
+                    {% for value in player.teams %}
+                        {% if value == team.id and active == false %}
+                            {% set active = true %}
+                        {% endif %}
+                    {% endfor %}
+                    {% if active == true %}
+                        <input type="checkbox" checked class="d-none team-checkbox" id="teams" name="teams[]" value="{{ team.id }}"/>
+                        <li onclick="addTeam('{{ team.title }}','{{ team.id }}')" value="{{ team.id }}" class="list-team-li active p-2 w-100">{{ team.title }}</li>
+                    {% else %}
+                        <input type="checkbox" class="d-none team-checkbox" id="teams" name="teams[]" value="{{ team.id }}"/>
+                        <li onclick="addTeam('{{ team.title }}','{{ team.id }}')" value="{{ team.id }}" class="list-team-li p-2 w-100">{{ team.title }}</li>
+                    {% endif %}
+                {% else %}
+                    <input type="checkbox" class="d-none team-checkbox" id="teams" name="teams[]" value="{{ team.id }}"/>
+                    <li onclick="addTeam('{{ team.title }}','{{ team.id }}')" value="{{ team.id }}" class="list-team-li p-2 w-100">{{ team.title }}</li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+<div class="d-flex justify-content-end">
+    <input name="submit" id='submit' type='submit' value="Enregistrer" class="btn-blue-plein">
+    <input name="submit" id='submit' type='submit' value="Enregistrer & rester" class="btn-blue-plein">
+</div>
+{{ form_end(form) }}

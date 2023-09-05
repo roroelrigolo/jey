@@ -1,0 +1,34 @@
+<ul class="nav nav-tabs mb-3" id="myTab" role="tablist">
+    <li class="nav-item">
+        <a class="nav-link active" id="general-tab" onclick="displayPageFrom('general')">Général</a>
+    </li>
+</ul>
+{{ form_start(form) }}
+<div class="content-form" id="general">
+    <div class="mb-3">
+        {{ form_row(form.name,{ 'attr': {
+            'class' : 'p-2 w-100'}}) }}
+    </div>
+    <div class="mb-3">
+        {{ form_row(form.firstName,{ 'attr': {
+            'class' : 'p-2 w-100'}}) }}
+    </div>
+    <div class="mb-3">
+        {{ form_row(form.pseudo,{ 'attr': {
+            'class' : 'p-2 w-100'}}) }}
+    </div>
+    <div class="mb-3">
+        {{ form_row(form.email,{ 'attr': {
+            'class' : 'p-2 w-100'}}) }}
+    </div>
+    <div class="mb-3">
+        {{ form_row(form.password,{ 'attr': {
+            'class' : 'p-2 w-100'}}) }}
+    </div>
+</div>
+<div class="d-flex justify-content-end">
+    <input name="submit" id='submit' type='submit' value="Enregistrer" class="btn-blue-plein">
+    <input name="submit" id='submit' type='submit' value="Enregistrer & rester" class="btn-blue-plein">
+</div>
+{{ form_end(form) }}
+

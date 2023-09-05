@@ -11,3 +11,8 @@
 .bd-radius-25 {
     border-radius: 25px;
 }
+
+/*BORDER 1PX COLOR*/
+.bd-blue-1 {
+    border: solid 1px var(--main-blue)!important;
+}

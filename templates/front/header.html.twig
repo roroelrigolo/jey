@@ -1,0 +1,39 @@
+{% set currentPage = app.request.pathinfo|split('/') %}
+<nav class="header fs-16 w-100 py-3 px-5">
+    <div class="d-flex align-items-center">
+        <div>
+            <a href="{{ path('app_front_home') }}"><img width="150px" src="/img/logo.png"></a>
+        </div>
+        <div class="w-100 px-5">
+            <input class="w-100 p-2 bd-radius-25">
+        </div>
+        <div class="d-flex">
+            <div><a href="{{ path('app_login') }}" class="btn-gold-plein bd-blue-1">Se connecter</a></div>
+            <div><a href="{{ path('app_register') }}" class="btn-blue-plein">Se créer un compte</a></div>
+        </div>
+    </div>
+    <div class="header-menu">
+        <ul class="list-unstyled d-flex ms-5 mb-0">
+            <li class="me-3">
+                Baseball
+            </li>
+            <li class="me-3">
+                Basketball
+            </li>
+            <li class="me-3">
+                Football
+            </li>
+            <li class="me-3">
+                Football Américain
+            </li>
+            <li class="me-3">
+                Hockey
+            </li>
+            <li class="me-3">
+                Rugby
+            </li>
+        </ul>
+    </div>
+</nav>
+
+

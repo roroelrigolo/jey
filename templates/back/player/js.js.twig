@@ -1,0 +1,74 @@
+function displayPageFrom(id){
+    contents =  document.getElementsByTagName('form')[0].getElementsByClassName('content-form');
+    for (i=0;i<contents.length;i++){
+    contents[i].className = "content-form d-none";
+}
+    document.getElementById(id).className = "content-form";
+    navs =  document.getElementsByClassName('nav-link');
+    for (i=0;i<contents.length;i++){
+    navs[i].className = "nav-link";
+}
+    document.getElementById(id+'-tab').className = "nav-link active";
+}
+
+function displayListTeam(){
+    list = document.getElementById('listTeam');
+    if(list.className == "list-unstyled d-none"){
+        list.className = "list-unstyled";
+    }
+    else {
+        list.className = "list-unstyled d-none";
+    }
+}
+
+function addTeam(team, value){
+    teamsList = document.getElementsByClassName('list-team-li');
+    for(i=0;i<teamsList.length;i++){
+        if(teamsList[i].value == value){
+            if(teamsList[i].className == "list-team-li active p-2 w-100"){
+                deleteTeam(value);
+            }
+            else {
+                teamsList[i].className = 'list-team-li active p-2 w-100';
+                var paragraph = document.createElement("li");
+                paragraph.className = "li-select-team p-2 me-2";
+                paragraph.setAttribute("value", value);
+                paragraph.setAttribute("onclick", "deleteTeam("+value+")");
+                paragraph.textContent = team;
+                document.getElementsByClassName("select-team")[0].append(paragraph);
+                teamsCheckbox = document.getElementsByClassName("team-checkbox");
+                for(i=0;i<teamsCheckbox.length;i++){
+                    if(teamsCheckbox[i].value == value){
+                        teamsCheckbox[i].checked = true;
+                    }
+                }
+            }
+        }
+    }
+}
+
+function deleteTeam(value){
+    teamsSelected = document.getElementsByClassName('li-select-team');
+    for(i=0;i<teamsSelected.length;i++){
+        if(teamsSelected[i].value == value){
+            teamsSelected[i].remove();
+        }
+    }
+    teamsList = document.getElementsByClassName('list-team-li');
+    for(i=0;i<teamsList.length;i++){
+        if(teamsList[i].value == value){
+            if(teamsList[i].className == "list-team-li active p-2 w-100"){
+                teamsList[i].className = 'list-team-li p-2 w-100';
+            }
+            else {
+                teamsList[i].className = 'list-team-li active p-2 w-100';
+            }
+        }
+    }
+    teamsCheckbox = document.getElementsByClassName("team-checkbox");
+    for(i=0;i<teamsCheckbox.length;i++){
+        if(teamsCheckbox[i].value == value){
+            teamsCheckbox[i].checked = false;
+        }
+    }
+}

@@ -1,0 +1,22 @@
+.menu {
+    position: fixed;
+    width: 300px;
+    background-color: var(--main-blue);
+}
+
+.menu a, .menu i{
+    text-decoration: none!important;
+    color : var(--main-white);
+}
+
+.title-header-back{
+    color : var(--main-white);
+}
+
+.element-menu:hover, .active-menu {
+    background-color: var(--main-gold);
+}
+a .element-menu:hover,.element-menu:hover i,
+a .active-menu, .active-menu i{
+    color : var(--main-blue);
+}

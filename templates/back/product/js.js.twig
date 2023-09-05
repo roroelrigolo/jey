@@ -1,0 +1,67 @@
+function displayPageFrom(id){
+    contents =  document.getElementsByTagName('form')[0].getElementsByClassName('content-form');
+    for (i=0;i<contents.length;i++){
+    contents[i].className = "content-form d-none";
+}
+    document.getElementById(id).className = "content-form";
+    navs =  document.getElementsByClassName('nav-link');
+    for (i=0;i<contents.length;i++){
+    navs[i].className = "nav-link";
+}
+    document.getElementById(id+'-tab').className = "nav-link active";
+}
+
+//Actualisation d'un select en fonction d'un précédent
+function actualisationSelect(idSelect, idSelectSuivant, func){
+    document.getElementById(idSelectSuivant).removeAttribute("disabled");
+    valueSelect = jQuery(idSelect+' option:selected')[0].value;
+    listNextSelect = document.getElementById(idSelectSuivant);
+
+    array = [];
+    if (func == "league"){league()}
+    else if(func == "team"){team()}
+    else if(func == "player"){player()}
+
+    for(i=0;i<listNextSelect.length;i++){
+        if(array.length == 0){
+            listNextSelect[i].style.display = "none";
+            document.getElementById(idSelectSuivant).setAttribute("disabled", "disabled");
+        }
+        else {
+            for(j=0;j<array.length;j++){
+                if (listNextSelect[i].value == array[j]){
+                    listNextSelect[i].style.display = "block";
+                    break;
+                }
+                else{
+                    listNextSelect[i].style.display = "none";
+                }
+            }
+        }
+    }
+}
+
+function league(){
+    {% for league in leagues %}
+    {% if league.sport is not null%}idValue = {{ league.sport.id }};{% endif %}
+    if (valueSelect == idValue){array.push({{ league.id }});}
+    {% endfor %}
+}
+function team(){
+    {% for team in teams %}
+    {% if team.league is not null%}idValue = {{ team.league.id }};{% endif %}
+    if (valueSelect == idValue){array.push({{ team.id }});}
+    {% endfor %}
+}
+function player(){
+    console.log('test')
+    {% for player in players %}
+    {% if player.teams is not null%}
+        {% for team in player.teams %}
+            idValue = {{ team }};
+            if (valueSelect == idValue){array.push({{ player.id }});}
+        {% endfor %}
+    {% endif %}
+    {% endfor %}
+}
+

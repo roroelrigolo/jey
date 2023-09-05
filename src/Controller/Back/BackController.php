@@ -13,6 +13,7 @@ class BackController extends AbstractController
     #[Route('/back/dashboard', name: 'app_back_dashboard')]
     public function back(): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         return $this->render('back/back.html.twig', []);
     }
 

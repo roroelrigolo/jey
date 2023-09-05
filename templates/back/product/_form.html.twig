@@ -1,0 +1,90 @@
+<ul class="nav nav-tabs mb-3" id="myTab" role="tablist">
+    <li class="nav-item">
+        <a class="nav-link active" id="general-tab" onclick="displayPageFrom('general')">Général</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="a-propos-tab" onclick="displayPageFrom('a-propos')">A propos</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="caracteristiques-tab" onclick="displayPageFrom('caracteristiques')">Caractéristiques</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="user-tab" onclick="displayPageFrom('user')">Utilisateur</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="images-tab" onclick="displayPageFrom('images')">Images</a>
+    </li>
+</ul>
+{{ form_start(form, {'attr' : {'enctype': 'multipart/form-data'} }) }}
+<div class="content-form" id="general">
+    <div class="mb-3">
+        {{ form_row(form.title,{ 'attr': {
+            'class' : 'p-2 w-100'}}) }}
+    </div>
+    <div class="mb-3">
+        {{ form_row(form.description,{ 'attr': {
+            'class' : 'p-2 w-100', 'rows' : '5'}}) }}
+    </div>
+    <div class="mb-3">
+        {{ form_row(form.price,{ 'attr': {
+            'class' : 'p-2 w-100', 'rows' : '5'}}) }}
+    </div>
+</div>
+<div class="content-form d-none" id="a-propos">
+    <div class="mb-3">
+        {{ form_row(form.sport,{ 'attr': {
+            'class' : 'p-2 w-100', "onchange":"actualisationSelect('#product_form_sport','product_form_league', 'league')"}}) }}
+    </div>
+    <div class="mb-3">
+        {{ form_row(form.league,{ 'attr': {
+            'class' : 'p-2 w-100', 'disabled':'disabled', "onchange":"actualisationSelect('#product_form_league','product_form_team', 'team')"}}) }}
+    </div>
+    <div class="mb-3">
+        {{ form_row(form.team,{ 'attr': {
+            'class' : 'p-2 w-100', 'disabled':'disabled', "onchange":"actualisationSelect('#product_form_team','product_form_player', 'player')"}}) }}
+    </div>
+    <div class="mb-3">
+        {{ form_row(form.player,{ 'attr': {
+            'class' : 'p-2 w-100', 'disabled':'disabled'}}) }}
+    </div>
+</div>
+<div class="content-form d-none" id="caracteristiques">
+    <div class="mb-3">
+        {{ form_row(form.brand,{ 'attr': {
+            'class' : 'p-2 w-100'}}) }}
+    </div>
+    <div class="mb-3">
+        {{ form_row(form.type,{ 'attr': {
+            'class' : 'p-2 w-100'}}) }}
+    </div>
+    <div class="mb-3">
+        {{ form_row(form.size,{ 'attr': {
+            'class' : 'p-2 w-100'}}) }}
+    </div>
+    <div class="mb-3">
+        {{ form_row(form.conditionnement,{ 'attr': {
+            'class' : 'p-2 w-100'}}) }}
+    </div>
+    <div class="mb-3">
+        {{ form_row(form.statement,{ 'attr': {
+            'class' : 'p-2 w-100'}}) }}
+    </div>
+</div>
+<div class="content-form d-none" id="user">
+    <div class="mb-3">
+        {{ form_row(form.user,{ 'attr': {
+            'class' : 'p-2 w-100'}}) }}
+    </div>
+</div>
+<div class="content-form d-none" id="images">
+    <div class="mb-3">
+        <label class="w-100">Images</label>
+        <input class="p-2 w-100" type="file" multiple="multiple" name="images[]" id="images[]" required>
+    </div>
+</div>
+<div class="d-flex justify-content-end">
+    <input name="submit" id='submit' type='submit' value="Enregistrer" class="btn-blue-plein">
+    <input name="submit" id='submit' type='submit' value="Enregistrer & rester" class="btn-blue-plein">
+</div>
+{{ form_end(form) }}
+

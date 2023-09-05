@@ -1,4 +1,4 @@
-{% extends '/base.html.twig' %}
+{% extends '/front/base.html.twig' %}
 
 {% block title %}Jey{% endblock %}
 
@@ -7,5 +7,19 @@
 {% endblock %}
 
 {% block body %}
-    <h1>Bonjour</h1>
+    <div class="container px-5 py-4">
+        <div class="row">
+            <h1 class="fs-32">Maillots populaires</h1>
+        </div>
+        <div class="row d-flex">
+            {% for product in products %}
+                {% include 'front/assets/product/card.html.twig' with {
+                    'product' : product
+                } %}
+            {% endfor %}
+        </div>
+        <div class="row">
+            <h1 class="fs-32">Derniers maillots</h1>
+        </div>
+    </div>
 {% endblock %}

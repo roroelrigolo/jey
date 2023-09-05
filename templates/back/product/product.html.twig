@@ -2,44 +2,22 @@
 
 {% block title %}Jey{% endblock %}
 
-{% block javascripts %}
-
-{% endblock %}
-
 {% block body %}
-    <h2 class="fs-22">Produits</h2>
-    <div class="table-back">
-        <div class="header">
-            <a class="btn-gold-plein">Ajouter un produit</a>
+    <h2 class="fs-22 mb-4">Produits</h2>
+    <div class="table-back mb-4">
+        <div class="header-blue d-flex align-items-center">
+            <a class="btn-gold-plein" href="{{ path('app_back_product_new') }}">Ajouter un produit</a>
             <a class="btn-gold-plein">Filtrer</a>
         </div>
         <div class="container w-100 py-3 px-5 m-0">
-            <div class="first-line bd-radius-5 row p-3 mb-3">
-                <div class="col-1"><p>ID</p></div>
-                <div class="col-2"><p>Nom</p></div>
-                <div class="col-6"><p>Description</p></div>
-                <div class="col-1"><p>Création</p></div>
-                <div class="col-1"><p>Modification</p></div>
-                <div class="col-1"><p></p></div>
-            </div>
-            <div class="other-line row bd-radius-5 py-2 px-3 mb-3">
-                <div class="col-1"><p>2</p></div>
-                <div class="col-2"><p class="text-overflow-2l">Maillot Lucas Doncic année 2021-2022</p></div>
-                <div class="col-6"><p class="text-overflow-2l">Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500, quand un imprimeur anonyme assembla ensemble des morceaux de texte pour réaliser un livre spécimen de polices de texte. Il n'a pas fait que survivre cinq siècles, mais s'est aussi adapté à la bureautique informatique, sans que son contenu n'en soit modifié. Il a été popularisé dans les années 1960 grâce à la vente de feuilles Letraset contenant des passages du Lorem Ipsum, et, plus récemment, par son inclusion dans des applications de mise en page de texte, comme Aldus PageMaker.</p></div>
-                <div class="col-1"><p>12/10/2022</p></div>
-                <div class="col-1"><p>12/10/2023</p></div>
-                <div class="col-1 d-flex justify-content-end">
-                    <i class="fa-light fa-pen-to-square"></i>
-                </div>
-            </div>
-            <div class="other-line row bd-radius-5 py-2 px-3 mb-3">
-                <div class="col-1"><p>1</p></div>
-                <div class="col-2"><p class="text-overflow-2l">Maillot Lucas Doncic année 2021-2022</p></div>
-                <div class="col-6"><p class="text-overflow-2l">Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500, quand un imprimeur anonyme assembla ensemble des morceaux de texte pour réaliser un livre spécimen de polices de texte. Il n'a pas fait que survivre cinq siècles, mais s'est aussi adapté à la bureautique informatique, sans que son contenu n'en soit modifié. Il a été popularisé dans les années 1960 grâce à la vente de feuilles Letraset contenant des passages du Lorem Ipsum, et, plus récemment, par son inclusion dans des applications de mise en page de texte, comme Aldus PageMaker.</p></div>
-                <div class="col-1"><p>12/10/2022</p></div>
-                <div class="col-1"><p>12/10/2023</p></div>
-                <div class="col-1"><p></p></div>
-            </div>
+            {% include 'back/table.html.twig' with {
+                'titles': ['Id','Nom','Description','Prix','Création','Modification',''],
+                'cols' : ['col-1','col-2','col-5','col-1','col-1','col-1','col-1'],
+                'datas' : datas,
+                'features' : ['','text-overflow-2l','text-overflow-2l','','','','d-flex justify-content-end'],
+                'url' : 'app_back_product_edit'
+            }
+            %}
         </div>
     </div>
 {% endblock %}

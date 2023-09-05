@@ -10,9 +10,13 @@ import './styles/app.css';
 import './styles/font.css';
 import './styles/border.css';
 import './styles/button.css';
-import './styles/header.css';
-import './styles/back.css';
+import './styles/back/header.css';
+import './styles/back/back.css';
+import './styles/back/form.css';
 
+import './styles/front/front.css';
+import './styles/front/header.css';
+import './styles/front/footer.css';
 
 // You can specify which plugins you need
 import { Tooltip, Toast, Popover } from 'bootstrap';

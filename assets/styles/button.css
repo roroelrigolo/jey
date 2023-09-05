@@ -6,6 +6,13 @@
     padding: 0.5em 1em;
     font-size: 14px;
     margin: 0 0.5em;
+    border: none;
+    display: block;
+    text-wrap: nowrap;
+}
+.btn-blue-plein:hover {
+    background-color: var(--main-gold);
+    color: var(--main-dark)!important;
 }
 .btn-gold-plein {
     background-color: var(--main-gold);
@@ -15,8 +22,11 @@
     padding: 0.5em 1em;
     font-size: 14px;
     margin: 0 0.5em;
+    border: none;
+    display: block;
+    text-wrap: nowrap;
 }
 .btn-gold-plein:hover {
     background-color: var(--main-dark);
-    color: var(--main-gold);
+    color: var(--main-gold)!important;
 }

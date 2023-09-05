@@ -1,0 +1,10 @@
+.header {
+    background: #FFFFFF;
+    height: 150px;
+    border-bottom: solid 1px var(--main-gray);
+    position: fixed;
+}
+
+.header-menu{
+    margin-left: 150px;
+}
