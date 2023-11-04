@@ -1,11 +1,13 @@
-<div class="col-2 p-3">
+<div class="col-2">
     <div class="card-product">
         {% for image in product.images|slice(0,1) %}
-            <img class="w-100" height="300px" src="/upload/product/img/{{ image.url }}">
+            <a href="{{ path('app_front_product_show', {'id': product.id}) }}">
+                <img class="w-100" height="300px" src="/upload/product/img/{{ image.url }}">
+            </a>
         {% endfor %}
-        <div class="p-2">
+        <div class="p-1">
             <div>
-                <p>{{ product.player.name }}, {{ product.team.title }}</p>
+                <p>{{ product.player.lastName }}, {{ product.team.title }}</p>
             </div>
             <div class="d-flex align-items-center justify-content-between">
                 <p>{{ product.size }}, {{ product.brand.title }}</p>

@@ -43,6 +43,96 @@ input{
     border: solid 1px black;
 }
 
+@media (min-width: 576px) {
+    .container {
+        max-width: 100%;
+    }
+    .container-sm {
+        max-width: 540px !important;
+    }
+}
+
+@media (min-width: 768px) {
+    .container {
+        max-width: 100%;
+    }
+    .container-md {
+        max-width: 720px !important;
+    }
+    .container-sm {
+        max-width: 540px !important;
+    }
+}
+
+@media (min-width: 992px) {
+    .container {
+        max-width: 100%;
+    }
+    .container-lg {
+        max-width: 960px !important;
+    }
+    .container-md {
+        max-width: 720px !important;
+    }
+    .container-sm {
+        max-width: 540px !important;
+    }
+}
+
+@media (min-width: 1200px) {
+    .container-xl, .container {
+        max-width: 1140px !important;
+    }
+    .container-lg {
+        max-width: 960px !important;
+    }
+    .container-md {
+        max-width: 720px !important;
+    }
+    .container-sm {
+        max-width: 540px !important;
+    }
+}
+
+@media (min-width: 1400px) {
+    .container-xxl, .container {
+        max-width: 1320px !important;
+    }
+    .container-xl {
+        max-width: 1140px !important;
+    }
+    .container-lg {
+        max-width: 960px !important;
+    }
+    .container-md {
+        max-width: 720px !important;
+    }
+    .container-sm {
+        max-width: 540px !important;
+    }
+}
+
+@media (min-width: 1600px) {
+    .container-xxxl, .container {
+        max-width: 1560px !important;
+    }
+    .container-xxl {
+        max-width: 1320px !important;
+    }
+    .container-xl {
+        max-width: 1140px !important;
+    }
+    .container-lg {
+        max-width: 960px !important;
+    }
+    .container-md {
+        max-width: 720px !important;
+    }
+    .container-sm {
+        max-width: 540px !important;
+    }
+}
+
 /*COL PERSO*/
 .col-0-5 {
     flex: 0 0 auto;

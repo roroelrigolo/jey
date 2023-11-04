@@ -1,0 +1,38 @@
+{% extends '/front/base.html.twig' %}
+
+{% block title %}Jey{% endblock %}
+
+{% block javascripts %}
+
+{% endblock %}
+
+{% block body %}
+    <div class="container-xxl px-5 py-4">
+        <div class="row">
+            <div class="col-6 d-flex px-1">
+                <div class="w-25">
+                    {% for image in product.images|slice(1) %}
+                        <div class="">
+                            <img class="w-100" height="135" src="/upload/product/img/{{ image.url }}">
+                        </div>
+                    {% endfor %}
+                    {% for image in product.images|slice(1) %}
+                        <div>
+                            <img class="w-100" height="135" src="/upload/product/img/{{ image.url }}">
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="w-75">
+                    {% for image in product.images|slice(0,1) %}
+                        <img class="w-100" height="600" src="/upload/product/img/{{ image.url }}">
+                    {% endfor %}
+                </div>
+
+            </div>
+            <div class="col-6">
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

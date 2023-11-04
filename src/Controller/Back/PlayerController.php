@@ -28,8 +28,8 @@ class PlayerController extends AbstractController
         for ($i=0;$i<count($players);$i++){
             $array = [
                 $players[$i]->getId(),
-                $players[$i]->getName(),
-                $players[$i]->getName(),
+                $players[$i]->getLastName(),
+                $players[$i]->getFirstName(),
                 '<i class="fa-light fa-pen-to-square"></i>'
             ];
             array_push($datas,$array);

@@ -10,6 +10,7 @@ import './styles/app.css';
 import './styles/font.css';
 import './styles/border.css';
 import './styles/button.css';
+import './styles/mar_pad.css';
 import './styles/back/header.css';
 import './styles/back/back.css';
 import './styles/back/form.css';

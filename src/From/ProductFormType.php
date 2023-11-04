@@ -77,13 +77,13 @@ class ProductFormType extends AbstractType
             ->add('player', EntityType::class, array(
                 'class' => Player::class,
                 'required' => true,
-                'choice_label' => 'name',
+                'choice_label' => 'lastName',
                 'choice_value' => 'id',
                 'placeholder' => 'Selectionnez un joueur',
                 'label' => 'Joueur',
                 'query_builder' => function (PlayerRepository $er) {
                     return $er->createQueryBuilder('j')
-                        ->orderBy('j.name', 'ASC');
+                        ->orderBy('j.lastName', 'ASC');
                 }
             ))
             ->add('brand', EntityType::class, array(

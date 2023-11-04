@@ -56,7 +56,9 @@ class ProductController extends AbstractController
 
             $product->setCreatedAt(new \DateTimeImmutable());
             $product->setUpdatedAt(new \DateTimeImmutable());
-            
+
+            $productRepository->add($product);
+
             $files = array_filter($_FILES['images']['name']); //Use something similar before processing files.
             // Count the number of uploaded files in array
             $total_count = count($_FILES['images']['name']);
@@ -80,8 +82,6 @@ class ProductController extends AbstractController
                 $image->setProduct($product->getId());
                 $imageRepository->add($image);
             }
-
-            $productRepository->add($product);
 
             $id = $product->getId();
             if( $_POST['submit'] == "Enregistrer"){
