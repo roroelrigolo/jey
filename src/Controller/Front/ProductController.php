@@ -3,6 +3,7 @@
 namespace App\Controller\Front;
 
 use App\Repository\ProductRepository;
+use App\Repository\SportRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,10 +13,15 @@ use Symfony\Component\Routing\Annotation\Route;
 class ProductController extends AbstractController
 {
     #[Route('/{id}', name: 'app_front_product_show')]
-    public function show($id, ProductRepository $productRepository): Response
+    public function show($id, ProductRepository $productRepository, SportRepository $sportRepository): Response
     {
+        $product = $productRepository->findOneBy(['id'=>$id]);
+        $sport = $product->getSport();
+
         return $this->render('front/product/show.html.twig', [
-            'product' => $productRepository->findOneBy(['id'=>$id])
+            'product' => $product,
+            'productSimilary' => $productRepository->findBy(['sport'=>$sport],['createdAt'=>'DESC']),
+            'sports' => $sportRepository->findBy(['displayMenu'=>1],['title'=>'ASC'])
         ]);
     }
 

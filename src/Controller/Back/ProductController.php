@@ -79,7 +79,7 @@ class ProductController extends AbstractController
                 $image->setTitle($_FILES['images']['name'][$i]);
                 $image->setUrl($_FILES['images']['name'][$i]);
                 $image->setType('product');
-                $image->setProduct($product->getId());
+                $image->setProduct($product);
                 $imageRepository->add($image);
             }
 

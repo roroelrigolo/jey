@@ -2,8 +2,10 @@
 
 namespace App\Controller\Back;
 
+use App\Entity\Image;
 use App\Entity\Sport;
 use App\Form\SportFormType;
+use App\Repository\ImageRepository;
 use App\Repository\SportRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,9 +23,16 @@ class SportController extends AbstractController
         $datas = [];
 
         for ($i=0;$i<count($sports);$i++){
+            if($sports[$i]->isDisplayMenu() == 1){
+                $displayMenu = "Oui";
+            }
+            else{
+                $displayMenu = "Non";
+            }
             $array = [
                 $sports[$i]->getId(),
                 $sports[$i]->getTitle(),
+                $displayMenu,
                 '<i class="fa-light fa-pen-to-square"></i>'
             ];
             array_push($datas,$array);
@@ -60,7 +69,7 @@ class SportController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_back_sport_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, SportRepository $sportRepository, $id): Response
+    public function edit($id, Request $request, SportRepository $sportRepository, ImageRepository $imageRepository): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $sport = $sportRepository->findOneBy(['id'=>$id]);
@@ -68,6 +77,30 @@ class SportController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $files = array_filter($_FILES['banner']['name']); //Use something similar before processing files.
+            // Count the number of uploaded files in array
+            $total_count = count($_FILES['banner']['name']);
+            // Loop through every file
+            for( $i=0 ; $i < $total_count ; $i++ ) {
+                //The temp file path is obtained
+                $tmpFilePath = $_FILES['banner']['tmp_name'][$i];
+                //A file path needs to be present
+                if ($tmpFilePath != ""){
+                    //Setup our new file path
+                    $newFilePath = "./upload/product/img/" . $_FILES['banner']['name'][$i];
+                    //File is uploaded to temp dir
+                    if(move_uploaded_file($tmpFilePath, $newFilePath)) {
+                        //Other code goes here
+                    }
+                }
+                $image = new Image();
+                $image->setTitle($_FILES['banner']['name'][$i]);
+                $image->setUrl($_FILES['banner']['name'][$i]);
+                $image->setType('sport');
+                $image->setProduct(null);
+                $imageRepository->add($image);
+            }
 
             $sportRepository->add($sport);
             if( $_POST['submit'] == "Enregistrer"){

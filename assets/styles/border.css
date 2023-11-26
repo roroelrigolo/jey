@@ -16,3 +16,6 @@
 .bd-blue-1 {
     border: solid 1px var(--main-blue)!important;
 }
+.bd-gray-1 {
+    border: solid 1px var(--main-gray)!important;
+}

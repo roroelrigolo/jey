@@ -1,4 +1,4 @@
-<div class="col-2">
+<div class="col pe-2 mb-2">
     <div class="card-product">
         {% for image in product.images|slice(0,1) %}
             <a href="{{ path('app_front_product_show', {'id': product.id}) }}">
@@ -7,11 +7,15 @@
         {% endfor %}
         <div class="p-1">
             <div>
-                <p>{{ product.player.lastName }}, {{ product.team.title }}</p>
+                {% if product.player %}
+                    <b>{{ product.player.lastName }}, {{ product.team.title }}</b>
+                {% else %}
+                    <b>{{ product.title }}</b>
+                {% endif %}
             </div>
             <div class="d-flex align-items-center justify-content-between">
                 <p>{{ product.size }}, {{ product.brand.title }}</p>
-                <p>{{ product.price }}€</p>
+                <b>{{ product.price }}€</b>
             </div>
         </div>
     </div>

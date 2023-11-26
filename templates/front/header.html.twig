@@ -14,24 +14,11 @@
     </div>
     <div class="header-menu">
         <ul class="list-unstyled d-flex ms-5 mb-0">
-            <li class="me-3">
-                Baseball
-            </li>
-            <li class="me-3">
-                Basketball
-            </li>
-            <li class="me-3">
-                Football
-            </li>
-            <li class="me-3">
-                Football Américain
-            </li>
-            <li class="me-3">
-                Hockey
-            </li>
-            <li class="me-3">
-                Rugby
-            </li>
+            {% for sport in sports %}
+                <li class="me-3">
+                    <a href="{{ path('app_front_sport_show', {'slug': sport.id|trans~'-'~sport.title}) }}">{{ sport.title }}</a>
+                </li>
+            {% endfor %}
         </ul>
     </div>
 </nav>

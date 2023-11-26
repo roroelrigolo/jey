@@ -8,30 +8,93 @@
 
 {% block body %}
     <div class="container-xxl px-5 py-4">
-        <div class="row">
+        <div class="row mb-4">
             <div class="col-6 d-flex px-1">
-                <div class="w-25">
+                <div class="w-30 pe-2">
                     {% for image in product.images|slice(1) %}
                         <div class="">
-                            <img class="w-100" height="135" src="/upload/product/img/{{ image.url }}">
-                        </div>
-                    {% endfor %}
-                    {% for image in product.images|slice(1) %}
-                        <div>
-                            <img class="w-100" height="135" src="/upload/product/img/{{ image.url }}">
+                            <img class="w-100 object-fit-cover" height="135" style="margin-bottom: 15px" src="/upload/product/img/{{ image.url }}">
                         </div>
                     {% endfor %}
                 </div>
-                <div class="w-75">
+                <div class="w-70">
                     {% for image in product.images|slice(0,1) %}
-                        <img class="w-100" height="600" src="/upload/product/img/{{ image.url }}">
+                        <img class="w-100 object-fit-cover" height="600" src="/upload/product/img/{{ image.url }}">
                     {% endfor %}
                 </div>
 
             </div>
             <div class="col-6">
-
+                <div class="bg-white p-2 mb-1 d-flex align-items-center">
+                    <img width="40" height="40" class="object-fit-cover bd-radius-25 me-1" src="https://plus.unsplash.com/premium_photo-1683121366070-5ceb7e007a97?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8dXNlcnxlbnwwfHwwfHx8MA%3D%3D">
+                    <div>
+                        <p><i class="color-blue">@{{ product.user.pseudo }}</i> - 421⭐</p>
+                        <p><i class="fa-light fa-location-dot"></i> {{ product.user.location }}</p>
+                        {# <p><i class="fa-light fa-clock"></i></i> Conneté il y a 27 minutes</p> #}
+                    </div>
+                </div>
+                <div class="bg-white p-2 mb-1">
+                    <p><b class="fs-25">{{ product.title }}</b></p>
+                        <p>
+                            <i class="color-blue">
+                                {% if product.player %}
+                                {{ product.player.firstName }} {{ product.player.lastName }},
+                                {% endif %}
+                                {{ product.team.title }},
+                                {{ product.league.title }}
+                            </i>
+                        </p>
+                        <p></p>
+                    <p class="mb-2"><b class="fs-40">{{ product.price }}€</b></p>
+                    <p>{{ product.description }}</p>
+                    <p class="mb-2"><i>{{ product.conditionnement }}</i></p>
+                    <p class="mb-1">Détails</p>
+                    <div class="d-flex justify-content-around">
+                        <div class="bg-gold color-blue bd-radius-25 text-center w-100 px-2 py-1 mx-2">
+                            <i class="fs-30 fa-light fa-person"></i>
+                            <p class="">{{ product.type }}</p>
+                        </div>
+                        <div class="bg-gold color-blue bd-radius-25 text-center w-100 px-2 py-1 mx-2">
+                            <i class="fs-30 fa-light fa-shirt"></i>
+                            <p class="">{{ product.size }}</p>
+                        </div>
+                        <div class="bg-gold color-blue bd-radius-25 text-center w-100 px-2 py-1 mx-2">
+                            <i class="fs-30 fa-light fa-copyright"></i>
+                            <p class="">{{ product.brand.title }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-2 mb-1 d-flex align-items-center">
+                    <a href="" class="btn-gold-plein bd-blue-1">Réserver</a>
+                    <a href="" class="btn-blue-vide bd-blue-1">Contacter le vendeur</a>
+                    <a href="" class="btn-blue-vide bd-blue-1">Ajouter aux favoris</a>
+                </div>
             </div>
+        </div>
+        <div class="row">
+            <p class="fs-20 mb-1">Autres annonces de <i class="color-blue">@{{ product.user.pseudo }}</i></p>
+        </div>
+        <div class="row row-cols-4 d-flex">
+            {% set idCurrentProduct = product.id %}
+            {% for product in product.user.products %}
+                {% if product.id != idCurrentProduct %}
+                    {% include 'front/assets/product/card.html.twig' with {
+                        'product' : product
+                    } %}
+                {% endif %}
+            {% endfor %}
+        </div>
+        <div class="row">
+            <p class="fs-20 mb-1">Annonces similaires</p>
+        </div>
+        <div class="row row-cols-4 d-flex">
+            {% for product in productSimilary %}
+                {% if product.id != idCurrentProduct %}
+                    {% include 'front/assets/product/card.html.twig' with {
+                        'product' : product
+                    } %}
+                {% endif %}
+            {% endfor %}
         </div>
     </div>
 {% endblock %}

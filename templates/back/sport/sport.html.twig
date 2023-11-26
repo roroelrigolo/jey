@@ -11,10 +11,10 @@
         </div>
         <div class="container w-100 py-3 px-5 m-0">
             {% include 'back/table.html.twig' with {
-                'titles': ['Id','Nom',''],
-                'cols' : ['col-1','col-10','col-1'],
+                'titles': ['Id','Nom','Menu',''],
+                'cols' : ['col-1','col-9','col-1','col-1'],
                 'datas' : datas,
-                'features' : ['','','d-flex justify-content-end'],
+                'features' : ['','','','d-flex justify-content-end'],
                 'url' : 'app_back_sport_edit'
             }
             %}

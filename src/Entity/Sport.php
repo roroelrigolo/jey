@@ -30,6 +30,12 @@ class Sport
     #[ORM\OneToMany(mappedBy: 'sport', targetEntity: Player::class)]
     private Collection $players;
 
+    #[ORM\Column]
+    private ?bool $displayMenu = null;
+
+    #[ORM\ManyToOne]
+    private ?Image $banner = null;
+
     public function __construct()
     {
         $this->products = new ArrayCollection();
@@ -171,6 +177,30 @@ class Sport
                 $player->setSport(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isDisplayMenu(): ?bool
+    {
+        return $this->displayMenu;
+    }
+
+    public function setDisplayMenu(bool $displayMenu): static
+    {
+        $this->displayMenu = $displayMenu;
+
+        return $this;
+    }
+
+    public function getBanner(): ?Image
+    {
+        return $this->banner;
+    }
+
+    public function setBanner(?Image $banner): static
+    {
+        $this->banner = $banner;
 
         return $this;
     }

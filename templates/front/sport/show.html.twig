@@ -9,7 +9,7 @@
 {% block body %}
     <div class="container-xxl py-2">
         <div class="row">
-            <h1 class="fs-30 mb-2">Maillots populaires</h1>
+            <h1 class="fs-30 mb-2">{{ sport.title }}</h1>
         </div>
         <div class="row row-cols-5 d-flex">
             {% for product in products %}
@@ -18,13 +18,6 @@
                 } %}
             {% endfor %}
         </div>
-        <div class="row">
-            <h1 class="fs-30 mb-2">Derniers maillots</h1>
-            {% for product in lastProducts %}
-                {% include 'front/assets/product/card.html.twig' with {
-                    'product' : product
-                } %}
-            {% endfor %}
-        </div>
     </div>
 {% endblock %}
+

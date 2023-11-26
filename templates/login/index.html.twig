@@ -1,12 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html class="h-100">
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}Se connecter{% endblock %}</title>
-
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" type="image/webp" href="{{ absolute_url(asset('img/favicon.svg')) }}"/>
-    {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
     {% block stylesheets %}
         {{ encore_entry_link_tags('app') }}
         <script src="https://kit.fontawesome.com/9d027f2cc5.js" crossorigin="anonymous"></script>
@@ -18,8 +15,6 @@
               crossorigin="anonymous">
 
     {% endblock %}
-
-    {% block javascripts %}
         <script type="text/javascript" charset="utf-8">
             function voirMDP() {
                 var x = document.getElementById("password");
@@ -30,88 +25,42 @@
                 }
             }
         </script>
-    {% endblock %}
 </head>
-<body class="no-top">
-
-<div class="container-fluid">
-    <div class="row align-items-center">
-        <div class="col-lg-4">
-            {% if error %}
-                <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-            {% endif %}
-
-            <div class="row align-items-center">
-                <div class="col p-4">
+<body class="no-top h-100">
+{% block body %}
+    <div class="container-fluid bg-gold h-100">
+        <div class="row align-items-center justify-content-center">
+            <div class="col-4"></div>
+            <div class="col-4 d-flex flex-column align-items-center justify-content-center">
+                {% if error %}
+                    <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                {% endif %}
+                <a class="px-3 mt-3 mb-1" href="{{ path('app_front_home') }}">
+                    <img width="200px" src="/img/logo_carre_jaune.png">
+                </a>
+                <h1 class="mb-5 h2 text-center">Se connecter</h1>
+                <form class="w-100" action="{{ path('app_login') }}" method="post">
                     <div class="mb-3">
+                        <label class="form-label" for="username">Email</label>
+                        <input class="bg-transparent w-100 p-3" type="text" id="username" name="_username"
+                               value="{{ last_username }}" aria-describedby="emailHelp" placeholder="Veuillez saisir votre adresse mail" required>
                     </div>
-
-                    <h1 class="mb-5 h2">Connectez-vous</h1>
-                    <form action="{{ path('app_login') }}" method="post">
-
-                        {# If you want to control the URL the user is redirected to on success
-        <input type="hidden" name="_target_path" value="/account"> #}
-
-                        <div class="mb-3">
-                            <label class="form-label" for="username">Votre login</label>
-                            <input class="form-control p-3" type="text" id="username" name="_username"
-                                   value="{{ last_username }}" aria-describedby="emailHelp" placeholder="email@email.com">
-                        </div>
-
-                        <div class="mb-3">
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between">
                             <label for="password" class="form-label">Mot de passe</label>
-                            <div class="position-relative">
-                                <input type="password" class="form-control p-3" id="password" name="_password">
-                                <div class="position-absolute show-pass">
-                                    <a class="text-decoration-none font-15Cliquable stretched-link" onclick="voirMDP()"><i class="fa-light fa-eye"></i> Montrer</a>
-                                </div>
-                            </div>
-
                         </div>
-
-                        <div class="mb-3 form-check">
-                            <input type="checkbox" id="remember" class="form-check-input"><label for="remember"
-                                                                                                 class="form-check-label">Restez
-                                connecté</label>
+                        <div class="position-relative">
+                            <input type="password" class="bg-transparent w-100 p-3" id="password" name="_password" placeholder="Veuillez saisir votre mot de passe" required>
                         </div>
-
-                        <button type="submit" class="btn btn-primary mb-1 w-100">Je me connecte</button>
-
-                    </form>
-                    <div class="mb-5">
-                        {# <a class="link-rose mb-5" href="{{ path('app_reset_password') }}">  #}
-                            Mot de passe oublié ?
-                        </a>
                     </div>
-                    <div>
-                        <a class="link-back" href="{{ path('app_front_home') }}">
-                            Retour sur le site
-                        </a>
+                    <div class=" d-flex justify-content-center w-100">
+                        <button type="submit" class="btn-blue-plein mb-1 py-3 px-5">Se connecter</button>
                     </div>
-                </div>
+                </form>
             </div>
-        </div>
-        <div class="col-lg-8 bg-maincolor4 custom-vh-100 align-items-center d-flex">
-            <div class="bg-login vh-60 align-items-center d-flex justify-content-center">
-                <div class="row">
-                    <div class="offset-2 col-8">
-                        <p class="text-white h2">« Le plaisir se ramasse, la joie se cueille et le bonheur se cultive
-                            »</p>
-                        <p class="text-white h2">Pensée bouddhiste</p>
-                    </div>
-                </div>
-            </div>
+            <div class="col-4"></div>
         </div>
     </div>
-</div>
-
-<div class="container">
-    <footer>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
-                integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
-                crossorigin="anonymous"></script>
-    </footer>
-</div>
-
+{% endblock %}
 </body>
 </html>
