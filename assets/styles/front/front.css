@@ -4,6 +4,15 @@
     background: #f3f3f3;
 }
 
+/*HOME*/
+.banner-home {
+    height: 600px;
+    max-height: 600px;
+    background-image: url("https://jey.xokola.fr/img/banner-home.jpg");
+    background-size: cover;
+    background-position-y: center;
+}
+
 /*CARD PRODUCT*/
 .card-product {
     border-radius: 12px;

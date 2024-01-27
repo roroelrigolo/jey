@@ -1,0 +1,5 @@
+RewriteEngine on
+RewriteBase /
+
+RewriteCond %{REQUEST_URI} !^/jey/public/
+RewriteRule ^(.*)$ /jey/public/$1 [L]

@@ -1,0 +1,8 @@
+<li class="text-base rounded-xl	{% if currentPage[2] == url %}bg-secondary text-primary{% else %}text-white{% endif %} hover:bg-secondary hover:text-primary p-3 my-3">
+    <a href="{{ path(route) }}">
+        <i class="{{ icon }} me-3"></i>{{ text }}
+    </a>
+</li>
+
+
+

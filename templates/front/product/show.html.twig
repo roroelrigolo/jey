@@ -45,7 +45,7 @@
                             </i>
                         </p>
                         <p></p>
-                    <p class="mb-2"><b class="fs-40">{{ product.price }}€</b></p>
+                    <p class="mb-1"><b class="fs-40">{{ product.price }}€</b></p>
                     <p>{{ product.description }}</p>
                     <p class="mb-2"><i>{{ product.conditionnement }}</i></p>
                     <p class="mb-1">Détails</p>
@@ -72,7 +72,7 @@
             </div>
         </div>
         <div class="row">
-            <p class="fs-20 mb-1">Autres annonces de <i class="color-blue">@{{ product.user.pseudo }}</i></p>
+            <p class="fs-20 mb-1">{{ product.user.products|length }} autres annonces de <i class="color-blue">@{{ product.user.pseudo }}</i></p>
         </div>
         <div class="row row-cols-4 d-flex">
             {% set idCurrentProduct = product.id %}
