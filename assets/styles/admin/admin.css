@@ -46,10 +46,3 @@
 .other-line:hover {
     background-color: var(--main-blue-hover);
 }
-.table-back a {
-    text-decoration: none;
-    color: var(--main-dark);
-}
-.table-back a:hover {
-    color: var(--main-dark);
-}

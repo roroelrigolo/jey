@@ -5,10 +5,10 @@
 {% block body %}
     <h2 class="fs-22 mb-4">Utilisateurs</h2>
     <div class="table-back mb-4">
-        <div class="header-blue d-flex align-items-center">
-            <a class="btn-gold-plein" href="{{ path('app_admin_user_new') }}">Ajouter un utilisateur</a>
-            <a class="btn-gold-plein">Filtrer</a>
-        </div>
+        {{ component('Admin:Table:Header', {buttons:[
+            { tag: 'a', text: 'Ajouter un utilisateur', route: 'app_admin_user_new', class: 'secondaryadmin' },
+            { tag: 'a', text: 'Filtrer', class: 'secondaryadmin' }
+        ]}) }}
         <div class="container w-100 py-3 px-5 m-0">
             {% include 'admin/table.html.twig' with {
                 'titles': ['Id','Nom','Prénom','Pseudo','Email',''],

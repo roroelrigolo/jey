@@ -1,8 +1,9 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    "./components_mano/**/*.js",
+    "./assets/**/*.js",
     "./templates/**/*.html.twig",
+    "./src/Twig/Components/**/*.php",
   ],
   theme: {
     extend: {
