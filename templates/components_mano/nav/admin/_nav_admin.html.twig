@@ -1,0 +1,28 @@
+{% set nav_items = [
+    ['Dashboard','app_admin_dashboard','fa-regular fa-gauge','dashboard'],
+    ['Produits','app_admin_product','fa-regular fa-coins','product'],
+    ['Sports','app_admin_sport','fa-regular fa-basketball','sport'],
+    ['Ligues','app_admin_league','fa-regular fa-trophy','league'],
+    ['Équipes','app_admin_team','fa-sharp fa-regular','team'],
+    ['Joueurs','app_admin_player','fa-regular fa-person-running','player'],
+    ['Marques','app_admin_brand','fa-regular fa-tag','brand'],
+    ['Utilisateurs','app_admin_user','"fa-regular fa-user','user'],
+] %}
+
+{% set currentPage = app.request.pathinfo|split('/') %}
+<nav class="fixed w-[300px] bg-primary h-full py-3 px-4">
+    <a class="d-flex align-items-center px-3 mt-3 mb-5" href="{{ path('app_front_home') }}">
+        <img width="70px" src="/img/logo_carre_jaune.png">
+        <h1 class="title-header-back mx-3">Jey.</h1>
+    </a>
+    <ul class="list-unstyled px-3">
+        {% for item in nav_items %}
+            {% include 'components_mano/nav/admin/_nav_admin_item.html.twig' with {
+                'text': item[0],
+                'route': item[1],
+                'icon': item[2],
+                'url': item[3],
+            } %}
+        {% endfor %}
+    </ul>
+</nav>

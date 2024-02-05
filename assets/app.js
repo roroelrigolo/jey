@@ -13,9 +13,9 @@ import './styles/background.css';
 import './styles/button.css';
 import './styles/mar_pad.css';
 import './styles/color.css';
-import './styles/back/header.css';
-import './styles/back/back.css';
-import './styles/back/form.css';
+import './styles/admin/header.css';
+import './styles/admin/admin.css';
+import './styles/admin/form.css';
 
 import './styles/front/front.css';
 import './styles/front/header.css';

@@ -25,7 +25,7 @@ class LoginController extends AbstractController
     #[Route('/login_success', name: 'app_login_success')]
     public function loginSucces(AuthenticationUtils $authenticationUtils): Response
     {
-        return $this->redirectToRoute('app_back_dashbaord');
+        return $this->redirectToRoute('app_admin_dashbaord');
     }
 
     #[Route(path: '/logout', name: 'app_logout')]

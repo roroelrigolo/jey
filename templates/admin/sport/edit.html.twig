@@ -1,0 +1,16 @@
+{% extends '/admin/base.html.twig' %}
+
+{% block title %}Jey{% endblock %}
+
+{% block body %}
+    <script>{% include '/admin/sport/js.js.twig' %}</script>
+    <h2 class="fs-22 mb-4">Sports</h2>
+    <div class="table-back mb-4">
+        <div class="header-gold">
+            <p class="fs-22">Éditer</p>
+        </div>
+        <div class="container w-100 py-3 px-5 m-0">
+            {{ include('/admin/sport/_form.html.twig') }}
+        </div>
+    </div>
+{% endblock %}
