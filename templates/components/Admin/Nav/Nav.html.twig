@@ -1,0 +1,16 @@
+<nav class="fixed w-[300px] bg-primary h-full py-3 px-4">
+    <a class="flex items-center px-3 mt-3 mb-5" href="{{ path('app_front_home') }}">
+        <img width="70px" src="/img/logo_carre_jaune.png">
+        <h1 class="text-3xl	text-white mx-3">Jey.</h1>
+    </a>
+    <ul class="list-unstyled px-3">
+        {% for item in items %}
+            {{ component('Admin:Nav:NavItems', {
+                'text': item[0],
+                'route': item[1],
+                'icon': item[2],
+                'url': item[3],
+            }) }}
+        {% endfor %}
+    </ul>
+</nav>
