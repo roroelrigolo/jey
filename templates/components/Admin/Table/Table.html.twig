@@ -1,0 +1,20 @@
+<div class="py-4 px-8">
+    <div class="bg-secondary rounded grid grid-cols-12 p-4 mb-4">
+        {% set i = 0 %}
+        {% for title in titles %}
+            <div class="{{ cols[i] }} px-1"><p>{{ title }}</p></div>
+            {% set i = i+1 %}
+        {% endfor %}
+    </div>
+    {% for data in datas %}
+        {% set i = 0 %}
+        <a href="{{ path(url,{'id': data[0]}) }}">
+            <div class="bg-white rounded grid grid-cols-12 py-2 px-3 mb-4 hover:bg-gray">
+                {% for value in data %}
+                    <div class="{{ cols[i] }} px-1"><p class="{{ features[i] }}">{{ value|raw }}</p></div>
+                    {% set i = i+1 %}
+                {% endfor %}
+            </div>
+        </a>
+    {% endfor %}
+</div>

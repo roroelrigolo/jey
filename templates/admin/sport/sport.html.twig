@@ -9,15 +9,12 @@
             { tag: 'a', text: 'Ajouter un sport', route: 'app_admin_sport_new', class: 'secondaryadmin' },
             { tag: 'a', text: 'Filtrer', class: 'secondaryadmin' }
         ]}) }}
-        <div class="container w-100 py-3 px-5 m-0">
-            {% include 'admin/table.html.twig' with {
-                'titles': ['Id','Nom','Menu',''],
-                'cols' : ['col-1','col-9','col-1','col-1'],
-                'datas' : datas,
-                'features' : ['','','','d-flex justify-content-end'],
-                'url' : 'app_admin_sport_edit'
-            }
-            %}
-        </div>
+        {{ component('Admin:Table:Table', {
+            titles: ['Id','Nom','Menu',''],
+            cols: ['col-span-1','col-span-9','col-span-1','col-span-1'],
+            datas: datas,
+            features: ['','','','flex justify-end'],
+            url: 'app_admin_sport_edit'
+        }) }}
     </div>
 {% endblock %}

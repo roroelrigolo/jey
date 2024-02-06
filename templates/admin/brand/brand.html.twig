@@ -9,15 +9,12 @@
             { tag: 'a', text: 'Ajouter une marque', route: 'app_admin_brand_new', class: 'secondaryadmin' },
             { tag: 'a', text: 'Filtrer', class: 'secondaryadmin' }
         ]}) }}
-        <div class="container w-100 py-3 px-5 m-0">
-            {% include 'admin/table.html.twig' with {
-                'titles': ['Id','Nom',''],
-                'cols' : ['col-1','col-10','col-1'],
-                'datas' : datas,
-                'features' : ['','','d-flex justify-content-end'],
-                'url' : 'app_admin_brand_edit'
-            }
-            %}
-        </div>
+        {{ component('Admin:Table:Table', {
+            titles: ['Id','Nom',''],
+            cols: ['col-span-1','col-span-10','col-span-1'],
+            datas: datas,
+            features: ['','','d-flex justify-end'],
+            url: 'app_admin_brand_edit'
+        }) }}
     </div>
 {% endblock %}
