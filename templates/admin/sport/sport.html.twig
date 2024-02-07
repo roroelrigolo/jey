@@ -7,8 +7,11 @@
     <div class="table-back mb-4">
         {{ component('Admin:Table:Header', {buttons:[
             { tag: 'a', text: 'Ajouter un sport', route: 'app_admin_sport_new', class: 'secondaryadmin' },
-            { tag: 'a', text: 'Filtrer', class: 'secondaryadmin' }
-        ]}) }}
+            { tag: 'a', text: 'Filtrer', class: 'secondaryadmin' }],
+            sort_filters:[
+                { value: 'id', text: 'ID' },
+                { value: 'title', text: 'Nom' }]
+        }) }}
         {{ component('Admin:Table:Table', {
             titles: ['Id','Nom','Menu',''],
             cols: ['col-span-1','col-span-9','col-span-1','col-span-1'],

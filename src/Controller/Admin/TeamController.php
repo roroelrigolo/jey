@@ -18,7 +18,10 @@ class TeamController extends AbstractController
     public function index(TeamRepository $teamRepository): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
-        $teams = $teamRepository->findBy([],['id'=>'DESC']);
+        $filter = isset($_GET["filter"]) ? $_GET["filter"] : 'id';
+        $order = isset($_GET["order"]) ? $_GET["order"] : "DESC";
+
+        $teams = $teamRepository->findBy([],[$filter=>$order]);
         $datas = [];
 
         for ($i=0;$i<count($teams);$i++){

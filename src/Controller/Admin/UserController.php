@@ -21,7 +21,10 @@ class UserController extends AbstractController
     public function index(UserRepository $userRepository): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
-        $users = $userRepository->findBy([],['id'=>'DESC']);
+        $filter = isset($_GET["filter"]) ? $_GET["filter"] : 'id';
+        $order = isset($_GET["order"]) ? $_GET["order"] : "DESC";
+
+        $users = $userRepository->findBy([],[$filter=>$order]);
         $datas = [];
 
         for ($i=0;$i<count($users);$i++){

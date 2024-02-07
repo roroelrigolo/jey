@@ -22,7 +22,10 @@ class ProductController extends AbstractController
     public function index(ProductRepository $productRepository): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
-        $products = $productRepository->findBy([],['id'=>'DESC']);
+        $filter = isset($_GET["filter"]) ? $_GET["filter"] : 'id';
+        $order = isset($_GET["order"]) ? $_GET["order"] : "DESC";
+
+        $products = $productRepository->findBy([],[$filter=>$order]);
         $datas = [];
 
         for ($i=0;$i<count($products);$i++){

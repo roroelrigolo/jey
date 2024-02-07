@@ -22,7 +22,10 @@ class PlayerController extends AbstractController
     public function index(PlayerRepository $playerRepository): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
-        $players = $playerRepository->findBy([],['id'=>'DESC']);
+        $filter = isset($_GET["filter"]) ? $_GET["filter"] : 'id';
+        $order = isset($_GET["order"]) ? $_GET["order"] : "DESC";
+
+        $players = $playerRepository->findBy([],[$filter=>$order]);
         $datas = [];
 
         for ($i=0;$i<count($players);$i++){

@@ -20,7 +20,10 @@ class BrandController extends AbstractController
     public function index(BrandRepository $brandRepository): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
-        $brands = $brandRepository->findBy([],['id'=>'DESC']);
+        $filter = isset($_GET["filter"]) ? $_GET["filter"] : 'id';
+        $order = isset($_GET["order"]) ? $_GET["order"] : "DESC";
+        
+        $brands = $brandRepository->findBy([],[$filter=>$order]);
         $datas = [];
 
         for ($i=0;$i<count($brands);$i++){

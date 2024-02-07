@@ -1,0 +1,11 @@
+<form id="sort_form" name="sort_form" method="get">
+    <select class="text-sm rounded px-4 py-2 bg-secondary text-primary" name="filter" onchange="document.forms['sort_form'].submit();">
+        {% for filter in sort_filters %}
+            <option {% if app.request.get('filter') == filter.value %}selected{% endif %} value="{{ filter.value }}">{{ filter.text }}</option>
+        {% endfor %}
+    </select>
+    <select class="text-sm rounded px-4 py-2 bg-secondary text-primary" name="order" onchange="document.forms['sort_form'].submit();">
+        <option {% if app.request.get('order') == "DESC" %}selected{% endif %} value="DESC">DESC</option>
+        <option {% if app.request.get('order') == "ASC" %}selected{% endif %} value="ASC">ASC</option>
+    </select>
+</form>

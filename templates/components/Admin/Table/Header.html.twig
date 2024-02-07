@@ -1,5 +1,10 @@
-<div class="bg-primary rounded-t-lg p-8 flex items-center">
-    {% for button in buttons %}
-        {{ component('Global:Button', button) }}
-    {% endfor %}
+<div class="bg-primary rounded-t-lg p-8 flex items-center justify-between">
+    <div>
+        {% for button in buttons %}
+            {{ component('Global:Button', button) }}
+        {% endfor %}
+    </div>
+    <div>
+        {{ component('Admin:Table:Sort', {sort_filters:sort_filters}) }}
+    </div>
 </div>

@@ -5,12 +5,19 @@
 {% block body %}
     <h2 class="fs-22 mb-4">Produits</h2>
     <div class="table-back mb-4">
-        {{ component('Admin:Table:Header', {buttons:[
+        {{ component('Admin:Table:Header', {
+            buttons:[
             { tag: 'a', text: 'Ajouter un produit', route: 'app_admin_product_new', class: 'secondaryadmin' },
-            { tag: 'a', text: 'Filtrer', class: 'secondaryadmin' }
-        ]}) }}
+            { tag: 'a', text: 'Filtrer', class: 'secondaryadmin' }],
+            sort_filters:[
+                { value: 'id', text: 'ID' },
+                { value: 'title', text: 'Titre' },
+                { value: 'price', text: 'Prix' },
+                { value: 'created_at', text: 'Création' },
+                { value: 'updated_at', text: 'Modification' }]
+        }) }}
         {{ component('Admin:Table:Table', {
-            titles: ['Id','Nom','Description','Prix','Création','Modification',''],
+            titles: ['Id','Titre','Description','Prix','Création','Modification',''],
             cols: ['col-span-1','col-span-2','col-span-5','col-span-1','col-span-1','col-span-1','col-span-1'],
             datas: datas,
             features: ['','text-overflow-2l','text-overflow-2l','','','','flex justify-end'],

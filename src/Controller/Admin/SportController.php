@@ -19,7 +19,10 @@ class SportController extends AbstractController
     public function index(SportRepository $sportRepository): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
-        $sports = $sportRepository->findBy([],['id'=>'DESC']);
+        $filter = isset($_GET["filter"]) ? $_GET["filter"] : 'id';
+        $order = isset($_GET["order"]) ? $_GET["order"] : "DESC";
+
+        $sports = $sportRepository->findBy([],[$filter=>$order]);
         $datas = [];
 
         for ($i=0;$i<count($sports);$i++){

@@ -7,8 +7,12 @@
     <div class="table-back mb-4">
         {{ component('Admin:Table:Header', {buttons:[
             { tag: 'a', text: 'Ajouter une ligue', route: 'app_admin_league_new', class: 'secondaryadmin' },
-            { tag: 'a', text: 'Filtrer', class: 'secondaryadmin' }
-        ]}) }}
+            { tag: 'a', text: 'Filtrer', class: 'secondaryadmin' }],
+            sort_filters:[
+                { value: 'id', text: 'ID' },
+                { value: 'title', text: 'Nom' },
+                { value: 'sport', text: 'Sport' }]
+        }) }}
         {{ component('Admin:Table:Table', {
             titles: ['Id','Nom','Sport',''],
             cols: ['col-span-1','col-span-2','col-span-2','col-span-7'],
