@@ -23,7 +23,7 @@ class SportController extends AbstractController
         return $this->render('front/sport/show.html.twig', [
             'sport' => $sportRepository->findOneBy(['id'=>$id,'title'=>$title]),
             'sports' => $sportRepository->findBy(['displayMenu'=>1],['title'=>'ASC']),
-            'products' => $productRepository->findBy(['sport'=>$id],['createdAt'=>'DESC'])
+            'products' => $productRepository->findBy(['sport'=>$id],['created_at'=>'DESC'])
         ]);
     }
 
