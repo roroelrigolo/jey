@@ -17,7 +17,10 @@ class LeagueFormType extends AbstractType
     {
         $builder
             ->add('title', TextType::class, [
-                'label' => "Nom"
+                'label' => "Nom",
+                'attr' => array(
+                    'placeholder' => "Veuillez saisir le nom"
+                )
             ])
             ->add('sport', EntityType::class, array(
                 'class' => Sport::class,

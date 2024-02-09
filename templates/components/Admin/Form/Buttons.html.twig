@@ -1,0 +1,9 @@
+<div class="flex justify-end">
+    {% for button in buttons %}
+        {{ component('Global:Button',{
+            tag: button.tag,
+            text: button.text,
+            class: button.class
+        }) }}
+    {% endfor %}
+</div>

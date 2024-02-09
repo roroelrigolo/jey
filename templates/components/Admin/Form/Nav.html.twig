@@ -1,0 +1,9 @@
+<ul class="flex gap-x-2 mb-3" id="myTab" role="tablist">
+    {% for item in nav_items %}
+        {{ component('Admin:Form:NavItem', {
+            id: item.id,
+            text: item.text,
+            class: loop.first ? 'text-primary font-bold underline' : ''
+        }) }}
+    {% endfor %}
+</ul>

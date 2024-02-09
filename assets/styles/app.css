@@ -44,9 +44,6 @@ p{
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
 }
-input{
-    border: solid 1px black;
-}
 
 @media (min-width: 576px) {
     .container {

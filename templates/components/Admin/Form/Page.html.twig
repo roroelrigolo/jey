@@ -1,0 +1,10 @@
+<div class="content-form {% if class is defined %}{{ class }}{% endif %}" id="{{ id }}">
+    {% for input in inputs %}
+        {{ component(input.component, {
+            form: input.form,
+            input_name: input.input_name,
+            attributs: input.attributs is defined ? input.attributs : [],
+            type: input.type is defined ? input.type : 'input'
+        }) }}
+    {% endfor %}
+</div>

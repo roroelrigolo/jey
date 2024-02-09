@@ -19,7 +19,7 @@ class Button
         $full_class = 'text-sm rounded-lg text-wrap px-4 py-2 mx-2';
 
         $classMappings = [
-            "primary" => " bg-primary text-secondary hover:bg-secondary",
+            "primary" => " bg-primary text-secondary hover:bg-secondary hover:text-primary",
             "primarylight" => " border border-primary text-primary hover:bg-secondary",
             "secondary" => " bg-secondary text-primary hover:bg-primary",
             "secondaryadmin" => " bg-secondary text-primary hover:bg-black hover:text-secondary",

@@ -1,0 +1,37 @@
+{% if attributs is defined %}
+    {% set setclass = false %}
+    {% set attrs = {} %}
+    {% for attribut in attributs %}
+        {% set value = attribut.value %}
+        {% if attribut.name == "class" %}
+            {% set value = "border p-2 w-full "~value %}
+            {% set setclass = true %}
+        {% endif %}
+        {% set attrs = attrs|merge({
+            (attribut.name):value
+        }) %}
+    {% endfor %}
+    {% if setclass == false %}
+        {% set attrs = attrs|merge({
+            ('class'):'border p-2 w-full'
+        }) %}
+    {% endif %}
+{% endif %}
+<div class="mb-3">
+    {# Classic input #}
+    {% if type == "input" %}
+        <div class="mb-3">
+            {{ form_label(form[input_name], null ,{'label_attr': {'class': 'w-full'}}) }}
+            {{ form_widget(form[input_name],{ 'attr': attrs }) }}
+        </div>
+    {% endif %}
+
+    {# Toogle input #}
+    {% if type == "toogle" %}
+        <label class="relative items-center cursor-pointer">
+            {{ form_label(form[input_name], null ,{'label_attr': {'class': 'w-full'}}) }}
+            {{form_widget(form[input_name],{'attr': {'class':'sr-only peer'}})}}
+            <div class="w-11 h-6 bg-gray-200 bg-gray peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[23px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+        </label>
+    {% endif %}
+</div>

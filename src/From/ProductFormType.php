@@ -23,6 +23,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -32,11 +33,22 @@ class ProductFormType extends AbstractType
     {
         $builder
             ->add('title', TextType::class, [
-                'label' => "Nom"
+                'label' => "Nom",
+                'attr' => array(
+                    'placeholder' => "Veuillez saisir le titre"
+                )
             ])
-            ->add('description')
+            ->add('description', TextareaType::class, [
+                'label' => "Description",
+                'attr' => array(
+                    'placeholder' => "Veuillez saisir la description"
+                )
+            ])
             ->add('price', NumberType::class, [
-                'label' => "Prix"
+                'label' => "Prix",
+                'attr' => array(
+                    'placeholder' => "Veuillez saisir le prix"
+                )
             ])
             ->add('sport', EntityType::class, array(
                 'class' => Sport::class,

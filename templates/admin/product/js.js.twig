@@ -1,14 +1,16 @@
 function displayPageFrom(id){
     contents =  document.getElementsByTagName('form')[0].getElementsByClassName('content-form');
     for (i=0;i<contents.length;i++){
-    contents[i].className = "content-form d-none";
-}
+        contents[i].classList.add('hidden');
+    }
     document.getElementById(id).className = "content-form";
     navs =  document.getElementsByClassName('nav-link');
     for (i=0;i<contents.length;i++){
-    navs[i].className = "nav-link";
-}
-    document.getElementById(id+'-tab').className = "nav-link active";
+        navs[i].className = "nav-link";
+    }
+    document.getElementById(id+'-tab').classList.add('text-primary');
+    document.getElementById(id+'-tab').classList.add('font-bold');
+    document.getElementById(id+'-tab').classList.add('underline');
 }
 
 //Actualisation d'un select en fonction d'un précédent
@@ -24,17 +26,17 @@ function actualisationSelect(idSelect, idSelectSuivant, func){
 
     for(i=0;i<listNextSelect.length;i++){
         if(array.length == 0){
-            listNextSelect[i].style.display = "none";
+            listNextSelect[i].classList.add('hidden');
             document.getElementById(idSelectSuivant).setAttribute("disabled", "disabled");
         }
         else {
             for(j=0;j<array.length;j++){
                 if (listNextSelect[i].value == array[j]){
-                    listNextSelect[i].style.display = "block";
+                    listNextSelect[i].classList.remove('hidden');
                     break;
                 }
                 else{
-                    listNextSelect[i].style.display = "none";
+                    listNextSelect[i].classList.add('hidden');
                 }
             }
         }
@@ -54,7 +56,6 @@ function team(){
     {% endfor %}
 }
 function player(){
-    console.log('test')
     {% for player in players %}
     {% if player.teams is not null%}
         {% for team in player.teams %}

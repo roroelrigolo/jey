@@ -1,7 +1,7 @@
 {% if tag == "a" %}
     <a class="{{ class }}" href="{% if route is defined %}{{ path(route) }}{% endif %}">{{ text }}</a>
-{% elseif tag == "button" %}
-
+{% elseif tag == "input" %}
+    <input name="submit" id='submit' type='submit' value="{{ text }}" class="{{ class }}">
 {% endif %}
 
 
