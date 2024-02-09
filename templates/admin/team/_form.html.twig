@@ -12,14 +12,25 @@
         {component:'Admin:Form:Input',form:form,input_name:'city'}
     ],
 }) }}
-{{ component('Admin:Form:Page', {
-    id: 'a-propos',
-    class: 'hidden',
-    inputs: [
-        {component:'Admin:Form:Input',form:form,input_name:'sport',attributs:[{name:'onchange',value:"actualisationSelect('#team_form_sport','team_form_league', 'league')"}]},
-        {component:'Admin:Form:Input',form:form,input_name:'league',attributs:[{name:'disabled',value:'disabled'}]},
-    ],
-}) }}
+{% if app.request.attributes.get("_route") == 'app_admin_team_edit' %}
+    {{ component('Admin:Form:Page', {
+        id: 'a-propos',
+        class: 'hidden',
+        inputs: [
+            {component:'Admin:Form:Input',form:form,input_name:'sport',attributs:[{name:'onchange',value:"actualisationSelect('#team_form_sport','team_form_league', 'league')"}]},
+            {component:'Admin:Form:Input',form:form,input_name:'league'},
+        ],
+    }) }}
+{% else %}
+    {{ component('Admin:Form:Page', {
+        id: 'a-propos',
+        class: 'hidden',
+        inputs: [
+            {component:'Admin:Form:Input',form:form,input_name:'sport',attributs:[{name:'onchange',value:"actualisationSelect('#team_form_sport','team_form_league', 'league')"}]},
+            {component:'Admin:Form:Input',form:form,input_name:'league',attributs:[{name:'disabled',value:'disabled'}]},
+        ],
+    }) }}
+{% endif %}
 {{ component('Admin:Form:Buttons', {
     buttons: [
         { tag: 'input', text: 'Enregistrer', class:'primary' },

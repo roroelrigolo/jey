@@ -34,4 +34,44 @@
             <div class="w-11 h-6 bg-gray-200 bg-gray peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[23px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
         </label>
     {% endif %}
+
+    {# Team input #}
+    {% if type == "team" %}
+        <div class="mb-3">
+            <label class="w-full">Equipes</label>
+            <ul class="select-team border min-h-[55px] flex p-2 w-100" onclick="displayListTeam()">
+                {% if this.player is defined and this.player.teams %}
+                    {% for value in this.player.teams %}
+                        {% for team in this.teams %}
+                            {% if value == team.id %}
+                                <li class="li-select-team p-2 me-2" value="{{ team.id }}" onclick="deleteTeam('{{ team.id }}')">{{ team.title }}</li>
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                {% endif %}
+            </ul>
+            <ul id="listTeam" class="border border-t-0 hidden">
+                {% for team in this.teams %}
+                    {% set active = false %}
+                    {% if this.player is defined and this.player.teams %}
+                        {% for value in this.player.teams %}
+                            {% if value == team.id and active == false %}
+                                {% set active = true %}
+                            {% endif %}
+                        {% endfor %}
+                        {% if active == true %}
+                            <input type="checkbox" checked class="hidden team-checkbox" id="teams" name="teams[]" value="{{ team.id }}"/>
+                            <li onclick="addTeam('{{ team.title }}','{{ team.id }}')" value="{{ team.id }}" class="list-team-li bg-secondary p-2 w-full hover:bg-gray">{{ team.title }}</li>
+                        {% else %}
+                            <input type="checkbox" class="hidden team-checkbox" id="teams" name="teams[]" value="{{ team.id }}"/>
+                            <li onclick="addTeam('{{ team.title }}','{{ team.id }}')" value="{{ team.id }}" class="list-team-li p-2 w-full hover:bg-gray">{{ team.title }}</li>
+                        {% endif %}
+                    {% else %}
+                        <input type="checkbox" class="hidden team-checkbox" id="teams" name="teams[]" value="{{ team.id }}"/>
+                        <li onclick="addTeam('{{ team.title }}','{{ team.id }}')" value="{{ team.id }}" class="list-team-li p-2 w-full hover:bg-gray">{{ team.title }}</li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
 </div>

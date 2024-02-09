@@ -44,7 +44,7 @@ class PlayerController extends AbstractController
     }
 
     #[Route('/new', name: 'app_admin_player_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, PlayerRepository $playerRepository, LeagueRepository $leagueRepository, TeamRepository $teamRepository): Response
+    public function new(Request $request, PlayerRepository $playerRepository, LeagueRepository $leagueRepository): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $player = new Player();
@@ -70,13 +70,12 @@ class PlayerController extends AbstractController
         return $this->render('admin/player/new.html.twig', [
             'player' => $player,
             'leagues' => $leagueRepository->findAll(),
-            'teams' => $teamRepository->findBy([],['title'=>'ASC']),
             'form' => $form->createView(),
         ]);
     }
 
     #[Route('/{id}/edit', name: 'app_admin_player_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, PlayerRepository $playerRepository,LeagueRepository $leagueRepository, TeamRepository $teamRepository, $id): Response
+    public function edit(Request $request, PlayerRepository $playerRepository,LeagueRepository $leagueRepository, $id): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $player = $playerRepository->findOneBy(['id'=>$id]);
@@ -101,7 +100,6 @@ class PlayerController extends AbstractController
         return $this->render('admin/player/edit.html.twig', [
             'player' => $player,
             'leagues' => $leagueRepository->findAll(),
-            'teams' => $teamRepository->findBy([],['title'=>'ASC']),
             'form' => $form->createView(),
         ]);
     }

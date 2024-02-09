@@ -1,12 +1,14 @@
 {{ form_start(form) }}
-
-<div class="mb-3">
-    {{ form_row(form.title,{ 'attr': {
-        'class' : 'p-2 w-100'}}) }}
-</div>
-<div class="d-flex justify-content-end">
-    <input name="submit" id='submit' type='submit' value="Enregistrer" class="btn-blue-plein">
-    <input name="submit" id='submit' type='submit' value="Enregistrer & rester" class="btn-blue-plein">
-</div>
+{{ component('Admin:Form:Page', {
+    id: 'general',
+    inputs: [
+        {component:'Admin:Form:Input',form:form,input_name:'title'},
+    ],
+}) }}
+{{ component('Admin:Form:Buttons', {
+    buttons: [
+        { tag: 'input', text: 'Enregistrer', class:'primary' },
+        { tag: 'input', text: 'Enregistrer & rester', class:'primary' }
+    ]
+}) }}
 {{ form_end(form) }}
-
