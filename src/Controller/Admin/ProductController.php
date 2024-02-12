@@ -31,6 +31,7 @@ class ProductController extends AbstractController
         for ($i=0;$i<count($products);$i++){
             $array = [
                 $products[$i]->getId(),
+                $products[$i]->getStatement(),
                 $products[$i]->getTitle(),
                 $products[$i]->getDescription(),
                 $products[$i]->getPrice().'€',

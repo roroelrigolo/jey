@@ -1,25 +1,23 @@
 {% set currentPage = app.request.pathinfo|split('/') %}
-<nav class="header fs-16 w-100 py-3 px-5">
-    <div class="d-flex align-items-center">
-        <div>
-            <a href="{{ path('app_front_home') }}"><img width="150px" src="/img/logo.png"></a>
-        </div>
-        <div class="w-100 px-5">
-            <input class="w-100 p-2 bd-radius-25">
-        </div>
-        <div class="d-flex">
-            <div><a href="{{ path('app_login') }}" class="btn-gold-plein bd-blue-1">Se connecter</a></div>
-            <div><a href="{{ path('app_register') }}" class="btn-blue-plein">Se créer un compte</a></div>
+<nav class="py-8 sticky top-0 w-full bg-fullwhite border-b border-primary px-12 flex gap-x-8">
+    <div class="w-1/12">
+        <a href="{{ path('app_front_home') }}"><img width="150px" src="/img/logo.png"></a>
+    </div>
+    <div class="flex w-8/12">
+        <div class="w-full">
+            <input class="w-full border p-2 bd-radius-25" placeholder="Je recherche une annonce...">
+            <ul class="flex">
+                {% for sport in sports %}
+                    <li class="me-4">
+                        <a href="{{ path('app_front_sport_show', {'slug': sport.id|trans~'-'~sport.title}) }}">{{ sport.title }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
         </div>
     </div>
-    <div class="header-menu">
-        <ul class="list-unstyled d-flex ms-5 mb-0">
-            {% for sport in sports %}
-                <li class="me-3">
-                    <a href="{{ path('app_front_sport_show', {'slug': sport.id|trans~'-'~sport.title}) }}">{{ sport.title }}</a>
-                </li>
-            {% endfor %}
-        </ul>
+    <div class="flex justify-end w-3/12">
+        {{ component('Global:Button', { tag: 'a', text: 'Se connecter', route: 'app_login', class: 'secondary' }) }}
+        {{ component('Global:Button', { tag: 'a', text: 'Se créer un compte', route: 'app_register', class: 'primary' }) }}
     </div>
 </nav>
 

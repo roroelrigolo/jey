@@ -17,10 +17,10 @@
                 { value: 'updated_at', text: 'Modification' }]
         }) }}
         {{ component('Admin:Table:Table', {
-            titles: ['Id','Titre','Description','Prix','Création','Modification',''],
-            cols: ['col-span-1','col-span-2','col-span-5','col-span-1','col-span-1','col-span-1','col-span-1'],
+            titles: ['Id','Statut','Titre','Description','Prix','Création','Modification',''],
+            cols: ['col-span-1','col-span-1','col-span-2','col-span-4','col-span-1','col-span-1','col-span-1','col-span-1'],
             datas: datas,
-            features: ['','text-overflow-2l','text-overflow-2l','','','','flex justify-end'],
+            features: ['','','text-overflow-2l','text-overflow-2l','','','','flex justify-end'],
             url: 'app_admin_product_edit'
         }) }}
     </div>

@@ -12,11 +12,10 @@
 
         {% block javascripts %}
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
             {{ encore_entry_script_tags('app') }}
         {% endblock %}
     </head>
-    <body class="d-flex h-100">
+    <body class="flex h-full bg-gray">
         {% set nav_items = [
             ['Dashboard','app_admin_dashboard','fa-regular fa-gauge','dashboard'],
             ['Produits','app_admin_product','fa-regular fa-coins','product'],

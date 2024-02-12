@@ -7,12 +7,6 @@
 
 // any CSS you import will output into a single css file (app.css in this case)
 import './styles/app.css';
-import './styles/font.css';
-import './styles/border.css';
-import './styles/background.css';
-import './styles/button.css';
-import './styles/mar_pad.css';
-import './styles/color.css';
 import './styles/admin/header.css';
 import './styles/admin/admin.css';
 import './styles/admin/form.css';
