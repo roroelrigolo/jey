@@ -7,12 +7,12 @@
 {% endblock %}
 
 {% block body %}
-    <div class="bg-secondary flex px-40 py-36 mb-20">
+    <div class="bg-secondary flex px-40 py-40 mb-20">
         <div class="w-1/2">
             <h1 class="text-5xl font-bold mb-8">Rejoint la communauté <span class="text-primary">Jey.</span> dès maintenant !</h1>
             <p class="mb-8 w-10/12">Le premier marché en ligne 100% spécialisée dans la revente ou l'échange de <span class="font-bold text-primary">maillots de sports</span> d'occasion & de collection. 🤝</p>
             <div class="flex items-center">
-                {{ component('Global:Button', { tag: 'a', text: 'Vendre dès maintenant', route: 'app_register', class: 'primary', size: 'text-lg' }) }}
+                {{ component('Global:Button', { tag: 'a', text: 'Vendre un maillot', route: 'app_register', class: 'primary', size: 'text-lg' }) }}
                 <p class="text-lg font-bold text-primary">En savoir plus</p>
             </div>
         </div>
@@ -26,25 +26,7 @@
         <p>De la NBA en passant par la Ligue 1, le Top 14 ou la NFL, trouvez votre prochain <span class="bg-primary font-bold text-secondary px-4 py-1">trésor sportif</span> sur Jey - où chaque maillot a une histoire à raconter.</p>
     </div>
 
-    <div class="container mx-auto py-2 mb-20">
-        <h3 class="text-2xl font-bold mb-2">Maillots populaires</h3>
-        <div class="flex">
-            {% for product in products %}
-                {% include 'front/assets/product/card.html.twig' with {
-                    'product' : product
-                } %}
-            {% endfor %}
-        </div>
-    </div>
+    {{ component('Front:Product:ProductListing', { title: "Maillots populaires", listing : 'bestProducts' }) }}
 
-    <div class="container mx-auto py-2 mb-20">
-        <h3 class="text-2xl font-bold mb-2">Derniers maillots</h3>
-        <div class="flex">
-            {% for product in lastProducts %}
-                {% include 'front/assets/product/card.html.twig' with {
-                    'product' : product
-                } %}
-            {% endfor %}
-        </div>
-    </div>
+    {{ component('Front:Product:ProductListing', { title: "Derniers maillots ajoutés", listing : 'lastProducts' }) }}
 {% endblock %}

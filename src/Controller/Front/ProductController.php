@@ -20,7 +20,7 @@ class ProductController extends AbstractController
 
         return $this->render('front/product/show.html.twig', [
             'product' => $product,
-            'productSimilary' => $productRepository->findBy(['sport'=>$sport],['createdAt'=>'DESC']),
+            'productSimilary' => $productRepository->findBy(['sport'=>$sport],['created_at'=>'DESC']),
             'sports' => $sportRepository->findBy(['displayMenu'=>1],['title'=>'ASC'])
         ]);
     }

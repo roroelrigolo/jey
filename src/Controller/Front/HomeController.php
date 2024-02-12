@@ -15,8 +15,6 @@ class HomeController extends AbstractController
     public function home(ProductRepository $productRepository, SportRepository $sportRepository): Response
     {
         return $this->render('front/home.html.twig', [
-            'products' => $productRepository->findBy([],['created_at'=>'DESC']),
-            'lastProducts' => $productRepository->findBy([],['created_at'=>'DESC'], 5),
             'sports' => $sportRepository->findBy(['displayMenu'=>1],['title'=>'ASC'])
         ]);
     }

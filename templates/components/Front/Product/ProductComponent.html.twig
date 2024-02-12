@@ -1,0 +1,26 @@
+<div class="card-product flex flex-col bg-fullwhite rounded-xl p-4">
+    <div class="group relative">
+        <div class="absolute flex bottom-0 justify-end w-full mb-2 px-2">
+            <p class="bg-secondary text-sm text-primary rounded px-2 z-10">{{ this.product.conditionnement }}</p>
+        </div>
+        {% for image in this.product.images|slice(0,2) %}
+            <a class="transition-opacity ease-in duration-300 {% if loop.index == 1 %}opacity-100{% else %}opacity-0 absolute top-0{% endif %} {% if loop.index == 1 %}group-hover:opacity-0{% else %}group-hover:opacity-100{% endif %}" href="{{ path('app_front_product_show', {'id': this.product.id}) }}">
+                <img class="w-full rounded-xl" src="/upload/product/img/{{ image.url }}">
+            </a>
+        {% endfor %}
+    </div>
+    <div class="flex flex-col justify-between h-full py-2 ">
+        <div>
+            {% if this.product.player is not null %}
+                <p class="font-bold">{{ this.product.player.lastname }} {{ this.product.player.firstname }}</p>
+            {% else %}
+                <p class="font-bold">{{ this.product.title }}</p>
+            {% endif %}
+            <p class="mb-4">{{ this.product.size }}, {{ this.product.brand.title }}</p>
+        </div>
+        <div class="flex justify-between">
+            <p class="text-xl text-primary font-bold">{{ this.product.price }}€</p>
+        </div>
+
+    </div>
+</div>
