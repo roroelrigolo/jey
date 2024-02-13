@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="h-100">
+<html class="h-full">
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
@@ -15,7 +15,7 @@
             {{ encore_entry_script_tags('app') }}
         {% endblock %}
     </head>
-    <body class="flex h-full bg-gray">
+    <body class="flex h-full bg-white">
         {% set nav_items = [
             ['Dashboard','app_admin_dashboard','fa-regular fa-gauge','dashboard'],
             ['Produits','app_admin_product','fa-regular fa-coins','product'],
@@ -27,11 +27,11 @@
             ['Utilisateurs','app_admin_user','fa-regular fa-user','user'],
         ] %}
         {{ component('Admin:Nav:Nav', { items: nav_items }) }}
-        <div class="global-content-back w-100">
-            <div class="nav-bar-back w-100 py-3 px-5">
+        <div class="w-full ml-[300px]">
+            <div class="bg-fullwhite w-full py-3 px-5">
                 <h2>Dashboard</h2>
             </div>
-            <div class="content-back py-4 px-5">
+            <div class="py-4 px-5">
                 {% block body %}{% endblock %}
             </div>
         </div>

@@ -2,6 +2,7 @@
     <div class="group relative">
         <div class="absolute flex bottom-0 justify-end w-full mb-2 px-2">
             <p class="bg-secondary text-sm text-primary rounded px-2 z-10">{{ this.product.conditionnement }}</p>
+            <p class="bg-secondary text-sm text-primary rounded px-2 z-10">{{ this.product.conditionnement }}</p>
         </div>
         {% for image in this.product.images|slice(0,2) %}
             <a class="transition-opacity ease-in duration-300 {% if loop.index == 1 %}opacity-100{% else %}opacity-0 absolute top-0{% endif %} {% if loop.index == 1 %}group-hover:opacity-0{% else %}group-hover:opacity-100{% endif %}" href="{{ path('app_front_product_show', {'id': this.product.id}) }}">

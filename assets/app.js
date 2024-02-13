@@ -7,14 +7,6 @@
 
 // any CSS you import will output into a single css file (app.css in this case)
 import './styles/app.css';
-import './styles/admin/header.css';
-import './styles/admin/admin.css';
-import './styles/admin/form.css';
-
-import './styles/front/front.css';
-import './styles/front/header.css';
-import './styles/front/footer.css';
-
 // You can specify which plugins you need
 import { Tooltip, Toast, Popover } from 'bootstrap';
 

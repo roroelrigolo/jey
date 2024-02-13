@@ -3,22 +3,21 @@
 {% block title %}Jey{% endblock %}
 
 {% block body %}
-    <h2 class="fs-22 mb-4">Ligues</h2>
-    <div class="table-back mb-4">
-        {{ component('Admin:Table:Header', {buttons:[
-            { tag: 'a', text: 'Ajouter une ligue', route: 'app_admin_league_new', class: 'secondaryadmin' },
-            { tag: 'a', text: 'Filtrer', class: 'secondaryadmin' }],
-            sort_filters:[
-                { value: 'id', text: 'ID' },
-                { value: 'title', text: 'Nom' },
-                { value: 'sport', text: 'Sport' }]
-        }) }}
-        {{ component('Admin:Table:Table', {
-            titles: ['Id','Nom','Sport',''],
-            cols: ['col-span-1','col-span-2','col-span-2','col-span-7'],
-            datas: datas,
-            features: ['','','','flex justify-end'],
-            url: 'app_admin_league_edit'
-        }) }}
-    </div>
+    {{ component('Admin:TitlePage', { title: 'Ligues' }) }}
+
+    {{ component('Admin:Table:Header', {buttons:[
+        { tag: 'a', text: 'Ajouter une ligue', route: 'app_admin_league_new', class: 'secondaryadmin' },
+        { tag: 'a', text: 'Filtrer', class: 'secondaryadmin' }],
+        sort_filters:[
+            { value: 'id', text: 'ID' },
+            { value: 'title', text: 'Nom' },
+            { value: 'sport', text: 'Sport' }]
+    }) }}
+    {{ component('Admin:Table:Table', {
+        titles: ['Id','Nom','Sport',''],
+        cols: ['col-span-1','col-span-2','col-span-2','col-span-7'],
+        datas: datas,
+        features: ['','','','flex justify-end'],
+        url: 'app_admin_league_edit'
+    }) }}
 {% endblock %}

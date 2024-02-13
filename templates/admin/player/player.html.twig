@@ -3,22 +3,21 @@
 {% block title %}Jey{% endblock %}
 
 {% block body %}
-    <h2 class="fs-22 mb-4">Joueurs</h2>
-    <div class="table-back mb-4">
-        {{ component('Admin:Table:Header', {buttons:[
-            { tag: 'a', text: 'Ajouter un joueur', route: 'app_admin_player_new', class: 'secondaryadmin' },
-            { tag: 'a', text: 'Filtrer', class: 'secondaryadmin' }],
-            sort_filters:[
-                { value: 'id', text: 'ID' },
-                { value: 'lastName', text: 'Nom' },
-                { value: 'firstName', text: 'Prenom' }]
-        }) }}
-        {{ component('Admin:Table:Table', {
-            titles: ['Id','Nom','Prenom',''],
-            cols: ['col-span-1','col-span-2','col-span-2','col-span-7'],
-            datas: datas,
-            features: ['','','','flex justify-end'],
-            url: 'app_admin_player_edit'
-        }) }}
-    </div>
+    {{ component('Admin:TitlePage', { title: 'Joueurs' }) }}
+
+    {{ component('Admin:Table:Header', {buttons:[
+        { tag: 'a', text: 'Ajouter un joueur', route: 'app_admin_player_new', class: 'secondaryadmin' },
+        { tag: 'a', text: 'Filtrer', class: 'secondaryadmin' }],
+        sort_filters:[
+            { value: 'id', text: 'ID' },
+            { value: 'lastName', text: 'Nom' },
+            { value: 'firstName', text: 'Prenom' }]
+    }) }}
+    {{ component('Admin:Table:Table', {
+        titles: ['Id','Nom','Prenom',''],
+        cols: ['col-span-1','col-span-2','col-span-2','col-span-7'],
+        datas: datas,
+        features: ['','','','flex justify-end'],
+        url: 'app_admin_player_edit'
+    }) }}
 {% endblock %}

@@ -14,12 +14,20 @@ class Input
     public string $input_name;
     public array $attributs = [];
     public string $type;
-    public string $id_player;
+    public string $id_player = "";
 
     public function __construct(
         private TeamRepository $teamRepository,
         private PlayerRepository $playerRepository,
     ){
+    }
+
+    /**
+     * @param string $id_player
+     */
+    public function setIdPlayer(string $id_player): void
+    {
+        $this->id_player = $id_player;
     }
 
     public function getTeams(): array {

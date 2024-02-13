@@ -4,13 +4,8 @@
 
 {% block body %}
     <script>{% include '/admin/user/js.js.twig' %}</script>
-    <h2 class="fs-22 mb-4">Utilisateurs</h2>
-    <div class="table-back mb-4">
-        <div class="header-gold">
-            <p class="fs-22">Éditer</p>
-        </div>
-        <div class="container w-100 py-3 px-5 m-0">
-            {{ include('/admin/user/_form.html.twig') }}
-        </div>
-    </div>
+
+    {{ component('Admin:TitlePage', { title: 'Utilisateurs' }) }}
+    {{ component('Admin:Form:Header', { title: 'Éditer' }) }}
+    {{ component('Admin:Form:Form', { form_link: '/admin/user/_form.html.twig', form: form }) }}
 {% endblock %}

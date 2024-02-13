@@ -3,21 +3,20 @@
 {% block title %}Jey{% endblock %}
 
 {% block body %}
-    <h2 class="fs-22 mb-4">Sports</h2>
-    <div class="table-back mb-4">
-        {{ component('Admin:Table:Header', {buttons:[
-            { tag: 'a', text: 'Ajouter un sport', route: 'app_admin_sport_new', class: 'secondaryadmin' },
-            { tag: 'a', text: 'Filtrer', class: 'secondaryadmin' }],
-            sort_filters:[
-                { value: 'id', text: 'ID' },
-                { value: 'title', text: 'Nom' }]
-        }) }}
-        {{ component('Admin:Table:Table', {
-            titles: ['Id','Nom','Menu',''],
-            cols: ['col-span-1','col-span-9','col-span-1','col-span-1'],
-            datas: datas,
-            features: ['','','','flex justify-end'],
-            url: 'app_admin_sport_edit'
-        }) }}
-    </div>
+    {{ component('Admin:TitlePage', { title: 'Sports' }) }}
+
+    {{ component('Admin:Table:Header', {buttons:[
+        { tag: 'a', text: 'Ajouter un sport', route: 'app_admin_sport_new', class: 'secondaryadmin' },
+        { tag: 'a', text: 'Filtrer', class: 'secondaryadmin' }],
+        sort_filters:[
+            { value: 'id', text: 'ID' },
+            { value: 'title', text: 'Nom' }]
+    }) }}
+    {{ component('Admin:Table:Table', {
+        titles: ['Id','Nom','Menu',''],
+        cols: ['col-span-1','col-span-9','col-span-1','col-span-1'],
+        datas: datas,
+        features: ['','','','flex justify-end'],
+        url: 'app_admin_sport_edit'
+    }) }}
 {% endblock %}

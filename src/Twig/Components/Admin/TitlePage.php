@@ -4,7 +4,7 @@ namespace App\Twig\Components\Admin;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent]
-class Test
+class TitlePage
 {
-    public string $message;
+    public string $title;
 }

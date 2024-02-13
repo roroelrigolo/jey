@@ -40,11 +40,11 @@
         <div class="mb-3">
             <label class="w-full">Equipes</label>
             <ul class="select-team border min-h-[55px] flex p-2 w-100" onclick="displayListTeam()">
-                {% if this.player is defined and this.player.teams %}
+                {% if id_player is defined and id_player != "" %}
                     {% for value in this.player.teams %}
                         {% for team in this.teams %}
                             {% if value == team.id %}
-                                <li class="li-select-team p-2 me-2" value="{{ team.id }}" onclick="deleteTeam('{{ team.id }}')">{{ team.title }}</li>
+                                <li class="li-select-team bg-secondary rounded p-2 me-2" value="{{ team.id }}" onclick="deleteTeam('{{ team.id }}')">{{ team.title }}</li>
                             {% endif %}
                         {% endfor %}
                     {% endfor %}
@@ -53,7 +53,7 @@
             <ul id="listTeam" class="border border-t-0 hidden">
                 {% for team in this.teams %}
                     {% set active = false %}
-                    {% if this.player is defined and this.player.teams %}
+                    {% if id_player is defined and id_player != "" %}
                         {% for value in this.player.teams %}
                             {% if value == team.id and active == false %}
                                 {% set active = true %}
