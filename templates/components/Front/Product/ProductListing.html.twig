@@ -1,8 +1,10 @@
-<div class="container mx-auto py-2 mb-20">
-    <div class="flex justify-between">
-        <h3 class="text-3xl font-bold mb-2">{{ title|raw }}</h3>
-        <a class="text-primary">Voir tout</a>
-    </div>
+<div class="container px-20 mx-auto py-2 mb-20">
+    {% if title is defined %}
+        <div class="flex justify-between">
+            <h3 class="text-3xl font-bold mb-2">{{ title|raw }}</h3>
+            <a class="text-primary">Voir tout</a>
+        </div>
+    {% endif %}
     <div class="flex gap-x-4 grid grid-cols-5">
         {% if listing == "bestProducts" %}
             {% set productList = this.bestProducts %}
@@ -10,8 +12,16 @@
             {% set productList = this.lastProducts %}
         {% elseif listing == "userProducts" %}
             {% set productList = this.userProducts %}
+        {% elseif listing == "sportProducts" %}
+            {% set productList = this.sportProducts %}
         {% endif %}
 
+        {% for product in productList %}
+            {{ component('Front:Product:ProductComponent', { id: product.id }) }}
+        {% endfor %}
+        {% for product in productList %}
+            {{ component('Front:Product:ProductComponent', { id: product.id }) }}
+        {% endfor %}
         {% for product in productList %}
             {{ component('Front:Product:ProductComponent', { id: product.id }) }}
         {% endfor %}

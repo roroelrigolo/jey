@@ -7,17 +7,12 @@
 {% endblock %}
 
 {% block body %}
-    <div class="container-xxl py-2">
-        <div class="row">
-            <h1 class="fs-30 mb-2">{{ sport.title }}</h1>
-        </div>
-        <div class="row row-cols-5 d-flex">
-            {% for product in products %}
-                {% include 'front/assets/product/card.html.twig' with {
-                    'product' : product
-                } %}
-            {% endfor %}
-        </div>
+    <div class="bg-secondary flex py-20 px-40 mb-20">
+        <h1 class="text-5xl font-bold mb-8">{{ sport.title }}</h1>
     </div>
+
+    {{ component('Front:Filter:Filter') }}
+
+    {{ component('Front:Product:ProductListing', {listing : 'sportProducts', sport_id : sport.id }) }}
 {% endblock %}
 

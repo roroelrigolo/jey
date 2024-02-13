@@ -1,0 +1,51 @@
+<div class="container px-20 mx-auto py-2">
+    <form class="flex gap-x-2" method="GET" accept-charset="UTF-8" enctype="multipart/form-data">
+        <select disabled name="sport" onchange="this.form.submit()">
+            <option value="" disabled selected>Sport</option>
+            {% for sport in this.allSports %}
+                <option value="{{ sport.id }}">{{ sport.title }}</option>
+            {% endfor %}
+        </select>
+
+        {{ component('Front:Filter:Select', { text: 'Joueur', variable: 'player', options_name: 'players', object: true }) }}
+        {{ component('Front:Filter:Select', { text: 'Marque', variable: 'brand', options_name: 'brands', object: true }) }}
+        {{ component('Front:Filter:Select', { text: 'Genre', variable: 'type', options_name: 'types' }) }}
+        {{ component('Front:Filter:Select', { text: 'Taille', variable: 'size', options_name: 'sizes' }) }}
+        {{ component('Front:Filter:Select', { text: 'État', variable: 'conditionnement', options_name: 'conditionnements' }) }}
+    </form>
+
+    {% for filter in app.request.query.all() %}
+        {{ filter[0] }}
+    {% endfor %}
+</div>
+
+<script>
+    function showFilter(id){
+        select = document.getElementById(id).getElementsByClassName('select')[0];
+        list = document.getElementById(id).getElementsByClassName('list')[0];
+        alllists = document.getElementsByClassName('list')
+        allselects = document.getElementsByClassName('select')
+        for (i=0;i<alllists.length;i++){
+            if(!alllists[i].classList.contains('hidden') && alllists[i] != list){
+                alllists[i].classList.add('hidden');
+            }
+            if(!allselects[i].classList.contains('active') && allselects[i].classList.contains('bg-secondary') && allselects[i] != select){
+                allselects[i].classList.remove('bg-secondary');
+            }
+        }
+
+        if(list.classList.contains('hidden')){
+            list.classList.remove('hidden');
+            if(!select.classList.contains('active')){
+                select.classList.add('bg-secondary');
+            }
+
+        }
+        else {
+            list.classList.add('hidden');
+            if(!select.classList.contains('active')){
+                select.classList.remove('bg-secondary');
+            }
+        }
+    }
+</script>

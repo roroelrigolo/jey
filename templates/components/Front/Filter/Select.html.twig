@@ -1,0 +1,36 @@
+<div class="relative" id="filter-{{ variable }}">
+    {% set filters = app.request.query.all(variable) %}
+    <p class="select border py-2 px-4 {% if filters is not empty %}active bg-secondary{% endif %}" onclick="showFilter('filter-{{ variable }}')">{{ text }}</p>
+    <div class="list hidden w-[300px] absolute z-50 bg-white drop-shadow-2xl top-12 p-4 grid gap-y-4">
+        {# On regarde si le filtre est une entitée ou bien un Enum #}
+        {% if object is defined %}
+            {% for filter in this.options %}
+                <div class="flex justify-between">
+                    {% if options_name == 'players' %}
+                        <label for="{{ filter.lastName }}">{{ filter.lastName }} {{ filter.firstName }}</label>
+                    {% else %}
+                        <label for="{{ filter.title }}">{{ filter.title }}</label>
+                    {% endif %}
+                    <input onclick="this.form.submit()" type="checkbox" id="{{ filter.id }}" name="{{ variable }}[]" value="{{ filter.id }}"
+                            {% for value_filter in filters %}
+                        {% if value_filter == filter.id %}
+                            checked
+                        {% endif %}
+                            {% endfor %}/>
+                </div>
+            {% endfor %}
+        {% else %}
+            {% for filter in this.options %}
+                <div class="flex justify-between">
+                    <label for="{{ filter }}">{{ filter }}</label>
+                    <input onclick="this.form.submit()" type="checkbox" id="{{ filter }}" name="{{ variable }}[]" value="{{ filter }}"
+                            {% for value_filter in filters %}
+                        {% if value_filter == filter %}
+                            checked
+                        {% endif %}
+                            {% endfor %}/>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+</div>

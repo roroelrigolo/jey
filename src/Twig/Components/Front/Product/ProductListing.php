@@ -12,6 +12,7 @@ class ProductListing
     public string $title;
     public string $listing;
     public int $user_id;
+    public int $sport_id;
 
     public function __construct(
         private ProductRepository $productRepository
@@ -32,4 +33,18 @@ class ProductListing
     {
         return $this->productRepository->findBy(['user'=>$this->user_id],['created_at'=>'DESC']);
     }
+
+    public function getSportProducts(): array
+    {
+        if($_GET != null){
+            return $this->productRepository->findBy($_GET,['created_at'=>'DESC']);
+            //return $this->productRepository->findBy(['sport'=>$this->sport_id],['created_at'=>'DESC']);
+        }
+        else{
+            return $this->productRepository->findBy(['sport'=>$this->sport_id],['created_at'=>'DESC']);
+        }
+
+    }
+
+
 }

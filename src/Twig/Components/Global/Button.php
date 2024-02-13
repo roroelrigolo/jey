@@ -20,7 +20,7 @@ class Button
         $full_class = 'rounded-lg text-nowrap h-fit px-4 py-2 me-2';
 
         $classMappings = [
-            "primary" => " bg-primary text-secondary hover:bg-secondary hover:text-primary",
+            "primary" => " bg-primary text-secondary hover:bg-black",
             "primarylight" => " border border-primary text-primary hover:bg-secondary",
             "secondary" => " bg-secondary text-primary hover:bg-primary",
             "secondaryadmin" => " bg-secondary text-primary hover:bg-black hover:text-secondary",
