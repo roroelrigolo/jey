@@ -4,7 +4,7 @@
             <p class="bg-secondary text-sm text-primary rounded px-2 z-10">{{ this.product.conditionnement }}</p>
         </div>
         {% for image in this.product.images|slice(0,2) %}
-            <a class="transition-opacity ease-in duration-300 {% if loop.index == 1 %}opacity-100{% else %}opacity-0 absolute top-0{% endif %} {% if loop.index == 1 %}group-hover:opacity-0{% else %}group-hover:opacity-100{% endif %}" href="{{ path('app_front_product_show', {'id': this.product.id}) }}">
+            <a class="transition-opacity ease-in duration-300 {% if loop.index == 1 %}opacity-100{% else %}opacity-0 absolute top-0{% endif %} {% if loop.index == 1 %}group-hover:opacity-0{% else %}group-hover:opacity-100{% endif %}" href="{{ path('app_front_product_show', {'uuid': this.product.uuid}) }}">
                 <img class="w-full rounded-lg" src="/upload/product/img/{{ image.url }}">
             </a>
         {% endfor %}

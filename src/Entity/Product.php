@@ -64,6 +64,9 @@ class Product
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: Image::class)]
     private Collection $images;
 
+    #[ORM\Column(type: Types::GUID)]
+    private ?string $uuid = null;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
@@ -280,6 +283,18 @@ class Product
                 $image->setProduct(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUuid(): ?string
+    {
+        return $this->uuid;
+    }
+
+    public function setUuid(string $uuid): static
+    {
+        $this->uuid = $uuid;
 
         return $this;
     }
