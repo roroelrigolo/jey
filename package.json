@@ -6,13 +6,18 @@
         "@popperjs/core": "^2.11.8",
         "@symfony/stimulus-bridge": "^3.2.0",
         "@symfony/webpack-encore": "^4.4.0",
+        "autoprefixer": "^10.4.17",
         "bootstrap": "^5.3.1",
         "core-js": "^3.23.0",
         "jquery": "^3.7.0",
+        "postcss": "^8.4.35",
+        "postcss-loader": "^8.1.0",
         "regenerator-runtime": "^0.13.9",
+        "tailwindcss": "^3.4.1",
         "webpack": "^5.88.2",
         "webpack-cli": "^4.10.0",
-        "webpack-notifier": "^1.15.0"
+        "webpack-notifier": "^1.15.0",
+        "@symfony/ux-live-component": "file:vendor/symfony/ux-live-component/assets"
     },
     "license": "UNLICENSED",
     "private": true,
@@ -23,6 +28,7 @@
         "build": "encore production --progress"
     },
     "dependencies": {
-        "12": "^1.0.2"
+        "12": "^1.0.2",
+        "flowbite": "^2.2.1"
     }
 }

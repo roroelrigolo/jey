@@ -45,6 +45,25 @@ class PlayerRepository extends ServiceEntityRepository
         }
     }
 
+    public function findByQuery(string $query): array
+    {
+        if (empty($query)) {
+            return $this->createQueryBuilder('p')
+                ->orderBy('p.lastName', 'ASC')
+                ->getQuery()
+                ->getResult()
+                ;
+        }
+
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.lastName LIKE :query or p.firstName LIKE :query')
+            ->setParameter('query', '%'.$query.'%')
+            ->orderBy('p.lastName', 'ASC')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
 //    /**
 //     * @return Player[] Returns an array of Player objects
 //     */

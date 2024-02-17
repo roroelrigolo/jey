@@ -6,7 +6,7 @@
     <div class="flex w-8/12">
         <div class="w-full">
             <input class="w-full border p-2 bd-radius-25" placeholder="Je recherche une annonce...">
-            <ul class="flex">
+            <ul class="flex mt-4">
                 {% for sport in sports %}
                     <li class="me-4">
                         <a href="{{ path('app_front_sport_show', {'slug': sport.id|trans~'-'~sport.title}) }}">{{ sport.title }}</a>

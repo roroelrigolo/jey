@@ -11,4 +11,4 @@ import './styles/app.css';
 import { Tooltip, Toast, Popover } from 'bootstrap';
 
 // start the Stimulus application
-import 'bootstrap';
+import './bootstrap.js';

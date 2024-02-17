@@ -19,4 +19,12 @@ class HomeController extends AbstractController
         ]);
     }
 
+    #[Route('/search', name: 'app_search')]
+    public function search(SportRepository $sportRepository): Response
+    {
+        return $this->render('front/search.html.twig', [
+            'sports' => $sportRepository->findBy(['displayMenu'=>1],['title'=>'ASC'])
+        ]);
+    }
+
 }

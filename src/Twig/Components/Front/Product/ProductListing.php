@@ -37,6 +37,7 @@ class ProductListing
     public function getSportProducts(): array
     {
         if($_GET != null){
+            unset($_GET["query"]);
             return $this->productRepository->findBy($_GET,['created_at'=>'DESC']);
             //return $this->productRepository->findBy(['sport'=>$this->sport_id],['created_at'=>'DESC']);
         }

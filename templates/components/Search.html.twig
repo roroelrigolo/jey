@@ -1,0 +1,13 @@
+<div {{ attributes }} class="m-4">
+    <input
+            class="input input-bordered"
+            type="search"
+            name="query"
+            value="{{ query }}"
+            data-model="query"
+    >
+
+    {% for player in this.players %}
+        {{ player.lastName }}
+    {% endfor %}
+</div>
