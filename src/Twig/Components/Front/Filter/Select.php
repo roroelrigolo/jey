@@ -40,6 +40,9 @@ class Select
         elseif ($this->options_name == 'types'){
             return $this->enum->types;
         }
+        elseif ($this->options_name == 'numbers'){
+            return $this->enum->numbers;
+        }
         elseif ($this->options_name == 'brands'){
             return $this->brandRepository->findBy([],['title'=>'ASC']);
         }

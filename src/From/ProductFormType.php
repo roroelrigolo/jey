@@ -10,6 +10,7 @@ use App\Entity\Product;
 use App\Entity\Sport;
 use App\Entity\Team;
 use App\Entity\User;
+use App\Enum;
 use App\Repository\BrandRepository;
 use App\Repository\ImageRepository;
 use App\Repository\LeagueRepository;
@@ -114,25 +115,31 @@ class ProductFormType extends AbstractType
                 'required' => true,
                 'placeholder' => 'Selectionnez un genre',
                 'label' => 'Genre',
-                'choices' => array_combine(\App\Enum::$types, \App\Enum::$types),
+                'choices' => array_combine(Enum::$types, Enum::$types),
             ])
             ->add('size', ChoiceType::class, [
                 'required' => true,
                 'placeholder' => 'Selectionnez une taille',
                 'label' => 'Taille',
-                'choices' => array_combine(\App\Enum::$sizes, \App\Enum::$sizes),
+                'choices' => array_combine(Enum::$sizes, Enum::$sizes),
             ])
             ->add('conditionnement', ChoiceType::class, [
                 'required' => true,
                 'placeholder' => 'Selectionnez un état',
                 'label' => 'État',
-                'choices' => array_combine(\App\Enum::$conditionnements, \App\Enum::$conditionnements),
+                'choices' => array_combine(Enum::$conditionnements, Enum::$conditionnements),
             ])
             ->add('statement', ChoiceType::class, [
                 'required' => true,
                 'placeholder' => 'Selectionnez une disponibilité',
                 'label' => 'Disponibilité',
-                'choices' => array_combine(\App\Enum::$statements, \App\Enum::$statements),
+                'choices' => array_combine(Enum::$statements, Enum::$statements),
+            ])
+            ->add('number', ChoiceType::class, [
+                'required' => true,
+                'placeholder' => 'Selectionnez un numéro',
+                'label' => 'Numéro',
+                'choices' => array_combine(Enum::$numbers, Enum::$numbers),
             ])
             ->add('user', EntityType::class, array(
                 'class' => User::class,

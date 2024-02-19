@@ -67,6 +67,9 @@ class Product
     #[ORM\Column(type: Types::GUID)]
     private ?string $uuid = null;
 
+    #[ORM\Column]
+    private ?int $number = null;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
@@ -295,6 +298,18 @@ class Product
     public function setUuid(string $uuid): static
     {
         $this->uuid = $uuid;
+
+        return $this;
+    }
+
+    public function getNumber(): ?int
+    {
+        return $this->number;
+    }
+
+    public function setNumber(int $number): static
+    {
+        $this->number = $number;
 
         return $this;
     }
