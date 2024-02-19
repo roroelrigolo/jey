@@ -32,16 +32,16 @@ class Select
     public function getOptions(): array
     {
         if($this->options_name == 'conditionnements'){
-            return $this->enum->conditionnements;
+            return $this->enum::$conditionnements;
         }
         elseif ($this->options_name == 'sizes'){
-            return $this->enum->sizes;
+            return $this->enum::$sizes;
         }
         elseif ($this->options_name == 'types'){
-            return $this->enum->types;
+            return $this->enum::$types;
         }
         elseif ($this->options_name == 'numbers'){
-            return $this->enum->numbers;
+            return $this->enum::$numbers;
         }
         elseif ($this->options_name == 'brands'){
             return $this->brandRepository->findBy([],['title'=>'ASC']);

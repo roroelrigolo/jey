@@ -3,7 +3,7 @@
 namespace App;
 
 class Enum  {
-    public $sizes = [
+    public static $sizes = [
         'XS',
         'S',
         'M',
@@ -13,13 +13,13 @@ class Enum  {
         'XXXL'
     ];
 
-    public $types = [
+    public static $types = [
         'Homme',
         'Femmes',
         'Enfants'
     ];
 
-    public $conditionnements = [
+    public static $conditionnements = [
         'Neuf avec étiquette',
         'Neuf sans étiquette',
         'Très bon état',
@@ -27,14 +27,14 @@ class Enum  {
         'Satisfaisant'
     ];
 
-    public $statements = [
+    public static $statements = [
         'Disponible',
         'Réservé',
         'Vendu',
         'Supprimé'
     ];
 
-    public $numbers = [
+    public static $numbers = [
         0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
         11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
         21, 22, 23, 24, 25, 26, 27, 28, 29, 30,

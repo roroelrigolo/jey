@@ -1,6 +1,7 @@
 <div class="container px-20 mx-auto py-2">
     <form class="flex gap-x-2" method="GET" accept-charset="UTF-8" enctype="multipart/form-data">
-        <select disabled name="sport" onchange="this.form.submit()">
+        {{ component('Global:Button', { tag: 'a', text: 'Réinitialiser les filtres', route: 'app_front_sport_show', route_parameter: [ { name: 'slug', value: sport.id|trans~'-'~sport.title } ], class: 'secondary', size: 'text-base' }) }}
+        <select class="rounded" disabled name="sport" onchange="this.form.submit()">
             <option value="{{ sport.id }}" selected disabled>{{ sport.title }}</option>
         </select>
 

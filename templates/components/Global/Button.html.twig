@@ -1,5 +1,12 @@
+{% if route_parameter is defined %}
+    {% set parameter = {} %}
+    {% for data in route_parameter %}
+        {% set parameter = parameter|merge({(data.name):data.value}) %}
+    {% endfor %}
+{% endif %}
+
 {% if tag == "a" %}
-    <a class="{{ class }} {% if size is defined %}{{ size }}{% else %}text-sm{% endif %}" href="{% if route is defined %}{{ path(route) }}{% endif %}">{{ text }}</a>
+    <a class="{{ class }} {% if size is defined %}{{ size }}{% else %}text-sm{% endif %}" href="{% if route is defined %}{% if route_parameter is defined %}{{ path(route, parameter) }}{% else %}{{ path(route) }}{% endif %}{% endif %}">{{ text }}</a>
 {% elseif tag == "input" %}
     <input name="submit" id='submit' type='submit' value="{{ text }}" class="{{ class }} {% if size is defined %}{{ size }}{% else %}text-sm{% endif %}">
 {% endif %}
