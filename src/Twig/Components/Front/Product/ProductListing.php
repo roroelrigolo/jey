@@ -3,6 +3,7 @@ namespace App\Twig\Components\Front\Product;
 
 use App\Entity\Product;
 use App\Repository\ProductRepository;
+use App\Repository\ViewRepository;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent]
@@ -15,12 +16,14 @@ class ProductListing
     public int $sport_id;
 
     public function __construct(
-        private ProductRepository $productRepository
+        private ProductRepository $productRepository,
+        private ViewRepository $viewRepository
     ) {
     }
 
     public function getBestProducts(): array
     {
+        var_dump($this->viewRepository->orderByProductMostViews());
         return $this->productRepository->findBy([],['created_at'=>'DESC'], 5);
     }
 

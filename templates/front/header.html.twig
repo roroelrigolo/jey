@@ -16,9 +16,9 @@
         </div>
     </div>
     <div class="flex justify-end gap-x-2 w-3/12">
-        {% if app.user is not defined %}
-        {{ component('Global:Button', { tag: 'a', text: 'Se connecter', route: 'app_login', class: 'secondary' }) }}
-        {{ component('Global:Button', { tag: 'a', text: 'Se créer un compte', route: 'app_register', class: 'primary' }) }}
+        {% if app.user is null %}
+            {{ component('Global:Button', { tag: 'a', text: 'Se connecter', route: 'app_login', class: 'secondary' }) }}
+            {{ component('Global:Button', { tag: 'a', text: 'Se créer un compte', route: 'app_register', class: 'primary' }) }}
         {% else %}
             <a href="{{ path('app_front_favorite') }}">
                 <i class="fa-light fa-heart text-2xl bg-secondary border border-primary p-4 h-fit rounded-full"></i>
