@@ -7,15 +7,11 @@ use App\Repository\ViewRepository;
 
 class ViewService
 {
-    /*
-    public function __construct(
-        private ViewRepository $viewRepository
-    ) {
-    }*/
 
     public function setView($user, Product $product, ViewRepository $viewRepository): string
     {
         if($user != null){
+            //On regarde si la vue existe déjà et on l'update, sinon on l'ajoute
             $view = $viewRepository->findOneBy(['user'=>$user,'product'=>$product],[]);
             if($view != null){
                 $view->setUpdatedAt(new \DateTimeImmutable());

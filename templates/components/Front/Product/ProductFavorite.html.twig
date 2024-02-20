@@ -1,0 +1,16 @@
+<div {{ attributes }}>
+    <div class="d-grid gap-2">
+        {#
+        <input data-model="user_id" value="{{ app.user.id }}">
+        <input data-model="product_id" value="{{ id_product }}">
+        #}
+        <button
+                type="submit"
+                data-action="live#action"
+                data-action-name="save"
+                class="bg-primary"
+        >
+            Ajouter aux favoris
+        </button>
+    </div>
+</div>

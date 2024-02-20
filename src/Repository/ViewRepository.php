@@ -48,8 +48,12 @@ class ViewRepository extends ServiceEntityRepository
     public function orderByProductMostViews() {
         return $this->createQueryBuilder('v')
             ->select('identity(v.product) product, COUNT(v.product) as viewCount')
+            ->leftJoin('v.product', 'p')
+            ->andWhere('p.statement = :statement')
+            ->setParameter('statement', 'Disponible')
             ->groupBy('v.product')
             ->orderBy('viewCount', 'DESC')
+            ->setMaxResults(5)
             ->getQuery()
             ->getResult()
             ;

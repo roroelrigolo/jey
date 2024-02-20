@@ -23,8 +23,12 @@ class ProductListing
 
     public function getBestProducts(): array
     {
-        var_dump($this->viewRepository->orderByProductMostViews());
-        return $this->productRepository->findBy([],['created_at'=>'DESC'], 5);
+        $views_products = $this->viewRepository->orderByProductMostViews();
+        $products = array();
+        foreach ($views_products as $view){
+            array_push($products, $this->productRepository->find($view['product']));
+        }
+        return $products;
     }
 
     public function getLastProducts(): array
