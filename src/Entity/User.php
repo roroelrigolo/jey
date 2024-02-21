@@ -44,17 +44,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $location = null;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Favorite::class)]
-    private Collection $favorites;
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: ProductLike::class)]
+    private Collection $productLikes;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: View::class)]
-    private Collection $views;
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: ProductView::class)]
+    private Collection $productViews;
 
     public function __construct()
     {
         $this->products = new ArrayCollection();
-        $this->favorites = new ArrayCollection();
-        $this->views = new ArrayCollection();
+        $this->productLikes = new ArrayCollection();
+        $this->productViews = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -206,29 +206,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, Favorite>
+     * @return Collection<int, ProductLike>
      */
-    public function getFavorites(): Collection
+    public function getProductLikes(): Collection
     {
-        return $this->favorites;
+        return $this->productLikes;
     }
 
-    public function addFavorite(Favorite $favorite): static
+    public function addProductLike(ProductLike $productLike): static
     {
-        if (!$this->favorites->contains($favorite)) {
-            $this->favorites->add($favorite);
-            $favorite->setUser($this);
+        if (!$this->productLikes->contains($productLike)) {
+            $this->productLikes->add($productLike);
+            $productLike->setUser($this);
         }
 
         return $this;
     }
 
-    public function removeFavorite(Favorite $favorite): static
+    public function removeProductLike(ProductLike $productLike): static
     {
-        if ($this->favorites->removeElement($favorite)) {
+        if ($this->productLikes->removeElement($productLike)) {
             // set the owning side to null (unless already changed)
-            if ($favorite->getUser() === $this) {
-                $favorite->setUser(null);
+            if ($productLike->getUser() === $this) {
+                $productLike->setUser(null);
             }
         }
 
@@ -236,29 +236,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, View>
+     * @return Collection<int, ProductView>
      */
-    public function getViews(): Collection
+    public function getProductViews(): Collection
     {
-        return $this->views;
+        return $this->productViews;
     }
 
-    public function addView(View $view): static
+    public function addProductView(ProductView $productView): static
     {
-        if (!$this->views->contains($view)) {
-            $this->views->add($view);
-            $view->setUser($this);
+        if (!$this->productViews->contains($productView)) {
+            $this->productViews->add($productView);
+            $productView->setUser($this);
         }
 
         return $this;
     }
 
-    public function removeView(View $view): static
+    public function removeProductView(ProductView $productView): static
     {
-        if ($this->views->removeElement($view)) {
+        if ($this->productViews->removeElement($productView)) {
             // set the owning side to null (unless already changed)
-            if ($view->getUser() === $this) {
-                $view->setUser(null);
+            if ($productView->getUser() === $this) {
+                $productView->setUser(null);
             }
         }
 

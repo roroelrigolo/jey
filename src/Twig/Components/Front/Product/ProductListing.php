@@ -3,7 +3,7 @@ namespace App\Twig\Components\Front\Product;
 
 use App\Entity\Product;
 use App\Repository\ProductRepository;
-use App\Repository\ViewRepository;
+use App\Repository\ProductViewRepository;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent]
@@ -17,16 +17,22 @@ class ProductListing
 
     public function __construct(
         private ProductRepository $productRepository,
-        private ViewRepository $viewRepository
     ) {
     }
 
     public function getBestProducts(): array
     {
-        $views_products = $this->viewRepository->orderByProductMostViews();
+        //On récupère les produits les plus populaires en fonction d'un ratio de popularité 80% favoris/20% vues
+        $products = $this->productRepository->findAll();
+        $array_product_ratio = array();
+        foreach ($products as $product){
+            $popular_ratio = (count($product->getProductViews())*0.2+count($product->getProductLikes())*0.8);
+            array_push($array_product_ratio, [$popular_ratio,$product->getId()]);
+        }
+        rsort($array_product_ratio);
         $products = array();
-        foreach ($views_products as $view){
-            array_push($products, $this->productRepository->find($view['product']));
+        foreach ($array_product_ratio as $product){
+            array_push($products, $this->productRepository->find($product[1]));
         }
         return $products;
     }

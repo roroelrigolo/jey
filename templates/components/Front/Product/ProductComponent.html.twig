@@ -18,7 +18,7 @@
                     <p class="font-bold">{{ this.product.title }}</p>
                 {% endif %}
                 {% if app.user is not null %}
-                    {{ component('Front:Product:ProductFavorite', { product_id : this.product.id, user_id: app.user.id }) }}
+                    {{ component('Front:Product:ProductLikeComponent', { product_id : this.product.id, user_id: app.user.id }) }}
                 {% endif %}
             </div>
             <p class="mb-4">{{ this.product.size }}, {{ this.product.brand.title }}</p>

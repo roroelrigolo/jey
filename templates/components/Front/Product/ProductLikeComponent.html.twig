@@ -1,6 +1,6 @@
 <div {{ attributes }}>
     <div class="flex gap-x-2">
-        {% if this.isFav == false %}
+        {% if this.isLike == false %}
             <button
                     data-action="live#action"
                     data-action-name="add"
@@ -17,6 +17,6 @@
                 <i class="fa-solid fa-heart"></i>
             </button>
         {% endif %}
-        {{ this.countFavs }}
+        {{ this.countLikes }}
     </div>
 </div>

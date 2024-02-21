@@ -70,17 +70,17 @@ class Product
     #[ORM\Column]
     private ?int $number = null;
 
-    #[ORM\OneToMany(mappedBy: 'product', targetEntity: Favorite::class)]
-    private Collection $favorites;
+    #[ORM\OneToMany(mappedBy: 'product', targetEntity: ProductLike::class)]
+    private Collection $productLikes;
 
-    #[ORM\OneToMany(mappedBy: 'product', targetEntity: View::class)]
-    private Collection $views;
+    #[ORM\OneToMany(mappedBy: 'product', targetEntity: ProductView::class)]
+    private Collection $productViews;
 
     public function __construct()
     {
         $this->images = new ArrayCollection();
-        $this->favorites = new ArrayCollection();
-        $this->views = new ArrayCollection();
+        $this->productLikes = new ArrayCollection();
+        $this->productViews = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -323,29 +323,29 @@ class Product
     }
 
     /**
-     * @return Collection<int, Favorite>
+     * @return Collection<int, ProductLike>
      */
-    public function getFavorites(): Collection
+    public function getProductLikes(): Collection
     {
-        return $this->favorites;
+        return $this->productLikes;
     }
 
-    public function addFavorite(Favorite $favorite): static
+    public function addProductLike(ProductLike $productLike): static
     {
-        if (!$this->favorites->contains($favorite)) {
-            $this->favorites->add($favorite);
-            $favorite->setProduct($this);
+        if (!$this->productLikes->contains($productLike)) {
+            $this->productLikes->add($productLike);
+            $productLike->setProduct($this);
         }
 
         return $this;
     }
 
-    public function removeFavorite(Favorite $favorite): static
+    public function removeProductLike(ProductLike $productLike): static
     {
-        if ($this->favorites->removeElement($favorite)) {
+        if ($this->productLikes->removeElement($productLike)) {
             // set the owning side to null (unless already changed)
-            if ($favorite->getProduct() === $this) {
-                $favorite->setProduct(null);
+            if ($productLike->getProduct() === $this) {
+                $productLike->setProduct(null);
             }
         }
 
@@ -353,29 +353,29 @@ class Product
     }
 
     /**
-     * @return Collection<int, View>
+     * @return Collection<int, ProductView>
      */
-    public function getViews(): Collection
+    public function getProductViews(): Collection
     {
-        return $this->views;
+        return $this->productViews;
     }
 
-    public function addView(View $view): static
+    public function addProductView(ProductView $productView): static
     {
-        if (!$this->views->contains($view)) {
-            $this->views->add($view);
-            $view->setProduct($this);
+        if (!$this->productViews->contains($productView)) {
+            $this->productViews->add($productView);
+            $productView->setProduct($this);
         }
 
         return $this;
     }
 
-    public function removeView(View $view): static
+    public function removeProductView(ProductView $productView): static
     {
-        if ($this->views->removeElement($view)) {
+        if ($this->productViews->removeElement($productView)) {
             // set the owning side to null (unless already changed)
-            if ($view->getProduct() === $this) {
-                $view->setProduct(null);
+            if ($productView->getProduct() === $this) {
+                $productView->setProduct(null);
             }
         }
 

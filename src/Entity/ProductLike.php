@@ -2,27 +2,24 @@
 
 namespace App\Entity;
 
-use App\Repository\FavoriteRepository;
+use App\Repository\ProductLikeRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: FavoriteRepository::class)]
-class Favorite
+#[ORM\Entity(repositoryClass: ProductLikeRepository::class)]
+class ProductLike
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'favorites')]
+    #[ORM\ManyToOne(inversedBy: 'productLikes')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
-    #[ORM\ManyToOne(inversedBy: 'favorites')]
+    #[ORM\ManyToOne(inversedBy: 'productLikes')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Product $product = null;
-
-    #[ORM\Column]
-    private ?\DateTimeImmutable $created_at = null;
 
     public function getId(): ?int
     {
@@ -49,18 +46,6 @@ class Favorite
     public function setProduct(?Product $product): static
     {
         $this->product = $product;
-
-        return $this;
-    }
-
-    public function getCreatedAt(): ?\DateTimeImmutable
-    {
-        return $this->created_at;
-    }
-
-    public function setCreatedAt(\DateTimeImmutable $created_at): static
-    {
-        $this->created_at = $created_at;
 
         return $this;
     }
