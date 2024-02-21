@@ -1,11 +1,11 @@
 {{ form_start(form) }}
-{{ component('Admin:Form:Page', {
+{{ component('Global:Form:Page', {
     id: 'general',
     inputs: [
-        {component:'Admin:Form:Input',form:form,input_name:'title'},
+        {component:'Global:Form:Input',form:form,input_name:'title'},
     ],
 }) }}
-{{ component('Admin:Form:Buttons', {
+{{ component('Global:Form:Buttons', {
     buttons: [
         { tag: 'input', text: 'Enregistrer', class:'primary' },
         { tag: 'input', text: 'Enregistrer & rester', class:'primary' }

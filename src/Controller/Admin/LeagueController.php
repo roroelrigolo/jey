@@ -3,7 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\League;
-use App\Form\LeagueFormType;
+use App\Form\Admin\LeagueFormType;
 use App\Repository\LeagueRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

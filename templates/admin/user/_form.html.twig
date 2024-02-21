@@ -1,15 +1,15 @@
 {{ form_start(form) }}
-{{ component('Admin:Form:Page', {
+{{ component('Global:Form:Page', {
     id: 'general',
     inputs: [
-        {component:'Admin:Form:Input',form:form,input_name:'name'},
-        {component:'Admin:Form:Input',form:form,input_name:'firstName'},
-        {component:'Admin:Form:Input',form:form,input_name:'pseudo'},
-        {component:'Admin:Form:Input',form:form,input_name:'email'},
-        {component:'Admin:Form:Input',form:form,input_name:'password'},
+        {component:'Global:Form:Input',form:form,input_name:'name'},
+        {component:'Global:Form:Input',form:form,input_name:'firstName'},
+        {component:'Global:Form:Input',form:form,input_name:'pseudo'},
+        {component:'Global:Form:Input',form:form,input_name:'email'},
+        {component:'Global:Form:Input',form:form,input_name:'password'},
     ],
 }) }}
-{{ component('Admin:Form:Buttons', {
+{{ component('Global:Form:Buttons', {
     buttons: [
         { tag: 'input', text: 'Enregistrer', class:'primary' },
         { tag: 'input', text: 'Enregistrer & rester', class:'primary' }

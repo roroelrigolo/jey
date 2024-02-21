@@ -4,12 +4,13 @@ namespace App\Controller\Admin;
 
 use App\Entity\Image;
 use App\Entity\Product;
-use App\Form\ProductFormType;
+use App\Form\Admin\ProductFormType;
 use App\Repository\ImageRepository;
 use App\Repository\LeagueRepository;
 use App\Repository\PlayerRepository;
 use App\Repository\ProductRepository;
 use App\Repository\TeamRepository;
+use Symfony\Component\Uid\Uuid;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -57,6 +58,7 @@ class ProductController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $product->setUuid(Uuid::uuid4()->toString());
             $product->setCreatedAt(new \DateTimeImmutable());
             $product->setUpdatedAt(new \DateTimeImmutable());
 

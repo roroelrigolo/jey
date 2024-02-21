@@ -1,5 +1,5 @@
 <?php
-namespace App\Twig\Components\Admin\Form;
+namespace App\Twig\Components\Global\Form;
 
 use App\Entity\Player;
 use App\Entity\Team;

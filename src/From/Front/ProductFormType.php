@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Form;
+namespace App\Form\Front;
 
 use App\Entity\Brand;
 use App\Entity\Image;
@@ -129,30 +129,12 @@ class ProductFormType extends AbstractType
                 'label' => 'État',
                 'choices' => array_combine(Enum::$conditionnements, Enum::$conditionnements),
             ])
-            ->add('statement', ChoiceType::class, [
-                'required' => true,
-                'placeholder' => 'Selectionnez une disponibilité',
-                'label' => 'Disponibilité',
-                'choices' => array_combine(Enum::$statements, Enum::$statements),
-            ])
             ->add('number', ChoiceType::class, [
                 'required' => true,
                 'placeholder' => 'Selectionnez un numéro',
                 'label' => 'Numéro',
                 'choices' => array_combine(Enum::$numbers, Enum::$numbers),
             ])
-            ->add('user', EntityType::class, array(
-                'class' => User::class,
-                'required' => true,
-                'choice_label' => 'name',
-                'choice_value' => 'id',
-                'placeholder' => 'Selectionnez un utilisateur',
-                'label' => 'Utilisateur',
-                'query_builder' => function (UserRepository $er) {
-                    return $er->createQueryBuilder('u')
-                        ->orderBy('u.name', 'ASC');
-                }
-            ))
         ;
     }
 

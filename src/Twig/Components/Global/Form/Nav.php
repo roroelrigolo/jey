@@ -1,12 +1,12 @@
 <?php
-namespace App\Twig\Components\Admin\Form;
+namespace App\Twig\Components\Global\Form;
 
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent]
-class Buttons
+class Nav
 {
-    public array $buttons = [];
+    public array $nav_items = [];
 }
 
 

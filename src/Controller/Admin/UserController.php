@@ -4,8 +4,8 @@ namespace App\Controller\Admin;
 
 use App\Entity\Sport;
 use App\Entity\User;
-use App\Form\SportFormType;
-use App\Form\UserFormType;
+use App\Form\Admin\SportFormType;
+use App\Form\Admin\UserFormType;
 use App\Repository\SportRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

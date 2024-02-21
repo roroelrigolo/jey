@@ -4,6 +4,6 @@
 
 {% block body %}
     {{ component('Admin:TitlePage', { title: 'Ligues' }) }}
-    {{ component('Admin:Form:Header', { title: 'Éditer' }) }}
-    {{ component('Admin:Form:Form', { form_link: '/admin/league/_form.html.twig', form: form }) }}
+    {{ component('Global:Form:Header', { title: 'Éditer' }) }}
+    {{ component('Global:Form:FormAdmin', { form_link: '/admin/league/_form.html.twig', form: form }) }}
 {% endblock %}

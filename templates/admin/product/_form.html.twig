@@ -1,4 +1,4 @@
-{{ component('Admin:Form:Nav', {
+{{ component('Global:Form:Nav', {
     nav_items: [
         {id:'general',text:'Général'},
         {id:'a-propos',text:'A propos'},
@@ -8,41 +8,41 @@
     ],
 }) }}
 {{ form_start(form, {'attr' : {'enctype': 'multipart/form-data'} }) }}
-{{ component('Admin:Form:Page', {
+{{ component('Global:Form:Page', {
     id: 'general',
     inputs: [
-        {component:'Admin:Form:Input',form:form,input_name:'title'},
-        {component:'Admin:Form:Input',form:form,input_name:'description',attributs:[{name:'rows',value:'5'}]},
-        {component:'Admin:Form:Input',form:form,input_name:'price'},
+        {component:'Global:Form:Input',form:form,input_name:'title'},
+        {component:'Global:Form:Input',form:form,input_name:'description',attributs:[{name:'rows',value:'5'}]},
+        {component:'Global:Form:Input',form:form,input_name:'price'},
     ],
 }) }}
-{{ component('Admin:Form:Page', {
+{{ component('Global:Form:Page', {
     id: 'a-propos',
     class: 'hidden',
     inputs: [
-        {component:'Admin:Form:Input',form:form,input_name:'sport',attributs:[{name:'onchange',value:"actualisationSelect('#product_form_sport','product_form_league', 'league')"}]},
-        {component:'Admin:Form:Input',form:form,input_name:'league',attributs:[{name:'disabled',value:'disabled'},{name:'onchange',value: "actualisationSelect('#product_form_league','product_form_team', 'team')"}]},
-        {component:'Admin:Form:Input',form:form,input_name:'team',attributs:[{name:'disabled',value:'disabled'},{name:'onchange',value: "actualisationSelect('#product_form_team','product_form_player', 'player')"}]},
-        {component:'Admin:Form:Input',form:form,input_name:'player',attributs:[{name:'disabled',value:'disabled'}]},
-        {component:'Admin:Form:Input',form:form,input_name:'number'},
+        {component:'Global:Form:Input',form:form,input_name:'sport',attributs:[{name:'onchange',value:"actualisationSelect('#product_form_sport','product_form_league', 'league')"}]},
+        {component:'Global:Form:Input',form:form,input_name:'league',attributs:[{name:'disabled',value:'disabled'},{name:'onchange',value: "actualisationSelect('#product_form_league','product_form_team', 'team')"}]},
+        {component:'Global:Form:Input',form:form,input_name:'team',attributs:[{name:'disabled',value:'disabled'},{name:'onchange',value: "actualisationSelect('#product_form_team','product_form_player', 'player')"}]},
+        {component:'Global:Form:Input',form:form,input_name:'player',attributs:[{name:'disabled',value:'disabled'}]},
+        {component:'Global:Form:Input',form:form,input_name:'number'},
     ],
 }) }}
-{{ component('Admin:Form:Page', {
+{{ component('Global:Form:Page', {
     id: 'caracteristiques',
     class: 'hidden',
     inputs: [
-        {component:'Admin:Form:Input',form:form,input_name:'brand'},
-        {component:'Admin:Form:Input',form:form,input_name:'type'},
-        {component:'Admin:Form:Input',form:form,input_name:'size'},
-        {component:'Admin:Form:Input',form:form,input_name:'conditionnement'},
-        {component:'Admin:Form:Input',form:form,input_name:'statement'},
+        {component:'Global:Form:Input',form:form,input_name:'brand'},
+        {component:'Global:Form:Input',form:form,input_name:'type'},
+        {component:'Global:Form:Input',form:form,input_name:'size'},
+        {component:'Global:Form:Input',form:form,input_name:'conditionnement'},
+        {component:'Global:Form:Input',form:form,input_name:'statement'},
     ],
 }) }}
-{{ component('Admin:Form:Page', {
+{{ component('Global:Form:Page', {
     id: 'user',
     class: 'hidden',
     inputs: [
-        {component:'Admin:Form:Input',form:form,input_name:'user'},
+        {component:'Global:Form:Input',form:form,input_name:'user'},
     ],
 }) }}
 <div class="content-form hidden" id="images">
@@ -51,7 +51,7 @@
         <input class="p-2 full" type="file" multiple="multiple" name="images[]" id="images[]" required>
     </div>
 </div>
-{{ component('Admin:Form:Buttons', {
+{{ component('Global:Form:Buttons', {
     buttons: [
         { tag: 'input', text: 'Enregistrer', class:'primary' },
         { tag: 'input', text: 'Enregistrer & rester', class:'primary' }

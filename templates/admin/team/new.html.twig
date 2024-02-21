@@ -6,6 +6,6 @@
     <script>{% include '/admin/team/js.js.twig' %}</script>
 
     {{ component('Admin:TitlePage', { title: 'Équipes' }) }}
-    {{ component('Admin:Form:Header', { title: 'Ajouter' }) }}
-    {{ component('Admin:Form:Form', { form_link: '/admin/team/_form.html.twig', form: form }) }}
+    {{ component('Global:Form:Header', { title: 'Ajouter' }) }}
+    {{ component('Global:Form:FormAdmin', { form_link: '/admin/team/_form.html.twig', form: form }) }}
 {% endblock %}

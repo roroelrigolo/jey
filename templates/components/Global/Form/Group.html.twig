@@ -1,0 +1,20 @@
+<div class="relative group-form bg-fullwhite p-8 mb-4 {% if class is defined %}{{ class }}{% endif %} id="{{ id }}">
+    <div class="absolute top-[-168px] invisible" id="ancre-{{ id }}">dzd</div>
+    <p class="text-xl font-bold mb-4 text-primary bg-secondary px-4 w-fit">{{ title }}</p>
+    <div class="px-4">
+        {% if custom is not defined %}
+            {% for input in inputs %}
+                {{ component(input.component, {
+                    form: input.form,
+                    input_name: input.input_name,
+                    attributs: input.attributs is defined ? input.attributs : [],
+                    type: input.type is defined ? input.type : 'input',
+                    id_player: input.id_player is defined ? input.id_player : ''
+                }) }}
+            {% endfor %}
+        {% elseif custom == "image" %}
+            <label class="full">Images</label>
+            <input class="p-2 full" type="file" multiple="multiple" name="images[]" id="images[]" required>
+        {% endif %}
+    </div>
+</div>

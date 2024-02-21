@@ -4,7 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Image;
 use App\Entity\Sport;
-use App\Form\SportFormType;
+use App\Form\Admin\SportFormType;
 use App\Repository\ImageRepository;
 use App\Repository\SportRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

@@ -30,6 +30,8 @@ class ProductListing
             array_push($array_product_ratio, [$popular_ratio,$product->getId()]);
         }
         rsort($array_product_ratio);
+        //On garde les 5 premiers produits les plus populaires
+        $array_product_ratio = array_slice($array_product_ratio, 0, 5);
         $products = array();
         foreach ($array_product_ratio as $product){
             array_push($products, $this->productRepository->find($product[1]));

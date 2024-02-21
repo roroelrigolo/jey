@@ -4,8 +4,8 @@ namespace App\Controller\Admin;
 
 use App\Entity\Player;
 use App\Entity\Sport;
-use App\Form\PlayerFormType;
-use App\Form\SportFormType;
+use App\Form\Admin\PlayerFormType;
+use App\Form\Admin\SportFormType;
 use App\Repository\LeagueRepository;
 use App\Repository\PlayerRepository;
 use App\Repository\SportRepository;

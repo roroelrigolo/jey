@@ -1,0 +1,39 @@
+{{ form_start(form, {'attr' : {'enctype': 'multipart/form-data','class': 'w-full'} }) }}
+{{ component('Global:Form:Group', {
+    title: 'Informations principales',
+    id: 'general',
+    inputs: [
+        {component:'Global:Form:Input',form:form,input_name:'title'},
+        {component:'Global:Form:Input',form:form,input_name:'description',attributs:[{name:'rows',value:'5'}]},
+        {component:'Global:Form:Input',form:form,input_name:'price'},
+    ],
+}) }}
+{{ component('Global:Form:Group', {
+    title: 'Images',
+    id: 'images',
+    custom: "image",
+}) }}
+{{ component('Global:Form:Group', {
+    title: 'Caractéristiques sportives',
+    id: 'sport-specifications',
+    inputs: [
+        {component:'Global:Form:Input',form:form,input_name:'sport',attributs:[{name:'onchange',value:"actualisationSelect('#team_form_sport','team_form_league', 'league')"}]},
+        {component:'Global:Form:Input',form:form,input_name:'league'},
+        {component:'Global:Form:Input',form:form,input_name:'team'},
+        {component:'Global:Form:Input',form:form,input_name:'player'},
+        {component:'Global:Form:Input',form:form,input_name:'number'},
+    ],
+}) }}
+{{ component('Global:Form:Group', {
+    title: 'Autres caractéristiques',
+    id: 'other-specifications',
+    inputs: [
+        {component:'Global:Form:Input',form:form,input_name:'brand'},
+        {component:'Global:Form:Input',form:form,input_name:'type'},
+        {component:'Global:Form:Input',form:form,input_name:'size'},
+        {component:'Global:Form:Input',form:form,input_name:'conditionnement'},
+    ],
+}) }}
+<input type="submit" value="Add">
+{{ form_end(form) }}
+

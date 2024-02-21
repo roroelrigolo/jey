@@ -6,6 +6,6 @@
     <script>{% include '/admin/player/js.js.twig' %}</script>
 
     {{ component('Admin:TitlePage', { title: 'Joueurs' }) }}
-    {{ component('Admin:Form:Header', { title: 'Ajouter' }) }}
-    {{ component('Admin:Form:Form', { form_link: '/admin/player/_form.html.twig', form: form }) }}
+    {{ component('Global:Form:Header', { title: 'Ajouter' }) }}
+    {{ component('Global:Form:FormAdmin', { form_link: '/admin/player/_form.html.twig', form: form }) }}
 {% endblock %}

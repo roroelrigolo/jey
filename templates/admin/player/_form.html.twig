@@ -1,39 +1,39 @@
-{{ component('Admin:Form:Nav', {
+{{ component('Global:Form:Nav', {
     nav_items: [
         {id:'general',text:'Général'},
         {id:'a-propos',text:'A propos'},
     ],
 }) }}
 {{ form_start(form) }}
-{{ component('Admin:Form:Page', {
+{{ component('Global:Form:Page', {
     id: 'general',
     inputs: [
-        {component:'Admin:Form:Input',form:form,input_name:'lastName'},
-        {component:'Admin:Form:Input',form:form,input_name:'firstName'}
+        {component:'Global:Form:Input',form:form,input_name:'lastName'},
+        {component:'Global:Form:Input',form:form,input_name:'firstName'}
     ],
 }) }}
 {% if app.request.attributes.get("_route") == 'app_admin_player_edit' %}
-    {{ component('Admin:Form:Page', {
+    {{ component('Global:Form:Page', {
         id: 'a-propos',
         class: 'hidden',
         inputs: [
-            {component:'Admin:Form:Input',form:form,input_name:'sport',attributs:[{name:'onchange',value:"actualisationSelect('#team_form_sport','team_form_league', 'league')"}]},
-            {component:'Admin:Form:Input',form:form,input_name:'league'},
-            {component:'Admin:Form:Input',form:form,input_name:'league',type:'team',id_player:player.id},
+            {component:'Global:Form:Input',form:form,input_name:'sport',attributs:[{name:'onchange',value:"actualisationSelect('#team_form_sport','team_form_league', 'league')"}]},
+            {component:'Global:Form:Input',form:form,input_name:'league'},
+            {component:'Global:Form:Input',form:form,input_name:'league',type:'team',id_player:player.id},
         ],
     }) }}
 {% else %}
-    {{ component('Admin:Form:Page', {
+    {{ component('Global:Form:Page', {
         id: 'a-propos',
         class: 'hidden',
         inputs: [
-            {component:'Admin:Form:Input',form:form,input_name:'sport',attributs:[{name:'onchange',value:"actualisationSelect('#team_form_sport','team_form_league', 'league')"}]},
-            {component:'Admin:Form:Input',form:form,input_name:'league',attributs:[{name:'disabled',value:'disabled'}]},
-            {component:'Admin:Form:Input',form:form,input_name:'league',type:'team'},
+            {component:'Global:Form:Input',form:form,input_name:'sport',attributs:[{name:'onchange',value:"actualisationSelect('#team_form_sport','team_form_league', 'league')"}]},
+            {component:'Global:Form:Input',form:form,input_name:'league',attributs:[{name:'disabled',value:'disabled'}]},
+            {component:'Global:Form:Input',form:form,input_name:'league',type:'team'},
         ],
     }) }}
 {% endif %}
-{{ component('Admin:Form:Buttons', {
+{{ component('Global:Form:Buttons', {
     buttons: [
         { tag: 'input', text: 'Enregistrer', class:'primary' },
         { tag: 'input', text: 'Enregistrer & rester', class:'primary' }

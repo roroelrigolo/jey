@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Form;
+namespace App\Form\Admin;
 
 use App\Entity\League;
+use App\Entity\Player;
 use App\Entity\Sport;
 use App\Entity\Team;
 use App\Repository\LeagueRepository;
@@ -13,16 +14,16 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class TeamFormType extends AbstractType
+class PlayerFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('title', TextType::class, [
+            ->add('lastName', TextType::class, [
                 'label' => "Nom"
             ])
-            ->add('city', TextType::class, [
-                'label' => "Ville"
+            ->add('firstName', TextType::class, [
+                'label' => "Prénom"
             ])
             ->add('sport', EntityType::class, array(
                 'class' => Sport::class,
@@ -54,7 +55,7 @@ class TeamFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Team::class,
+            'data_class' => Player::class,
         ]);
     }
 }

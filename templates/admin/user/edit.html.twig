@@ -6,6 +6,6 @@
     <script>{% include '/admin/user/js.js.twig' %}</script>
 
     {{ component('Admin:TitlePage', { title: 'Utilisateurs' }) }}
-    {{ component('Admin:Form:Header', { title: 'Éditer' }) }}
-    {{ component('Admin:Form:Form', { form_link: '/admin/user/_form.html.twig', form: form }) }}
+    {{ component('Global:Form:Header', { title: 'Éditer' }) }}
+    {{ component('Global:Form:FormAdmin', { form_link: '/admin/user/_form.html.twig', form: form }) }}
 {% endblock %}

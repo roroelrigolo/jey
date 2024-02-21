@@ -1,16 +1,16 @@
 {{ form_start(form, {'attr' : {'enctype': 'multipart/form-data'} }) }}
-{{ component('Admin:Form:Page', {
+{{ component('Global:Form:Page', {
     id: 'general',
     inputs: [
-        {component:'Admin:Form:Input',form:form,input_name:'title'},
-        {component:'Admin:Form:Input',form:form,input_name:'displayMenu',type:'toogle'}
+        {component:'Global:Form:Input',form:form,input_name:'title'},
+        {component:'Global:Form:Input',form:form,input_name:'displayMenu',type:'toogle'}
     ],
 }) }}
 <div class="mb-3">
     <label class="w-100">Images</label>
     <input class="p-2 w-100" type="file" name="banner" id="banner" required>
 </div>
-{{ component('Admin:Form:Buttons', {
+{{ component('Global:Form:Buttons', {
     buttons: [
         { tag: 'input', text: 'Enregistrer', class:'primary' },
         { tag: 'input', text: 'Enregistrer & rester', class:'primary' }

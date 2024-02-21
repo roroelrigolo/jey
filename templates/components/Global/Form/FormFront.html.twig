@@ -1,0 +1,13 @@
+<div class="w-full flex gap-x-4 py-3 px-5 m-0">
+    <div class="w-3/12 bg-fullwhite h-fit p-4 sticky top-[168px]">
+        <p class="text-lg font-bold">Sommaire</p>
+        <ul class="ps-8 list-disc grid gap-y-2">
+            {% for item in sommaire %}
+                <li><a href="#{{ item[1] }}">{{ item[0] }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="w-9/12">
+        {{ include(form_link) }}
+    </div>
+</div>

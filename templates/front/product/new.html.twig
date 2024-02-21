@@ -1,0 +1,25 @@
+{% extends '/front/base.html.twig' %}
+
+{% block title %}Jey{% endblock %}
+
+{% block body %}
+    <div class="bg-secondary flex py-20 px-40">
+        <h1 class="text-5xl font-bold mb-8">Vendre un produit</h1>
+    </div>
+    <div class="container grid grid-cols-12 mx-auto px-40 py-2 mb-20">
+        <div class="col-span-12">
+            {{ component('Global:Form:FormFront', {
+                form_link: 'front/product/_form.html.twig',
+                form: form,
+                sommaire: [
+                    ['Informations principales','ancre-general'],
+                    ['Images','ancre-images'],
+                    ['Caractéristiques sportives','ancre-sport-specifications'],
+                    ['Autres caractéristiques','ancre-other-specifications'],
+                ]
+            }) }}
+        </div>
+    </div>
+
+{% endblock %}
+
