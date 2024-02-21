@@ -1,16 +1,22 @@
 <div {{ attributes }}>
-    <div class="d-grid gap-2">
-        {#
-        <input data-model="user_id" value="{{ app.user.id }}">
-        <input data-model="product_id" value="{{ id_product }}">
-        #}
-        <button
-                type="submit"
-                data-action="live#action"
-                data-action-name="save"
-                class="bg-primary"
-        >
-            Ajouter aux favoris
-        </button>
+    <div class="flex gap-x-2">
+        {% if this.isFav == false %}
+            <button
+                    data-action="live#action"
+                    data-action-name="add"
+                    class="text-secondary"
+            >
+                <i class="fa-light fa-heart"></i>
+            </button>
+        {% else %}
+            <button
+                    data-action="live#action"
+                    data-action-name="delete"
+                    class="text-secondary"
+            >
+                <i class="fa-solid fa-heart"></i>
+            </button>
+        {% endif %}
+        {{ this.countFavs }}
     </div>
 </div>

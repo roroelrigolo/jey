@@ -11,17 +11,20 @@
     </div>
     <div class="flex flex-col justify-between h-full py-2 ">
         <div>
-            {% if this.product.player is not null %}
-                <p class="font-bold">{{ this.product.player.lastname }} {{ this.product.player.firstname }}</p>
-            {% else %}
-                <p class="font-bold">{{ this.product.title }}</p>
-            {% endif %}
+            <div class="flex justify-between">
+                {% if this.product.player is not null %}
+                    <p class="font-bold">{{ this.product.player.lastname }} {{ this.product.player.firstname }}</p>
+                {% else %}
+                    <p class="font-bold">{{ this.product.title }}</p>
+                {% endif %}
+                {% if app.user is not null %}
+                    {{ component('Front:Product:ProductFavorite', { product_id : this.product.id, user_id: app.user.id }) }}
+                {% endif %}
+            </div>
             <p class="mb-4">{{ this.product.size }}, {{ this.product.brand.title }}</p>
         </div>
         <div class="flex justify-between">
             <p class="text-xl text-primary font-bold">{{ this.product.price }}€</p>
         </div>
-
     </div>
-    {{ component('Front:Product:ProductFavorite') }}
 </div>
