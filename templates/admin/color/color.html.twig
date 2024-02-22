@@ -14,10 +14,11 @@
             { value: 'value', text: 'Valeur' }]
     }) }}
     {{ component('Admin:Table:Table', {
-        titles: ['Id','Nom','Valeur',''],
-        cols: ['col-span-1','col-span-9','col-span-1','col-span-1'],
+        titles: ['Id','Valeur','Nom',''],
+        cols: ['col-span-1','col-span-1','col-span-9','col-span-1'],
         datas: datas,
-        features: ['','','','flex justify-end'],
-        url: 'app_admin_color_edit'
+        features: ['','text-center','','flex justify-end'],
+        url: 'app_admin_color_edit',
+        types: ['','color','','']
     }) }}
 {% endblock %}

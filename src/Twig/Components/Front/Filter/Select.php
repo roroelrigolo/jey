@@ -4,6 +4,7 @@ namespace App\Twig\Components\Front\Filter;
 use App\Entity\Sport;
 use App\Enum;
 use App\Repository\BrandRepository;
+use App\Repository\ColorRepository;
 use App\Repository\LeagueRepository;
 use App\Repository\PlayerRepository;
 use App\Repository\SportRepository;
@@ -27,6 +28,7 @@ class Select
         private PlayerRepository $playerRepository,
         private TeamRepository $teamRepository,
         private LeagueRepository $leagueRepository,
+        private ColorRepository $colorRepository,
         private Enum $enum
     ) {
     }
@@ -56,6 +58,9 @@ class Select
         }
         elseif ($this->options_name == 'leagues'){
             return $this->leagueRepository->findBy(['sport'=>$this->sport],['title'=>'ASC']);
+        }
+        elseif ($this->options_name == 'colors'){
+            return $this->colorRepository->findBy([],['title'=>'ASC']);
         }
         return [];
     }

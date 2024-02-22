@@ -16,6 +16,8 @@
                                     <div class="flex justify-between {% if search is defined %}search-{{ variable }}{% endif %} {% for value_filter in filters %}{% if value_filter == filter.id %}checked{% endif %}{% endfor %}">
                                         {% if options_name == 'players' %}
                                             <label class="label" for="{{ filter.lastName }}">{{ filter.lastName }} {{ filter.firstName }}</label>
+                                        {% elseif options_name == 'colors' %}
+                                            <label class="label items-top flex" for="{{ filter.title }}"><p class="rounded-full border me-2 w-[20px] h-[20px]" style="background: {{ filter.value }}"></p>{{ filter.title }}</label>
                                         {% else %}
                                             <label class="label" for="{{ filter.title }}">{{ filter.title }}</label>
                                         {% endif %}
@@ -37,6 +39,8 @@
                     <div class="flex justify-between {% if search is defined %}search-{{ variable }}{% endif %} {% for value_filter in filters %}{% if value_filter == filter.id %}hidden checked{% endif %}{% endfor %}">
                         {% if options_name == 'players' %}
                             <label class="label" for="{{ filter.lastName }}">{{ filter.lastName }} {{ filter.firstName }}</label>
+                        {% elseif options_name == 'colors' %}
+                            <label class="label items-top flex" for="{{ filter.title }}"><p class="rounded-full border me-2 w-[20px] h-[20px]" style="background: {{ filter.value }}"></p>{{ filter.title }}</label>
                         {% else %}
                             <label class="label" for="{{ filter.title }}">{{ filter.title }}</label>
                         {% endif %}

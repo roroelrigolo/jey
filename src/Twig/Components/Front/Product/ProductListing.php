@@ -53,14 +53,27 @@ class ProductListing
     {
         if($_GET != null){
             unset($_GET["query"]);
-            return $this->productRepository->findBy($_GET,['created_at'=>'DESC']);
-            //return $this->productRepository->findBy(['sport'=>$this->sport_id],['created_at'=>'DESC']);
+            $colors = $_GET["colors"];
+            unset($_GET["colors"]);
+            $players = $this->productRepository->findBy($_GET,['created_at'=>'DESC']);
+            //On flitre avec les couleurs si définies
+            if ($colors !== null) {
+                $filteredPlayers = [];
+                foreach ($players as $player) {
+                    $colors_player = $player->getColors();
+                    foreach ($colors_player as $color_player) {
+                        if (in_array($color_player->getId(), $colors)) {
+                            $filteredPlayers[] = $player;
+                            break;
+                        }
+                    }
+                }
+                $players = $filteredPlayers;
+            }
+            return $players;
         }
         else{
             return $this->productRepository->findBy(['sport'=>$this->sport_id],['created_at'=>'DESC']);
         }
-
     }
-
-
 }

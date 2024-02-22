@@ -10,5 +10,6 @@ class Table
     public array $cols = [];
     public array $datas = [];
     public array $features = [];
+    public array $types = [];
     public string $url;
 }

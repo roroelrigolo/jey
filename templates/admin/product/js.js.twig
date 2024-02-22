@@ -57,9 +57,9 @@ function team(){
 }
 function player(){
     {% for player in players %}
-    {% if player.teams is not null%}
+    {% if player.teams is not null %}
         {% for team in player.teams %}
-            idValue = {{ team }};
+            idValue = {{ team.id }};
             if (valueSelect == idValue){array.push({{ player.id }});}
         {% endfor %}
     {% endif %}

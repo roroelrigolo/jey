@@ -30,8 +30,8 @@ class ColorController extends AbstractController
         for ($i=0;$i<count($colors);$i++){
             $array = [
                 $colors[$i]->getId(),
-                $colors[$i]->getTitle(),
                 $colors[$i]->getValue(),
+                $colors[$i]->getTitle(),
                 '<i class="fa-light fa-pen-to-square"></i>'
             ];
             array_push($datas,$array);

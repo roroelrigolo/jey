@@ -13,6 +13,7 @@
         {{ component('Front:Filter:Select', { text: 'Genre', variable: 'type', options_name: 'types' }) }}
         {{ component('Front:Filter:Select', { text: 'Taille', variable: 'size', options_name: 'sizes' }) }}
         {{ component('Front:Filter:Select', { text: 'État', variable: 'conditionnement', options_name: 'conditionnements' }) }}
+        {{ component('Front:Filter:Select', { text: 'Couleurs', variable: 'colors', options_name: 'colors', object: true }) }}
     </form>
 
     {% for filter in app.request.query.all() %}

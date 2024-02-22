@@ -11,7 +11,13 @@
         <a href="{{ path(url,{'id': data[0]}) }}">
             <div class="bg-white rounded grid grid-cols-12 py-2 px-3 mb-4 hover:bg-gray">
                 {% for value in data %}
-                    <div class="{{ cols[i] }} px-1"><p class="{{ features[i] }}">{{ value|raw }}</p></div>
+                    {% if types is defined and types != [] and types[i] != '' %}
+                        {% if types[i] == 'color' %}
+                            <div class="{{ cols[i] }} px-1"><p style="background: {{ value }}" class="{{ features[i] }} rounded-full border w-[30px] h-[30px]"></p></div>
+                        {% endif %}
+                    {% else %}
+                        <div class="{{ cols[i] }} px-1"><p class="{{ features[i] }}">{{ value|raw }}</p></div>
+                    {% endif %}
                     {% set i = i+1 %}
                 {% endfor %}
             </div>
