@@ -21,22 +21,16 @@ class Player
     #[ORM\Column(length: 255)]
     private ?string $firstName = null;
 
-    #[ORM\ManyToOne(inversedBy: 'players')]
-    private ?Sport $sport = null;
-
-    #[ORM\ManyToOne(inversedBy: 'players')]
-    private ?League $league = null;
-
-    #[ORM\Column]
-    private array $teams = [];
-
     #[ORM\OneToMany(mappedBy: 'player', targetEntity: Product::class)]
     private Collection $products;
 
+    #[ORM\ManyToMany(targetEntity: Team::class, inversedBy: 'players')]
+    private Collection $teams;
+
     public function __construct()
     {
-        $this->team = new ArrayCollection();
         $this->products = new ArrayCollection();
+        $this->teams = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -68,42 +62,6 @@ class Player
         return $this;
     }
 
-    public function getSport(): ?Sport
-    {
-        return $this->sport;
-    }
-
-    public function setSport(?Sport $sport): static
-    {
-        $this->sport = $sport;
-
-        return $this;
-    }
-
-    public function getLeague(): ?League
-    {
-        return $this->league;
-    }
-
-    public function setLeague(?League $league): static
-    {
-        $this->league = $league;
-
-        return $this;
-    }
-
-    public function getTeams(): array
-    {
-        return $this->teams;
-    }
-
-    public function setTeams(array $teams): static
-    {
-        $this->teams = $teams;
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, Product>
      */
@@ -130,6 +88,30 @@ class Player
                 $product->setPlayer(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Team>
+     */
+    public function getTeams(): Collection
+    {
+        return $this->teams;
+    }
+
+    public function addTeam(Team $team): static
+    {
+        if (!$this->teams->contains($team)) {
+            $this->teams->add($team);
+        }
+
+        return $this;
+    }
+
+    public function removeTeam(Team $team): static
+    {
+        $this->teams->removeElement($team);
 
         return $this;
     }

@@ -7,6 +7,7 @@ use App\Repository\BrandRepository;
 use App\Repository\LeagueRepository;
 use App\Repository\PlayerRepository;
 use App\Repository\SportRepository;
+use App\Repository\TeamRepository;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent]
@@ -24,6 +25,7 @@ class Select
         private SportRepository $sportRepository,
         private BrandRepository $brandRepository,
         private PlayerRepository $playerRepository,
+        private TeamRepository $teamRepository,
         private LeagueRepository $leagueRepository,
         private Enum $enum
     ) {
@@ -47,7 +49,10 @@ class Select
             return $this->brandRepository->findBy([],['title'=>'ASC']);
         }
         elseif ($this->options_name == 'players'){
-            return $this->playerRepository->findBy(['sport'=>$this->sport],['lastName'=>'ASC']);
+            return $this->playerRepository->findBySport($this->sport->getId());
+        }
+        elseif ($this->options_name == 'teams'){
+            return $this->teamRepository->findBySport($this->sport->getId());
         }
         elseif ($this->options_name == 'leagues'){
             return $this->leagueRepository->findBy(['sport'=>$this->sport],['title'=>'ASC']);

@@ -6,6 +6,7 @@
         </select>
 
         {{ component('Front:Filter:Select', { sport: sport, text: 'Ligue', variable: 'league', options_name: 'leagues', object: true, search: true }) }}
+        {{ component('Front:Filter:Select', { sport: sport, text: 'Equipe', variable: 'team', options_name: 'teams', object: true, search: true }) }}
         {{ component('Front:Filter:Select', { sport: sport, text: 'Joueur', variable: 'player', options_name: 'players', object: true, search: true }) }}
         {{ component('Front:Filter:Select', { text: 'Numéro', variable: 'number', options_name: 'numbers'}) }}
         {{ component('Front:Filter:Select', { text: 'Marque', variable: 'brand', options_name: 'brands', object: true, search: true }) }}

@@ -1,0 +1,62 @@
+{% if attributs is defined %}
+    {% set setclass = false %}
+    {% set attrs = {} %}
+    {% for attribut in attributs %}
+        {% set value = attribut.value %}
+        {% if attribut.name == "class" %}
+            {% set value = "w-full "~value %}
+            {% set setclass = true %}
+        {% endif %}
+        {% set attrs = attrs|merge({
+            (attribut.name):value
+        }) %}
+    {% endfor %}
+    {% if setclass == false %}
+        {% set attrs = attrs|merge({
+            ('class'):'w-full'
+        }) %}
+    {% endif %}
+{% endif %}
+{% block choice_widget %}
+    {{ form_label(form[input_name], null ,{'label_attr': {'class': 'w-full'}}) }}
+    <div class="flex gap-x-2 mb-4 mt-2">
+        {% for teams_player in this.player.teams|sort((a, b) => a.title <=> b.title) %}
+            <div class="bg-secondary text-primary px-4 py-2 rounded">{{ teams_player.title }}</div>
+        {% endfor %}
+    </div>
+    <input id="search-input-{{ input_name }}" type="text" class="border p-2 w-full mb-4" placeholder="Rechercher & cocher une équipe" onkeyup="changeListFilter('{{ input_name }}')">
+    <div class="flex flex-wrap justify-center gap-y-4">
+        {% for child in form[input_name] %}
+            {% set checked = false %}
+            <div class="search-{{ input_name }} w-full hidden flex gap-x-2">
+                {{ form_widget(child, {'attr': {}}) }}
+                {{ form_label(
+                    child,
+                    null,
+                    { 'label_attr': attrs }
+                )
+                }}
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+<script>
+    changeListFilter('{{ input_name }}');
+    function changeListFilter(input_name){
+        inputId = '#search-input-'+input_name;
+        classe = '.search-'+input_name;
+        checkboxs = document.querySelectorAll(classe);
+        inputValue = document.querySelector(inputId).value.toUpperCase();
+        for(i=0;i<checkboxs.length;i++){
+            if(!(checkboxs[i].classList.contains('hidden') && checkboxs[i].classList.contains('checked'))){
+                if(checkboxs[i].classList.contains('hidden')){
+                    checkboxs[i].classList.remove('hidden');
+                }
+                if (!checkboxs[i].querySelectorAll('label')[0].textContent.toUpperCase().includes(inputValue) || inputValue == "") {
+                    checkboxs[i].classList.add('hidden');
+                }
+            }
+        }
+    }
+</script>

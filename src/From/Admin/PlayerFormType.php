@@ -8,6 +8,7 @@ use App\Entity\Sport;
 use App\Entity\Team;
 use App\Repository\LeagueRepository;
 use App\Repository\SportRepository;
+use App\Repository\TeamRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -25,28 +26,16 @@ class PlayerFormType extends AbstractType
             ->add('firstName', TextType::class, [
                 'label' => "Prénom"
             ])
-            ->add('sport', EntityType::class, array(
-                'class' => Sport::class,
+            ->add('teams', EntityType::class, array(
+                'expanded' => true,
+                'class' => Team::class,
                 'required' => true,
+                'multiple' => true,
                 'choice_label' => 'title',
-                'choice_value' => 'id',
-                'placeholder' => 'Selectionnez un sport',
-                'label' => 'Sport',
-                'query_builder' => function (SportRepository $er) {
-                    return $er->createQueryBuilder('s')
-                        ->orderBy('s.title', 'ASC');
-                }
-            ))
-            ->add('league', EntityType::class, array(
-                'class' => League::class,
-                'required' => true,
-                'choice_label' => 'title',
-                'choice_value' => 'id',
-                'placeholder' => 'Selectionnez une ligue',
-                'label' => 'Ligue',
-                'query_builder' => function (LeagueRepository $er) {
-                    return $er->createQueryBuilder('l')
-                        ->orderBy('l.title', 'ASC');
+                'label' => 'Equipes',
+                'query_builder' => function (TeamRepository $er) {
+                    return $er->createQueryBuilder('t')
+                        ->orderBy('t.title', 'ASC');
                 }
             ))
         ;

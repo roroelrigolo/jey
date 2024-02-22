@@ -1,0 +1,23 @@
+{% extends '/admin/base.html.twig' %}
+
+{% block title %}Jey{% endblock %}
+
+{% block body %}
+    {{ component('Admin:TitlePage', { title: 'Couleurs' }) }}
+
+    {{ component('Admin:Table:Header', { buttons:[
+        { tag: 'a', text: 'Ajouter une couleur', route: 'app_admin_color_new', class: 'secondaryadmin' },
+        { tag: 'a', text: 'Filtrer', class: 'secondaryadmin' }],
+        sort_filters:[
+            { value: 'id', text: 'ID' },
+            { value: 'title', text: 'Nom' },
+            { value: 'value', text: 'Valeur' }]
+    }) }}
+    {{ component('Admin:Table:Table', {
+        titles: ['Id','Nom','Valeur',''],
+        cols: ['col-span-1','col-span-9','col-span-1','col-span-1'],
+        datas: datas,
+        features: ['','','','flex justify-end'],
+        url: 'app_admin_color_edit'
+    }) }}
+{% endblock %}

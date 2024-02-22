@@ -3,6 +3,7 @@ namespace App\Twig\Components\Global\Form;
 
 use App\Entity\Player;
 use App\Entity\Product;
+use App\Repository\TeamRepository;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent]

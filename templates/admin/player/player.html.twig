@@ -14,10 +14,10 @@
             { value: 'firstName', text: 'Prenom' }]
     }) }}
     {{ component('Admin:Table:Table', {
-        titles: ['Id','Nom','Prenom',''],
-        cols: ['col-span-1','col-span-2','col-span-2','col-span-7'],
+        titles: ['Id','Nom','Prenom','Equipes',''],
+        cols: ['col-span-1','col-span-2','col-span-2','col-span-2','col-span-5'],
         datas: datas,
-        features: ['','','','flex justify-end'],
+        features: ['','','','','flex justify-end'],
         url: 'app_admin_player_edit'
     }) }}
 {% endblock %}

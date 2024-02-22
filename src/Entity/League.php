@@ -24,16 +24,12 @@ class League
     #[ORM\OneToMany(mappedBy: 'league', targetEntity: Team::class)]
     private Collection $teams;
 
-    #[ORM\OneToMany(mappedBy: 'league', targetEntity: Player::class)]
-    private Collection $players;
-
     #[ORM\OneToMany(mappedBy: 'league', targetEntity: Product::class)]
     private Collection $products;
 
     public function __construct()
     {
         $this->teams = new ArrayCollection();
-        $this->players = new ArrayCollection();
         $this->products = new ArrayCollection();
     }
 
@@ -90,36 +86,6 @@ class League
             // set the owning side to null (unless already changed)
             if ($team->getLeague() === $this) {
                 $team->setLeague(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Player>
-     */
-    public function getPlayers(): Collection
-    {
-        return $this->players;
-    }
-
-    public function addPlayer(Player $player): static
-    {
-        if (!$this->players->contains($player)) {
-            $this->players->add($player);
-            $player->setLeague($this);
-        }
-
-        return $this;
-    }
-
-    public function removePlayer(Player $player): static
-    {
-        if ($this->players->removeElement($player)) {
-            // set the owning side to null (unless already changed)
-            if ($player->getLeague() === $this) {
-                $player->setLeague(null);
             }
         }
 

@@ -45,6 +45,18 @@ class TeamRepository extends ServiceEntityRepository
         }
     }
 
+    public function findBySport($id_sport): array {
+        return $this->createQueryBuilder('t')
+            ->leftJoin('t.league', 'l')
+            ->leftJoin('l.sport', 's')
+            ->where('s.id = :id_sport')
+            ->orderBy('t.title', 'ASC')
+            ->setParameter('id_sport', $id_sport)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
 //    /**
 //     * @return Team[] Returns an array of Team objects
 //     */

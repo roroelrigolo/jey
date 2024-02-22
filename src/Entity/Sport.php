@@ -21,14 +21,8 @@ class Sport
     #[ORM\OneToMany(mappedBy: 'sport', targetEntity: Product::class)]
     private Collection $products;
 
-    #[ORM\OneToMany(mappedBy: 'sport', targetEntity: Team::class)]
-    private Collection $teams;
-
     #[ORM\OneToMany(mappedBy: 'sport', targetEntity: League::class)]
     private Collection $leagues;
-
-    #[ORM\OneToMany(mappedBy: 'sport', targetEntity: Player::class)]
-    private Collection $players;
 
     #[ORM\Column]
     private ?bool $displayMenu = null;
@@ -39,9 +33,7 @@ class Sport
     public function __construct()
     {
         $this->products = new ArrayCollection();
-        $this->teams = new ArrayCollection();
         $this->leagues = new ArrayCollection();
-        $this->players = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -92,36 +84,6 @@ class Sport
     }
 
     /**
-     * @return Collection<int, Team>
-     */
-    public function getTeams(): Collection
-    {
-        return $this->teams;
-    }
-
-    public function addTeam(Team $team): static
-    {
-        if (!$this->teams->contains($team)) {
-            $this->teams->add($team);
-            $team->setSport($this);
-        }
-
-        return $this;
-    }
-
-    public function removeTeam(Team $team): static
-    {
-        if ($this->teams->removeElement($team)) {
-            // set the owning side to null (unless already changed)
-            if ($team->getSport() === $this) {
-                $team->setSport(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection<int, League>
      */
     public function getLeagues(): Collection
@@ -145,36 +107,6 @@ class Sport
             // set the owning side to null (unless already changed)
             if ($league->getSport() === $this) {
                 $league->setSport(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Player>
-     */
-    public function getPlayers(): Collection
-    {
-        return $this->players;
-    }
-
-    public function addPlayer(Player $player): static
-    {
-        if (!$this->players->contains($player)) {
-            $this->players->add($player);
-            $player->setSport($this);
-        }
-
-        return $this;
-    }
-
-    public function removePlayer(Player $player): static
-    {
-        if ($this->players->removeElement($player)) {
-            // set the owning side to null (unless already changed)
-            if ($player->getSport() === $this) {
-                $player->setSport(null);
             }
         }
 

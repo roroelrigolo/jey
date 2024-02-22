@@ -76,11 +76,15 @@ class Product
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: ProductView::class)]
     private Collection $productViews;
 
+    #[ORM\ManyToMany(targetEntity: Color::class, inversedBy: 'products')]
+    private Collection $colors;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
         $this->productLikes = new ArrayCollection();
         $this->productViews = new ArrayCollection();
+        $this->colors = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -378,6 +382,30 @@ class Product
                 $productView->setProduct(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Color>
+     */
+    public function getColors(): Collection
+    {
+        return $this->colors;
+    }
+
+    public function addColor(Color $color): static
+    {
+        if (!$this->colors->contains($color)) {
+            $this->colors->add($color);
+        }
+
+        return $this;
+    }
+
+    public function removeColor(Color $color): static
+    {
+        $this->colors->removeElement($color);
 
         return $this;
     }
