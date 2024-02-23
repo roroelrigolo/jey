@@ -14,8 +14,7 @@ class Enum  {
     ];
 
     public static $types = [
-        'Homme',
-        'Femmes',
+        'Homme/Femmes',
         'Enfants'
     ];
 

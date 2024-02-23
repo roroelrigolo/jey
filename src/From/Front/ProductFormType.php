@@ -4,22 +4,18 @@ namespace App\Form\Front;
 
 use App\Entity\Brand;
 use App\Entity\Color;
-use App\Entity\Image;
 use App\Entity\League;
 use App\Entity\Player;
 use App\Entity\Product;
 use App\Entity\Sport;
 use App\Entity\Team;
-use App\Entity\User;
 use App\Enum;
 use App\Repository\BrandRepository;
 use App\Repository\ColorRepository;
-use App\Repository\ImageRepository;
 use App\Repository\LeagueRepository;
 use App\Repository\PlayerRepository;
 use App\Repository\SportRepository;
 use App\Repository\TeamRepository;
-use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -27,6 +23,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -89,6 +86,9 @@ class ProductFormType extends AbstractType
                         ->orderBy('t.title', 'ASC');
                 }
             ))
+            ->add('flock', CheckboxType::class, [
+                'label' => "Il y a t'il un flocage ?"
+            ])
             ->add('player', EntityType::class, array(
                 'class' => Player::class,
                 'required' => true,

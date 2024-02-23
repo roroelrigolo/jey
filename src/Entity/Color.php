@@ -18,7 +18,7 @@ class Color
     #[ORM\Column(length: 255)]
     private ?string $title = null;
 
-    #[ORM\Column(length: 10)]
+    #[ORM\Column(length: 255)]
     private ?string $value = null;
 
     #[ORM\ManyToMany(targetEntity: Product::class, mappedBy: 'colors')]

@@ -53,11 +53,14 @@ class ProductListing
     {
         if($_GET != null){
             unset($_GET["query"]);
-            $colors = $_GET["colors"];
-            unset($_GET["colors"]);
+            $colors = [];
+            if (isset($_GET["colors"])) {
+                $colors = $_GET["colors"];
+                unset($_GET["colors"]);
+            }
             $players = $this->productRepository->findBy($_GET,['created_at'=>'DESC']);
             //On flitre avec les couleurs si définies
-            if ($colors !== null) {
+            if ($colors != []) {
                 $filteredPlayers = [];
                 foreach ($players as $player) {
                     $colors_player = $player->getColors();

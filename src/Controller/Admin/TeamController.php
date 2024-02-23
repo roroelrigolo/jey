@@ -29,7 +29,7 @@ class TeamController extends AbstractController
                 $teams[$i]->getId(),
                 $teams[$i]->getTitle(),
                 $teams[$i]->getCity(),
-                $teams[$i]->getSport()->getTitle(),
+                $teams[$i]->getLeague()->getSport()->getTitle(),
                 $teams[$i]->getLeague()->getTitle(),
                 '<i class="fa-light fa-pen-to-square"></i>'
             ];

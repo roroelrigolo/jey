@@ -17,9 +17,10 @@
     title: 'Caractéristiques sportives',
     id: 'sport-specifications',
     inputs: [
-        {component:'Global:Form:Input',form:form,input_name:'sport',attributs:[{name:'onchange',value:"actualisationSelect('#team_form_sport','team_form_league', 'league')"}]},
+        {component:'Global:Form:Input',form:form,input_name:'sport',type: 'sport',attributs:[{name:'onchange',value:"actualisationSelect('#team_form_sport','team_form_league', 'league')"}]},
         {component:'Global:Form:Input',form:form,input_name:'league'},
         {component:'Global:Form:Input',form:form,input_name:'team'},
+        {component:'Global:Form:Input',form:form,input_name:'flock',type:'toogle'},
         {component:'Global:Form:Input',form:form,input_name:'player'},
         {component:'Global:Form:Input',form:form,input_name:'number'},
     ],
@@ -37,4 +38,3 @@
 }) }}
 <input type="submit" value="Add">
 {{ form_end(form) }}
-

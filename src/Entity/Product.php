@@ -79,6 +79,9 @@ class Product
     #[ORM\ManyToMany(targetEntity: Color::class, inversedBy: 'products')]
     private Collection $colors;
 
+    #[ORM\Column]
+    private ?bool $flock = null;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
@@ -406,6 +409,18 @@ class Product
     public function removeColor(Color $color): static
     {
         $this->colors->removeElement($color);
+
+        return $this;
+    }
+
+    public function isFlock(): ?bool
+    {
+        return $this->flock;
+    }
+
+    public function setFlock(bool $flock): static
+    {
+        $this->flock = $flock;
 
         return $this;
     }

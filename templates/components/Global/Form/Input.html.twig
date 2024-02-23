@@ -74,4 +74,78 @@
             </ul>
         </div>
     {% endif %}
+
+    {# Classic input #}
+    {% if type == "sport" %}
+        <div class="mb-3 relative">
+            <label class="w-full">Sport</label>
+            <input id="search-input-sport" class="w-full" type="text" placeholder="Recherchez & sélectionnez un sport ..." onkeyup="changeListFilter('sport')" onclick="console.log('test')">
+            <div id="search-list-sport" class="hidden absolute left-0 right-0 bg-white grid z-50">
+                {% for sport in this.sports %}
+                    <div onclick="fillInput('{{ sport.title }}','sport')" class="search-sport hidden w-full p-4 hover:bg-secondary">
+                        <p class="">{{ sport.title }}</p>
+                    </div>
+                {% endfor %}
+                <div id="search-noresult-sport" class="p-4 hidden hover:bg-secondary" onclick="fillInput('input','sport')">
+                    <p>Aucun résultat disponible</p>
+                    <p>Utiliser <span id="search-noresult-new-sport"></span> comme sport ?</p>
+                </div>
+            </div>
+        </div>
+    {% endif %}
 </div>
+
+<script>
+    function changeListFilter(variable){
+        inputId = '#search-input-'+variable;
+        classe = '.search-'+variable;
+        listResultId = '#search-list-'+variable;
+        noResultId = "#search-noresult-"+variable;
+        checkboxs = document.querySelectorAll(classe);
+        inputValue = document.querySelector(inputId).value;
+        listResult = document.querySelector(listResultId);
+        noResult = document.querySelector(noResultId);
+        if(listResult.classList.contains('hidden')){
+            listResult.classList.remove('hidden');
+        }
+        if(inputValue == ""){
+            listResult.classList.add('hidden');
+            noResult.classList.add('hidden');
+        }
+        noResultValue = true;
+        for(i=0;i<checkboxs.length;i++){
+            if(!(checkboxs[i].classList.contains('hidden') && checkboxs[i].classList.contains('checked'))){
+                if(checkboxs[i].classList.contains('hidden')){
+                    checkboxs[i].classList.remove('hidden');
+                }
+                if (!checkboxs[i].querySelector('p').textContent.toUpperCase().includes(inputValue.toUpperCase()) || inputValue == "") {
+                    if(!checkboxs[i].classList.contains('checked')){
+                        checkboxs[i].classList.add('hidden');
+                    }
+                }
+            }
+        }
+        for(i=0;i<checkboxs.length;i++){
+            if(!checkboxs[i].classList.contains('hidden')){
+                noResultValue = false;
+            }
+        }
+        console.log(noResultValue);
+        if (noResultValue == true){
+            idNewInput = "#search-noresult-new-"+variable;
+            document.querySelector(idNewInput).textContent = '"'+inputValue+'"';
+            noResult.classList.remove('hidden');
+        }
+        if (noResultValue == false && !(noResult.classList.contains('hidden'))){
+            noResult.classList.add('hidden');
+        }
+    }
+    function fillInput (text, variable){
+        inputId = '#search-input-'+variable;
+        listResultId = '#search-list-'+variable;
+        if (text != "input"){
+            document.querySelector(inputId).value = text;
+        }
+        document.querySelector(listResultId).classList.add('hidden');
+    }
+</script>
