@@ -1,8 +1,10 @@
 <?php
 namespace App\Twig\Components\Global\Form;
 
+use App\Entity\League;
 use App\Entity\Player;
 use App\Entity\Product;
+use App\Entity\Team;
 use App\Repository\TeamRepository;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
@@ -13,4 +15,6 @@ class FormAdmin
     public \Symfony\Component\Form\FormView $form;
     public Product $product;
     public Player $player;
+    public Team $team;
+    public League $league;
 }

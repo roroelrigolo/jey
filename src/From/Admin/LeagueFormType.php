@@ -22,13 +22,13 @@ class LeagueFormType extends AbstractType
                     'placeholder' => "Veuillez saisir le nom"
                 )
             ])
-            ->add('sport', EntityType::class, array(
+            ->add('sports', EntityType::class, array(
+                'expanded' => true,
                 'class' => Sport::class,
-                'required' => false,
+                'required' => true,
+                'multiple' => true,
                 'choice_label' => 'title',
-                'choice_value' => 'id',
-                'placeholder' => 'Selectionnez un sport',
-                'label' => 'Sport',
+                'label' => 'Sports',
                 'query_builder' => function (SportRepository $er) {
                     return $er->createQueryBuilder('s')
                         ->orderBy('s.title', 'ASC');

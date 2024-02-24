@@ -75,20 +75,31 @@
         </div>
     {% endif %}
 
-    {# Classic input #}
-    {% if type == "sport" %}
+    {# Input Select custom #}
+    {% if type == "customSelect" %}
         <div class="mb-3 relative">
-            <label class="w-full">Sport</label>
-            <input id="search-input-sport" class="w-full" type="text" placeholder="Recherchez & sélectionnez un sport ..." onkeyup="changeListFilter('sport')" onclick="console.log('test')">
-            <div id="search-list-sport" class="hidden absolute left-0 right-0 bg-white grid z-50">
-                {% for sport in this.sports %}
-                    <div onclick="fillInput('{{ sport.title }}','sport')" class="search-sport hidden w-full p-4 hover:bg-secondary">
-                        <p class="">{{ sport.title }}</p>
+            <label class="w-full">{{ label }}</label>
+            <input id="search-input-{{ input_name }}" class="w-full" type="text" placeholder="{{ placeholder }}" onclick="displayListSelect('search-list-{{ input_name }}')" onkeyup="changeListFilter('{{ input_name }}')" required>
+            <div id="search-list-{{ input_name }}" class="hidden absolute left-0 right-0 bg-white grid z-50 overflow-y-scroll max-h-[300px]">
+                {% if input_name == "sport" %}
+                    {% set get = this.sports %}
+                {% elseif input_name == "league" %}
+                    {% set get = this.leagues %}
+                {% elseif input_name == "team" %}
+                    {% set get = this.teams %}
+                {% endif %}
+                {% for item in get %}
+                    <div onclick="fillInput('{{ item.title }}','{{ input_name }}')" class="search-{{ input_name }} w-full h-fit px-4 py-2 hover:bg-secondary">
+                        {% if input_name == "team" %}
+                            <p>{{ item.city }} {{ item.title }}</p>
+                        {% else %}
+                            <p>{{ item.title }}</p>
+                        {% endif %}
                     </div>
                 {% endfor %}
-                <div id="search-noresult-sport" class="p-4 hidden hover:bg-secondary" onclick="fillInput('input','sport')">
+                <div id="search-noresult-{{ input_name }}" class="px-4 py-2 hidden hover:bg-secondary" onclick="fillInput('input','{{ input_name }}')">
                     <p>Aucun résultat disponible</p>
-                    <p>Utiliser <span id="search-noresult-new-sport"></span> comme sport ?</p>
+                    <p>Utiliser <span id="search-noresult-new-{{ input_name }}"></span> comme {{ input_name}} ?</p>
                 </div>
             </div>
         </div>
@@ -96,6 +107,15 @@
 </div>
 
 <script>
+    function displayListSelect(idList){
+        list = document.querySelector('#'+idList);
+        if(list.classList.contains('hidden')){
+            list.classList.remove('hidden');
+        }
+        else {
+            list.classList.add('hidden');
+        }
+    }
     function changeListFilter(variable){
         inputId = '#search-input-'+variable;
         classe = '.search-'+variable;
@@ -108,20 +128,14 @@
         if(listResult.classList.contains('hidden')){
             listResult.classList.remove('hidden');
         }
-        if(inputValue == ""){
-            listResult.classList.add('hidden');
-            noResult.classList.add('hidden');
-        }
         noResultValue = true;
         for(i=0;i<checkboxs.length;i++){
             if(!(checkboxs[i].classList.contains('hidden') && checkboxs[i].classList.contains('checked'))){
                 if(checkboxs[i].classList.contains('hidden')){
                     checkboxs[i].classList.remove('hidden');
                 }
-                if (!checkboxs[i].querySelector('p').textContent.toUpperCase().includes(inputValue.toUpperCase()) || inputValue == "") {
-                    if(!checkboxs[i].classList.contains('checked')){
-                        checkboxs[i].classList.add('hidden');
-                    }
+                if (!checkboxs[i].querySelector('p').textContent.toUpperCase().includes(inputValue.toUpperCase())) {
+                    checkboxs[i].classList.add('hidden')
                 }
             }
         }
@@ -130,13 +144,15 @@
                 noResultValue = false;
             }
         }
-        console.log(noResultValue);
         if (noResultValue == true){
             idNewInput = "#search-noresult-new-"+variable;
             document.querySelector(idNewInput).textContent = '"'+inputValue+'"';
             noResult.classList.remove('hidden');
         }
         if (noResultValue == false && !(noResult.classList.contains('hidden'))){
+            noResult.classList.add('hidden');
+        }
+        if(inputValue == ""){
             noResult.classList.add('hidden');
         }
     }

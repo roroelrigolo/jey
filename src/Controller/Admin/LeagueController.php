@@ -24,10 +24,14 @@ class LeagueController extends AbstractController
         $datas = [];
 
         for ($i=0;$i<count($leagues);$i++){
+            $sports = "";
+            foreach ($leagues[$i]->getSports() as $sport){
+                $sports .= $sport->getTitle().' ';
+            }
             $array = [
                 $leagues[$i]->getId(),
                 $leagues[$i]->getTitle(),
-                $leagues[$i]->getSport()->getTitle(),
+                $sports,
                 '<i class="fa-light fa-pen-to-square"></i>'
             ];
             array_push($datas,$array);

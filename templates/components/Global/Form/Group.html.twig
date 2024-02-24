@@ -9,6 +9,8 @@
                     input_name: input.input_name,
                     attributs: input.attributs is defined ? input.attributs : [],
                     type: input.type is defined ? input.type : 'input',
+                    label: input.label is defined ? input.label : '',
+                    placeholder: input.placeholder is defined ? input.placeholder : '',
                     id_player: input.id_player is defined ? input.id_player : ''
                 }) }}
             {% endfor %}

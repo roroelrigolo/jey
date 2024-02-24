@@ -24,16 +24,17 @@ class Team
     #[ORM\Column(length: 255)]
     private ?string $city = null;
 
-    #[ORM\ManyToOne(inversedBy: 'teams')]
-    private ?League $league = null;
-
     #[ORM\ManyToMany(targetEntity: Player::class, mappedBy: 'teams')]
     private Collection $players;
+
+    #[ORM\ManyToMany(targetEntity: League::class, inversedBy: 'teams')]
+    private Collection $leagues;
 
     public function __construct()
     {
         $this->products = new ArrayCollection();
         $this->players = new ArrayCollection();
+        $this->leagues = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -95,18 +96,6 @@ class Team
         return $this;
     }
 
-    public function getLeague(): ?League
-    {
-        return $this->league;
-    }
-
-    public function setLeague(?League $league): static
-    {
-        $this->league = $league;
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, Player>
      */
@@ -130,6 +119,30 @@ class Team
         if ($this->players->removeElement($player)) {
             $player->removeTeam($this);
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, League>
+     */
+    public function getLeagues(): Collection
+    {
+        return $this->leagues;
+    }
+
+    public function addLeague(League $league): static
+    {
+        if (!$this->leagues->contains($league)) {
+            $this->leagues->add($league);
+        }
+
+        return $this;
+    }
+
+    public function removeLeague(League $league): static
+    {
+        $this->leagues->removeElement($league);
 
         return $this;
     }

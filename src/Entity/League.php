@@ -18,19 +18,20 @@ class League
     #[ORM\Column(length: 255)]
     private ?string $title = null;
 
-    #[ORM\ManyToOne(inversedBy: 'leagues')]
-    private ?Sport $sport = null;
-
-    #[ORM\OneToMany(mappedBy: 'league', targetEntity: Team::class)]
-    private Collection $teams;
-
     #[ORM\OneToMany(mappedBy: 'league', targetEntity: Product::class)]
     private Collection $products;
 
+    #[ORM\ManyToMany(targetEntity: Team::class, mappedBy: 'leagues')]
+    private Collection $teams;
+
+    #[ORM\ManyToMany(targetEntity: Sport::class, inversedBy: 'leagues')]
+    private Collection $sports;
+
     public function __construct()
     {
-        $this->teams = new ArrayCollection();
         $this->products = new ArrayCollection();
+        $this->teams = new ArrayCollection();
+        $this->sports = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -46,48 +47,6 @@ class League
     public function setTitle(string $title): static
     {
         $this->title = $title;
-
-        return $this;
-    }
-
-    public function getSport(): ?Sport
-    {
-        return $this->sport;
-    }
-
-    public function setSport(?Sport $sport): static
-    {
-        $this->sport = $sport;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Team>
-     */
-    public function getTeams(): Collection
-    {
-        return $this->teams;
-    }
-
-    public function addTeam(Team $team): static
-    {
-        if (!$this->teams->contains($team)) {
-            $this->teams->add($team);
-            $team->setLeague($this);
-        }
-
-        return $this;
-    }
-
-    public function removeTeam(Team $team): static
-    {
-        if ($this->teams->removeElement($team)) {
-            // set the owning side to null (unless already changed)
-            if ($team->getLeague() === $this) {
-                $team->setLeague(null);
-            }
-        }
 
         return $this;
     }
@@ -118,6 +77,57 @@ class League
                 $product->setLeague(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Team>
+     */
+    public function getTeams(): Collection
+    {
+        return $this->teams;
+    }
+
+    public function addTeam(Team $team): static
+    {
+        if (!$this->teams->contains($team)) {
+            $this->teams->add($team);
+            $team->addLeague($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTeam(Team $team): static
+    {
+        if ($this->teams->removeElement($team)) {
+            $team->removeLeague($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Sport>
+     */
+    public function getSports(): Collection
+    {
+        return $this->sports;
+    }
+
+    public function addSport(Sport $sport): static
+    {
+        if (!$this->sports->contains($sport)) {
+            $this->sports->add($sport);
+        }
+
+        return $this;
+    }
+
+    public function removeSport(Sport $sport): static
+    {
+        $this->sports->removeElement($sport);
 
         return $this;
     }

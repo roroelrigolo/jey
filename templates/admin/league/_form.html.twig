@@ -1,11 +1,21 @@
 {{ form_start(form, {'attr' : {'enctype': 'multipart/form-data'} }) }}
-{{ component('Global:Form:Page', {
-    id: 'general',
-    inputs: [
-        {component:'Global:Form:Input',form:form,input_name:'title'},
-        {component:'Global:Form:Input',form:form,input_name:'sport'}
-    ],
-}) }}
+{% if app.request.attributes.get("_route") == 'app_admin_league_edit' %}
+    {{ component('Global:Form:Page', {
+        id: 'general',
+        inputs: [
+            {component:'Global:Form:Input',form:form,input_name:'title'},
+            {component:'Global:Form:Checkbox',form:form,input_name:'sports',id_league: league.id,attributs:[{name:'class',value:''}]}
+        ],
+    }) }}
+{% else %}
+    {{ component('Global:Form:Page', {
+        id: 'general',
+        inputs: [
+            {component:'Global:Form:Input',form:form,input_name:'title'},
+            {component:'Global:Form:Checkbox',form:form,input_name:'sports'}
+        ],
+    }) }}
+{% endif %}
 {{ component('Global:Form:Buttons', {
     buttons: [
         { tag: 'input', text: 'Enregistrer', class:'primary' },

@@ -20,15 +20,14 @@ class Sport
 
     #[ORM\OneToMany(mappedBy: 'sport', targetEntity: Product::class)]
     private Collection $products;
-
-    #[ORM\OneToMany(mappedBy: 'sport', targetEntity: League::class)]
-    private Collection $leagues;
-
     #[ORM\Column]
     private ?bool $displayMenu = null;
 
     #[ORM\ManyToOne]
     private ?Image $banner = null;
+
+    #[ORM\ManyToMany(targetEntity: League::class, mappedBy: 'sports')]
+    private Collection $leagues;
 
     public function __construct()
     {
@@ -83,36 +82,6 @@ class Sport
         return $this;
     }
 
-    /**
-     * @return Collection<int, League>
-     */
-    public function getLeagues(): Collection
-    {
-        return $this->leagues;
-    }
-
-    public function addLeague(League $league): static
-    {
-        if (!$this->leagues->contains($league)) {
-            $this->leagues->add($league);
-            $league->setSport($this);
-        }
-
-        return $this;
-    }
-
-    public function removeLeague(League $league): static
-    {
-        if ($this->leagues->removeElement($league)) {
-            // set the owning side to null (unless already changed)
-            if ($league->getSport() === $this) {
-                $league->setSport(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function isDisplayMenu(): ?bool
     {
         return $this->displayMenu;
@@ -133,6 +102,33 @@ class Sport
     public function setBanner(?Image $banner): static
     {
         $this->banner = $banner;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, League>
+     */
+    public function getLeagues(): Collection
+    {
+        return $this->leagues;
+    }
+
+    public function addLeague(League $league): static
+    {
+        if (!$this->leagues->contains($league)) {
+            $this->leagues->add($league);
+            $league->addSport($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLeague(League $league): static
+    {
+        if ($this->leagues->removeElement($league)) {
+            $league->removeSport($this);
+        }
 
         return $this;
     }

@@ -24,25 +24,13 @@ class TeamFormType extends AbstractType
             ->add('city', TextType::class, [
                 'label' => "Ville"
             ])
-            ->add('sport', EntityType::class, array(
-                'class' => Sport::class,
-                'required' => true,
-                'choice_label' => 'title',
-                'choice_value' => 'id',
-                'placeholder' => 'Selectionnez un sport',
-                'label' => 'Sport',
-                'query_builder' => function (SportRepository $er) {
-                    return $er->createQueryBuilder('s')
-                        ->orderBy('s.title', 'ASC');
-                }
-            ))
-            ->add('league', EntityType::class, array(
+            ->add('leagues', EntityType::class, array(
+                'expanded' => true,
                 'class' => League::class,
                 'required' => true,
+                'multiple' => true,
                 'choice_label' => 'title',
-                'choice_value' => 'id',
-                'placeholder' => 'Selectionnez une ligue',
-                'label' => 'Ligue',
+                'label' => 'Ligues',
                 'query_builder' => function (LeagueRepository $er) {
                     return $er->createQueryBuilder('l')
                         ->orderBy('l.title', 'ASC');

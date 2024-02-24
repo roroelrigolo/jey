@@ -25,12 +25,20 @@ class TeamController extends AbstractController
         $datas = [];
 
         for ($i=0;$i<count($teams);$i++){
+            $leagues = "";
+            $sports = "";
+            foreach ($teams[$i]->getLeagues() as $league){
+                $leagues .= $league->getTitle().' ';
+                foreach ($league->getSports() as $sport){
+                    $sports .= $sport->getTitle().' ';
+                }
+            }
             $array = [
                 $teams[$i]->getId(),
                 $teams[$i]->getTitle(),
                 $teams[$i]->getCity(),
-                $teams[$i]->getLeague()->getSport()->getTitle(),
-                $teams[$i]->getLeague()->getTitle(),
+                $sports,
+                $leagues,
                 '<i class="fa-light fa-pen-to-square"></i>'
             ];
             array_push($datas,$array);

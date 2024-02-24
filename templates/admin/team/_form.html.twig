@@ -17,8 +17,7 @@
         id: 'a-propos',
         class: 'hidden',
         inputs: [
-            {component:'Global:Form:Input',form:form,input_name:'sport',attributs:[{name:'onchange',value:"actualisationSelect('#team_form_sport','team_form_league', 'league')"}]},
-            {component:'Global:Form:Input',form:form,input_name:'league'},
+            {component:'Global:Form:Checkbox',form:form,input_name:'leagues', id_team: team.id, attributs:[{name:'class',value:''}]},
         ],
     }) }}
 {% else %}
@@ -26,8 +25,7 @@
         id: 'a-propos',
         class: 'hidden',
         inputs: [
-            {component:'Global:Form:Input',form:form,input_name:'sport',attributs:[{name:'onchange',value:"actualisationSelect('#team_form_sport','team_form_league', 'league')"}]},
-            {component:'Global:Form:Input',form:form,input_name:'league',attributs:[{name:'disabled',value:'disabled'}]},
+            {component:'Global:Form:Input',form:form,input_name:'leagues'},
         ],
     }) }}
 {% endif %}
