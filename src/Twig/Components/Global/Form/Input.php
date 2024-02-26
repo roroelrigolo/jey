@@ -3,6 +3,7 @@ namespace App\Twig\Components\Global\Form;
 
 use App\Entity\Player;
 use App\Entity\Team;
+use App\Repository\BrandRepository;
 use App\Repository\LeagueRepository;
 use App\Repository\PlayerRepository;
 use App\Repository\SportRepository;
@@ -21,6 +22,7 @@ class Input
     public string $group_class;
     public string $typeName;
     public string $placeholder;
+    public bool $required;
     public string $id_player = "";
 
     public function __construct(
@@ -28,6 +30,7 @@ class Input
         private PlayerRepository $playerRepository,
         private SportRepository $sportRepository,
         private LeagueRepository $leagueRepository,
+        private BrandRepository $brandRepository,
     ){
     }
 
@@ -76,6 +79,14 @@ class Input
     public function getPlayers(): array
     {
         return $this->playerRepository->findBy(['available'=>1],['lastName'=>'ASC']);
+    }
+
+    /**
+     * @return array
+     */
+    public function getBrands(): array
+    {
+        return $this->brandRepository->findBy(['available'=>1],['title'=>'ASC']);
     }
 }
 

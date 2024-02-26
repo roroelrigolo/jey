@@ -92,17 +92,17 @@
     {% if type == "customSelect" %}
         <div class="mb-3 relative {{ group_class }}" id="group-{{ input_name }}">
             <label class="w-full">{{ label }}</label>
-            <input id="search-input-{{ input_name }}" class="w-full" type="text" placeholder="{{ placeholder }}" onclick="displayListSelect('search-list-{{ input_name }}')" onkeyup="changeListFilter('{{ input_name }}')" required>
+            <input id="search-input-{{ input_name }}" name="search-input-{{ input_name }}" class="w-full" type="text" placeholder="{{ placeholder }}" onclick="displayListSelect('search-list-{{ input_name }}')" onkeyup="changeListFilter('{{ input_name }}')" {% if required == true %}required{% endif %}>
             <div id="search-list-{{ input_name }}" class="hidden absolute left-0 right-0 bg-white grid z-50 overflow-y-scroll max-h-[300px]">
-                {% if input_name == "sport" %}
-                    {% set get = this.sports %}
-                {% elseif input_name == "league" %}
-                    {% set get = this.leagues %}
-                {% elseif input_name == "team" %}
-                    {% set get = this.teams %}
-                {% elseif input_name == "player" %}
-                    {% set get = this.players %}
-                {% endif %}
+                {% set mapping = {
+                    'sport': this.sports,
+                    'league': this.leagues,
+                    'team': this.teams,
+                    'player': this.players,
+                    'brand': this.brands
+                } %}
+                {% set get = mapping[input_name] %}
+
                 {% for item in get %}
                     {% if input_name == "team" %}
                         {% set textInput = item.city ~ ' ' ~ item.title %}

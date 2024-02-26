@@ -67,7 +67,7 @@ class Product
     #[ORM\Column(type: Types::GUID)]
     private ?string $uuid = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?int $number = null;
 
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: ProductLike::class)]

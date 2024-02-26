@@ -4,6 +4,7 @@ namespace App\Controller\Front;
 
 use App\Entity\Image;
 use App\Entity\Product;
+use App\Entity\Sport;
 use App\Form\Front\ProductFormType;
 use App\Repository\ImageRepository;
 use App\Repository\LeagueRepository;
@@ -31,7 +32,28 @@ class ProductController extends AbstractController
         $form = $this->createForm(ProductFormType::class, $product);
         $form->handleRequest($request);
 
+
+        if ($form->isSubmitted()) {
+            $sportProduct = $_POST['search-input-sport'] ?? null;
+            if (!empty($sportProduct)) {
+                $sportInBase = $sportRepository->findOneBy(['title'=>$sportProduct],[]);
+                if($sportInBase == null){
+                    $newSport = new Sport();
+                    $newSport
+                        ->setTitle(ucfirst($sportProduct))
+                        ->setDisplayMenu(0)
+                        ->setAvailable(0);
+                    $sportRepository->add($newSport);
+                    $product->setSport($newSport);
+                }
+                else {
+                    $product->setSport($sportInBase);
+                }
+            }
+        }
         if ($form->isSubmitted() && $form->isValid()) {
+            var_dump("test");
+            /*
             $product->setUser($this->getUser());
             $product->setUuid(Uuid::uuid4()->toString());
             $product->setStatement('Disponible');
@@ -71,6 +93,7 @@ class ProductController extends AbstractController
             else {
                 return $this->redirectToRoute('app_admin_product_edit', ['id'=>$id], Response::HTTP_SEE_OTHER);
             }
+            */
         }
 
         return $this->render('front/product/new.html.twig', [

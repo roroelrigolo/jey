@@ -8,18 +8,20 @@
         {component:'Global:Form:Input',form:form,input_name:'price'},
     ],
 }) }}
+{#
 {{ component('Global:Form:Group', {
     title: 'Images',
     id: 'images',
     custom: "image",
 }) }}
+#}
 {{ component('Global:Form:Group', {
     title: 'Caractéristiques sportives',
     id: 'sport-specifications',
     inputs: [
-        {component:'Global:Form:Input',form:form,input_name:'sport',type: 'customSelect',label: 'Sport',placeholder: 'Recherchez & sélectionnez un sport ...' },
-        {component:'Global:Form:Input',form:form,input_name:'league',type: 'customSelect',label: 'Ligue',placeholder: 'Recherchez & sélectionnez une ligue ...' },
-        {component:'Global:Form:Input',form:form,input_name:'team',type: 'customSelect',label: 'Équipe',placeholder: 'Recherchez & sélectionnez une équipe ...' },
+        {component:'Global:Form:Input',form:form,input_name:'sport',type: 'customSelect',label: 'Sport',placeholder: 'Recherchez & sélectionnez un sport ...', required:1 },
+        {component:'Global:Form:Input',form:form,input_name:'league',type: 'customSelect',label: 'Ligue',placeholder: 'Recherchez & sélectionnez une ligue ...', required:1 },
+        {component:'Global:Form:Input',form:form,input_name:'team',type: 'customSelect',label: 'Équipe',placeholder: 'Recherchez & sélectionnez une équipe ...', required:1 },
         {component:'Global:Form:Input',form:form,input_name:'flock',type:'toogle',attributs:[{name:'onChange',value:'showFlockInputs()'}], description: 'Le flockage correspond au nom & numéro du joueur inscrit au dos du maillot'},
         {component:'Global:Form:Input',form:form,input_name:'player',type: 'customSelect',label: 'Joueur',placeholder: 'Recherchez & sélectionnez un joueur ...', group_class: 'hidden' },
         {component:'Global:Form:Input',form:form,input_name:'number', group_class: 'hidden'},
@@ -29,7 +31,7 @@
     title: 'Autres caractéristiques',
     id: 'other-specifications',
     inputs: [
-        {component:'Global:Form:Input',form:form,input_name:'brand'},
+        {component:'Global:Form:Input',form:form,input_name:'brand',type: 'customSelect',label: 'Marque',placeholder: 'Recherchez & sélectionnez une marque ...', required:1 },
         {component:'Global:Form:Input',form:form,input_name:'type'},
         {component:'Global:Form:Input',form:form,input_name:'size'},
         {component:'Global:Form:Input',form:form,input_name:'conditionnement'},
