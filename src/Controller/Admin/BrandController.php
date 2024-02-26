@@ -27,9 +27,11 @@ class BrandController extends AbstractController
         $datas = [];
 
         for ($i=0;$i<count($brands);$i++){
+            $available = ($brands[$i]->isAvailable() == 1) ? "Oui" : "Non";
             $array = [
                 $brands[$i]->getId(),
                 $brands[$i]->getTitle(),
+                $available,
                 '<i class="fa-light fa-pen-to-square"></i>'
             ];
             array_push($datas,$array);

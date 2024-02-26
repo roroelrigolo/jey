@@ -26,16 +26,13 @@ class SportController extends AbstractController
         $datas = [];
 
         for ($i=0;$i<count($sports);$i++){
-            if($sports[$i]->isDisplayMenu() == 1){
-                $displayMenu = "Oui";
-            }
-            else{
-                $displayMenu = "Non";
-            }
+            $displayMenu = ($sports[$i]->isDisplayMenu() == 1) ? "Oui" : "Non";
+            $available = ($sports[$i]->isAvailable() == 1) ? "Oui" : "Non";
             $array = [
                 $sports[$i]->getId(),
                 $sports[$i]->getTitle(),
                 $displayMenu,
+                $available,
                 '<i class="fa-light fa-pen-to-square"></i>'
             ];
             array_push($datas,$array);

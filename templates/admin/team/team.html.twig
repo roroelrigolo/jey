@@ -16,10 +16,10 @@
             { value: 'league', text: 'Ligue' }]
     }) }}
     {{ component('Admin:Table:Table', {
-        titles: ['Id','Nom','Ville','Sport','Ligue',''],
-        cols: ['col-span-1','col-span-2','col-span-2','col-span-2','col-span-2','col-span-3'],
+        titles: ['Id','Nom','Ville','Sport','Ligue','Valide',''],
+        cols: ['col-span-1','col-span-2','col-span-2','col-span-2','col-span-2','col-span-1','col-span-2'],
         datas: datas,
-        features: ['','','','','','flex justify-end'],
+        features: ['','','','','','','flex justify-end'],
         url: 'app_admin_team_edit'
     }) }}
 {% endblock %}

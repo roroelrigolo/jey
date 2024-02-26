@@ -21,6 +21,9 @@ class Brand
     #[ORM\OneToMany(mappedBy: 'brand', targetEntity: Product::class)]
     private Collection $products;
 
+    #[ORM\Column]
+    private ?bool $available = null;
+
     public function __construct()
     {
         $this->products = new ArrayCollection();
@@ -69,6 +72,18 @@ class Brand
                 $product->setBrand(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isAvailable(): ?bool
+    {
+        return $this->available;
+    }
+
+    public function setAvailable(bool $available): static
+    {
+        $this->available = $available;
 
         return $this;
     }

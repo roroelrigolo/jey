@@ -33,11 +33,13 @@ class PlayerController extends AbstractController
             foreach ($players[$i]->getTeams() as $team){
                 $teams .= $team->getTitle().' ';
             }
+            $available = ($players[$i]->isAvailable() == 1) ? "Oui" : "Non";
             $array = [
                 $players[$i]->getId(),
                 $players[$i]->getLastName(),
                 $players[$i]->getFirstName(),
                 $teams,
+                $available,
                 '<i class="fa-light fa-pen-to-square"></i>'
             ];
             array_push($datas,$array);

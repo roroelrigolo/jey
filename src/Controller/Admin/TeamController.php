@@ -33,12 +33,14 @@ class TeamController extends AbstractController
                     $sports .= $sport->getTitle().' ';
                 }
             }
+            $available = ($teams[$i]->isAvailable() == 1) ? "Oui" : "Non";
             $array = [
                 $teams[$i]->getId(),
                 $teams[$i]->getTitle(),
                 $teams[$i]->getCity(),
                 $sports,
                 $leagues,
+                $available,
                 '<i class="fa-light fa-pen-to-square"></i>'
             ];
             array_push($datas,$array);

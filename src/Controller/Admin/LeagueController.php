@@ -28,10 +28,12 @@ class LeagueController extends AbstractController
             foreach ($leagues[$i]->getSports() as $sport){
                 $sports .= $sport->getTitle().' ';
             }
+            $available = ($leagues[$i]->isAvailable() == 1) ? "Oui" : "Non";
             $array = [
                 $leagues[$i]->getId(),
                 $leagues[$i]->getTitle(),
                 $sports,
+                $available,
                 '<i class="fa-light fa-pen-to-square"></i>'
             ];
             array_push($datas,$array);

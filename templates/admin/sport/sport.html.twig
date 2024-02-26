@@ -13,10 +13,10 @@
             { value: 'title', text: 'Nom' }]
     }) }}
     {{ component('Admin:Table:Table', {
-        titles: ['Id','Nom','Menu',''],
-        cols: ['col-span-1','col-span-9','col-span-1','col-span-1'],
+        titles: ['Id','Nom','Menu','Valide',''],
+        cols: ['col-span-1','col-span-8','col-span-1','col-span-1','col-span-1'],
         datas: datas,
-        features: ['','','','flex justify-end'],
+        features: ['','','','','flex justify-end'],
         url: 'app_admin_sport_edit'
     }) }}
 {% endblock %}

@@ -27,6 +27,9 @@ class Player
     #[ORM\ManyToMany(targetEntity: Team::class, inversedBy: 'players')]
     private Collection $teams;
 
+    #[ORM\Column]
+    private ?bool $available = null;
+
     public function __construct()
     {
         $this->products = new ArrayCollection();
@@ -112,6 +115,18 @@ class Player
     public function removeTeam(Team $team): static
     {
         $this->teams->removeElement($team);
+
+        return $this;
+    }
+
+    public function isAvailable(): ?bool
+    {
+        return $this->available;
+    }
+
+    public function setAvailable(bool $available): static
+    {
+        $this->available = $available;
 
         return $this;
     }

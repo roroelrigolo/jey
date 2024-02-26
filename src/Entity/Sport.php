@@ -29,6 +29,9 @@ class Sport
     #[ORM\ManyToMany(targetEntity: League::class, mappedBy: 'sports')]
     private Collection $leagues;
 
+    #[ORM\Column]
+    private ?bool $available = null;
+
     public function __construct()
     {
         $this->products = new ArrayCollection();
@@ -129,6 +132,18 @@ class Sport
         if ($this->leagues->removeElement($league)) {
             $league->removeSport($this);
         }
+
+        return $this;
+    }
+
+    public function isAvailable(): ?bool
+    {
+        return $this->available;
+    }
+
+    public function setAvailable(bool $available): static
+    {
+        $this->available = $available;
 
         return $this;
     }

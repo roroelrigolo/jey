@@ -13,10 +13,10 @@
             { value: 'title', text: 'Nom' }]
     }) }}
     {{ component('Admin:Table:Table', {
-        titles: ['Id','Nom',''],
-        cols: ['col-span-1','col-span-10','col-span-1'],
+        titles: ['Id','Nom','Valide',''],
+        cols: ['col-span-1','col-span-9','col-span-1','col-span-1'],
         datas: datas,
-        features: ['','','d-flex justify-end'],
+        features: ['','','','d-flex justify-end'],
         url: 'app_admin_brand_edit'
     }) }}
 {% endblock %}

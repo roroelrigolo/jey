@@ -17,6 +17,8 @@ class Input
     public array $attributs = [];
     public string $type;
     public string $label;
+    public string $description;
+    public string $group_class;
     public string $typeName;
     public string $placeholder;
     public string $id_player = "";
@@ -50,7 +52,7 @@ class Input
      */
     public function getSports(): array
     {
-        return $this->sportRepository->findBy([],['title'=>'ASC']);
+        return $this->sportRepository->findBy(['available'=>1],['title'=>'ASC']);
     }
 
     /**
@@ -58,14 +60,22 @@ class Input
      */
     public function getLeagues(): array
     {
-        return $this->leagueRepository->findBy([],['title'=>'ASC']);
+        return $this->leagueRepository->findBy(['available'=>1],['title'=>'ASC']);
     }
 
     /**
      * @return array
      */
     public function getTeams(): array {
-        return $this->teamRepository->findBy([],['title'=>'ASC']);
+        return $this->teamRepository->findBy(['available'=>1],['title'=>'ASC']);
+    }
+
+    /**
+     * @return array
+     */
+    public function getPlayers(): array
+    {
+        return $this->playerRepository->findBy(['available'=>1],['lastName'=>'ASC']);
     }
 }
 

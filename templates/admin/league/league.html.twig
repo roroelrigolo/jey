@@ -14,10 +14,10 @@
             { value: 'sport', text: 'Sport' }]
     }) }}
     {{ component('Admin:Table:Table', {
-        titles: ['Id','Nom','Sport',''],
-        cols: ['col-span-1','col-span-2','col-span-7','col-span-2'],
+        titles: ['Id','Nom','Sport','Valide',''],
+        cols: ['col-span-1','col-span-2','col-span-6','col-span-1','col-span-2'],
         datas: datas,
-        features: ['','','','flex justify-end'],
+        features: ['','','','','flex justify-end'],
         url: 'app_admin_league_edit'
     }) }}
 {% endblock %}

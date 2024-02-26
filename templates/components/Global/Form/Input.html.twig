@@ -4,7 +4,11 @@
     {% for attribut in attributs %}
         {% set value = attribut.value %}
         {% if attribut.name == "class" %}
-            {% set value = "border p-2 w-full "~value %}
+            {% if type == "toogle" %}
+                {% set value = "sr-only peer "~value %}
+            {% else %}
+                {% set value = "border p-2 w-full "~value %}
+            {% endif %}
             {% set setclass = true %}
         {% endif %}
         {% set attrs = attrs|merge({
@@ -12,15 +16,21 @@
         }) %}
     {% endfor %}
     {% if setclass == false %}
-        {% set attrs = attrs|merge({
-            ('class'):'border p-2 w-full'
-        }) %}
+        {% if type == "toogle" %}
+            {% set attrs = attrs|merge({
+                ('class'):'sr-only peer'
+            }) %}
+        {% else %}
+            {% set attrs = attrs|merge({
+                ('class'):'border p-2 w-full'
+            }) %}
+        {% endif %}
     {% endif %}
 {% endif %}
 <div class="mb-3">
     {# Classic input #}
     {% if type == "input" %}
-        <div class="mb-3">
+        <div class="mb-3 {{ group_class }}" id="group-{{ input_name }}">
             {{ form_label(form[input_name], null ,{'label_attr': {'class': 'w-full'}}) }}
             {{ form_widget(form[input_name],{ 'attr': attrs }) }}
         </div>
@@ -30,8 +40,11 @@
     {% if type == "toogle" %}
         <label class="relative items-center cursor-pointer">
             {{ form_label(form[input_name], null ,{'label_attr': {'class': 'w-full'}}) }}
-            {{form_widget(form[input_name],{'attr': {'class':'sr-only peer'}})}}
-            <div class="w-11 h-6 bg-gray-200 bg-gray peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[23px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+            {% if description != "" %}
+                <p class="text-xs text-gray italic">{{ description }}</p>
+            {% endif %}
+            {{form_widget(form[input_name],{'attr': attrs})}}
+            <div class="w-11 h-6 bg-gray-200 bg-gray peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:mt-[1px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
         </label>
     {% endif %}
 
@@ -77,7 +90,7 @@
 
     {# Input Select custom #}
     {% if type == "customSelect" %}
-        <div class="mb-3 relative">
+        <div class="mb-3 relative {{ group_class }}" id="group-{{ input_name }}">
             <label class="w-full">{{ label }}</label>
             <input id="search-input-{{ input_name }}" class="w-full" type="text" placeholder="{{ placeholder }}" onclick="displayListSelect('search-list-{{ input_name }}')" onkeyup="changeListFilter('{{ input_name }}')" required>
             <div id="search-list-{{ input_name }}" class="hidden absolute left-0 right-0 bg-white grid z-50 overflow-y-scroll max-h-[300px]">
@@ -87,14 +100,19 @@
                     {% set get = this.leagues %}
                 {% elseif input_name == "team" %}
                     {% set get = this.teams %}
+                {% elseif input_name == "player" %}
+                    {% set get = this.players %}
                 {% endif %}
                 {% for item in get %}
-                    <div onclick="fillInput('{{ item.title }}','{{ input_name }}')" class="search-{{ input_name }} w-full h-fit px-4 py-2 hover:bg-secondary">
-                        {% if input_name == "team" %}
-                            <p>{{ item.city }} {{ item.title }}</p>
-                        {% else %}
-                            <p>{{ item.title }}</p>
-                        {% endif %}
+                    {% if input_name == "team" %}
+                        {% set textInput = item.city ~ ' ' ~ item.title %}
+                    {% elseif input_name == "player" %}
+                        {% set textInput = item.lastName ~ ' ' ~ item.firstName %}
+                    {% else %}
+                        {% set textInput = item.title %}
+                    {% endif %}
+                    <div onclick="fillInput('{{ textInput }}','{{ input_name }}')" class="search-{{ input_name }} w-full h-fit px-4 py-2 hover:bg-secondary">
+                        <p>{{ textInput }}</p>
                     </div>
                 {% endfor %}
                 <div id="search-noresult-{{ input_name }}" class="px-4 py-2 hidden hover:bg-secondary" onclick="fillInput('input','{{ input_name }}')">
@@ -117,51 +135,68 @@
         }
     }
     function changeListFilter(variable){
-        inputId = '#search-input-'+variable;
-        classe = '.search-'+variable;
-        listResultId = '#search-list-'+variable;
-        noResultId = "#search-noresult-"+variable;
-        checkboxs = document.querySelectorAll(classe);
-        inputValue = document.querySelector(inputId).value;
-        listResult = document.querySelector(listResultId);
-        noResult = document.querySelector(noResultId);
-        if(listResult.classList.contains('hidden')){
-            listResult.classList.remove('hidden');
-        }
-        noResultValue = true;
-        for(i=0;i<checkboxs.length;i++){
-            if(!(checkboxs[i].classList.contains('hidden') && checkboxs[i].classList.contains('checked'))){
-                if(checkboxs[i].classList.contains('hidden')){
-                    checkboxs[i].classList.remove('hidden');
-                }
-                if (!checkboxs[i].querySelector('p').textContent.toUpperCase().includes(inputValue.toUpperCase())) {
-                    checkboxs[i].classList.add('hidden')
-                }
+        //On définit les variables
+        const inputId = '#search-input-' + variable;
+        const classeListOptions = '.search-' + variable;
+        const listResultId = '#search-list-' + variable;
+        const noResultId = "#search-noresult-" + variable;
+        let noResultValue = true;
+
+        //On récupère les balises et valeur html nécessaires
+        const options = document.querySelectorAll(classeListOptions);
+        const inputValue = document.querySelector(inputId).value;
+        const listResult = document.querySelector(listResultId);
+        const noResult = document.querySelector(noResultId);
+
+        //On affiche toute la liste
+        listResult.classList.toggle('hidden', false);
+
+        for(let i=0;i<options.length;i++){
+            const option = options[i];
+            if(option.classList.contains('hidden')){
+                option.classList.remove('hidden');
             }
-        }
-        for(i=0;i<checkboxs.length;i++){
-            if(!checkboxs[i].classList.contains('hidden')){
+            if (!option.querySelector('p').textContent.toUpperCase().includes(inputValue.toUpperCase())) {
+                option.classList.add('hidden');
+            }
+            // Mise à jour de noResultValue
+            if (!option.classList.contains('hidden')) {
                 noResultValue = false;
             }
         }
-        if (noResultValue == true){
-            idNewInput = "#search-noresult-new-"+variable;
-            document.querySelector(idNewInput).textContent = '"'+inputValue+'"';
-            noResult.classList.remove('hidden');
+        //On affiche ou non le noResult
+        noResult.classList.toggle('hidden', !noResultValue);
+        if (noResultValue) {
+            const idNewInput = "#search-noresult-new-" + variable;
+            document.querySelector(idNewInput).textContent = '"' + inputValue + '"';
         }
-        if (noResultValue == false && !(noResult.classList.contains('hidden'))){
-            noResult.classList.add('hidden');
-        }
-        if(inputValue == ""){
+        if (inputValue === "") {
             noResult.classList.add('hidden');
         }
     }
     function fillInput (text, variable){
-        inputId = '#search-input-'+variable;
-        listResultId = '#search-list-'+variable;
-        if (text != "input"){
-            document.querySelector(inputId).value = text;
+        const inputId = '#search-input-' + variable;
+        const listResultId = '#search-list-' + variable;
+        const inputValue = document.querySelector(inputId);
+        const listResult = document.querySelector(listResultId);
+        console.log(text)
+        if (text !== "input") {
+            inputValue.value = text;
         }
-        document.querySelector(listResultId).classList.add('hidden');
+        listResult.classList.add('hidden');
     }
+
+    {% if type == "toogle" %}
+        function showFlockInputs() {
+            let checkValue = document.querySelector('#product_form_flock').checked
+            if(!checkValue){
+                document.querySelector('#group-player').classList.add('hidden')
+                document.querySelector('#group-number').classList.add('hidden')
+            }
+            else {
+                document.querySelector('#group-player').classList.remove('hidden')
+                document.querySelector('#group-number').classList.remove('hidden')
+            }
+        }
+    {% endif %}
 </script>

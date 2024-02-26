@@ -3,11 +3,10 @@
 namespace App\Form\Admin;
 
 use App\Entity\League;
-use App\Entity\Sport;
 use App\Entity\Team;
 use App\Repository\LeagueRepository;
-use App\Repository\SportRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -36,6 +35,9 @@ class TeamFormType extends AbstractType
                         ->orderBy('l.title', 'ASC');
                 }
             ))
+            ->add('available', CheckboxType::class, [
+                'label' => "Valide ?"
+            ])
         ;
     }
 
