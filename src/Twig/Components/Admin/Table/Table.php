@@ -9,6 +9,7 @@ class Table
     public array $titles = [];
     public array $cols = [];
     public array $datas = [];
+    public array $availables = [];
     public array $features = [];
     public array $types = [];
     public string $url;

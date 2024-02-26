@@ -25,6 +25,7 @@ class BrandController extends AbstractController
         
         $brands = $brandRepository->findBy([],[$filter=>$order]);
         $datas = [];
+        $availables = [];
 
         for ($i=0;$i<count($brands);$i++){
             $available = ($brands[$i]->isAvailable() == 1) ? "Oui" : "Non";
@@ -35,10 +36,12 @@ class BrandController extends AbstractController
                 '<i class="fa-light fa-pen-to-square"></i>'
             ];
             array_push($datas,$array);
+            array_push($availables,$brands[$i]->isAvailable());
         }
 
         return $this->render('admin/brand/brand.html.twig', [
-            'datas' => $datas
+            'datas' => $datas,
+            'availables' => $availables
         ]);
     }
 

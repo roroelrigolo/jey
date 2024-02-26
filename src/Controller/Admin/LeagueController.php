@@ -22,6 +22,7 @@ class LeagueController extends AbstractController
 
         $leagues = $leagueRepository->findBy([],[$filter=>$order]);
         $datas = [];
+        $availables = [];
 
         for ($i=0;$i<count($leagues);$i++){
             $sports = "";
@@ -37,10 +38,12 @@ class LeagueController extends AbstractController
                 '<i class="fa-light fa-pen-to-square"></i>'
             ];
             array_push($datas,$array);
+            array_push($availables,$leagues[$i]->isAvailable());
         }
 
         return $this->render('admin/league/league.html.twig', [
-            'datas' => $datas
+            'datas' => $datas,
+            'availables' => $availables
         ]);
     }
 

@@ -21,10 +21,12 @@ class SportFormType extends AbstractType
                 )
             ])
             ->add('displayMenu', CheckboxType::class, [
-                'label' => "Afficher dans le menu ?"
+                'label' => "Afficher dans le menu ?",
+                'required' => false
             ])
             ->add('available', CheckboxType::class, [
-                'label' => "Valide ?"
+                'label' => "Valide ?",
+                'required' => false
             ])
         ;
     }

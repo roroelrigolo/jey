@@ -23,9 +23,6 @@ class Sport
     #[ORM\Column]
     private ?bool $displayMenu = null;
 
-    #[ORM\ManyToOne]
-    private ?Image $banner = null;
-
     #[ORM\ManyToMany(targetEntity: League::class, mappedBy: 'sports')]
     private Collection $leagues;
 
@@ -93,18 +90,6 @@ class Sport
     public function setDisplayMenu(bool $displayMenu): static
     {
         $this->displayMenu = $displayMenu;
-
-        return $this;
-    }
-
-    public function getBanner(): ?Image
-    {
-        return $this->banner;
-    }
-
-    public function setBanner(?Image $banner): static
-    {
-        $this->banner = $banner;
 
         return $this;
     }

@@ -18,7 +18,8 @@ class BrandFormType extends AbstractType
                 'label' => "Nom"
             ])
             ->add('available', CheckboxType::class, [
-                'label' => "Valide ?"
+                'label' => "Valide ?",
+                'required' => false
             ])
         ;
     }

@@ -14,10 +14,11 @@
             { value: 'firstName', text: 'Prenom' }]
     }) }}
     {{ component('Admin:Table:Table', {
-        titles: ['Id','Nom','Prenom','Equipes','Valide',''],
-        cols: ['col-span-1','col-span-2','col-span-2','col-span-2','col-span-1','col-span-4'],
+        titles: ['Id','Nom','Prenom','Equipes','Valide','Nom temporaire',''],
+        cols: ['col-span-1','col-span-2','col-span-2','col-span-2','col-span-1','col-span-2','col-span-2'],
         datas: datas,
-        features: ['','','','','','flex justify-end'],
+        availables: availables,
+        features: ['','','','','','','flex justify-end'],
         url: 'app_admin_player_edit'
     }) }}
 {% endblock %}

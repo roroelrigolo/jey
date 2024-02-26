@@ -23,6 +23,10 @@ class PlayerFormType extends AbstractType
             ->add('firstName', TextType::class, [
                 'label' => "Prénom"
             ])
+            ->add('temporaryName', TextType::class, [
+                'label' => "Nom temporaire",
+                'required' => false
+            ])
             ->add('teams', EntityType::class, array(
                 'expanded' => true,
                 'class' => Team::class,
@@ -36,7 +40,8 @@ class PlayerFormType extends AbstractType
                 }
             ))
             ->add('available', CheckboxType::class, [
-                'label' => "Valide ?"
+                'label' => "Valide ?",
+                'required' => false
             ])
         ;
     }

@@ -23,6 +23,7 @@ class TeamController extends AbstractController
 
         $teams = $teamRepository->findBy([],[$filter=>$order]);
         $datas = [];
+        $availables = [];
 
         for ($i=0;$i<count($teams);$i++){
             $leagues = "";
@@ -43,10 +44,12 @@ class TeamController extends AbstractController
                 '<i class="fa-light fa-pen-to-square"></i>'
             ];
             array_push($datas,$array);
+            array_push($availables,$teams[$i]->isAvailable());
         }
 
         return $this->render('admin/team/team.html.twig', [
-            'datas' => $datas
+            'datas' => $datas,
+            'availables' => $availables
         ]);
     }
 

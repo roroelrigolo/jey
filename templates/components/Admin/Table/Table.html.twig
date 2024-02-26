@@ -9,7 +9,7 @@
     {% for data in datas %}
         {% set i = 0 %}
         <a href="{{ path(url,{'id': data[0]}) }}">
-            <div class="bg-white rounded grid grid-cols-12 py-2 px-3 mb-4 hover:bg-gray">
+            <div class="{% if availables is defined and availables[loop.index-1]==0 %}bg-tertiary{% else %}bg-white{% endif %} rounded grid grid-cols-12 py-2 px-3 mb-4 hover:bg-gray">
                 {% for value in data %}
                     {% if types is defined and types != [] and types[i] != '' %}
                         {% if types[i] == 'color' %}

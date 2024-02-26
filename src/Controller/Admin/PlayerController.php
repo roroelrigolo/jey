@@ -27,6 +27,7 @@ class PlayerController extends AbstractController
 
         $players = $playerRepository->findBy([],[$filter=>$order]);
         $datas = [];
+        $availables = [];
 
         for ($i=0;$i<count($players);$i++){
             $teams = "";
@@ -40,13 +41,16 @@ class PlayerController extends AbstractController
                 $players[$i]->getFirstName(),
                 $teams,
                 $available,
+                $players[$i]->getTemporaryName(),
                 '<i class="fa-light fa-pen-to-square"></i>'
             ];
             array_push($datas,$array);
+            array_push($availables,$players[$i]->isAvailable());
         }
 
         return $this->render('admin/player/player.html.twig', [
-            'datas' => $datas
+            'datas' => $datas,
+            'availables' => $availables
         ]);
     }
 

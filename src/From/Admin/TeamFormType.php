@@ -33,7 +33,8 @@ class TeamFormType extends AbstractType
                 }
             ))
             ->add('available', CheckboxType::class, [
-                'label' => "Valide ?"
+                'label' => "Valide ?",
+                'required' => false
             ])
         ;
     }
