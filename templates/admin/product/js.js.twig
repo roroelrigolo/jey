@@ -42,27 +42,3 @@ function actualisationSelect(idSelect, idSelectSuivant, func){
         }
     }
 }
-
-function league(){
-    {% for league in leagues %}
-    {% if league.sport is not null%}idValue = {{ league.sport.id }};{% endif %}
-    if (valueSelect == idValue){array.push({{ league.id }});}
-    {% endfor %}
-}
-function team(){
-    {% for team in teams %}
-    {% if team.league is not null%}idValue = {{ team.league.id }};{% endif %}
-    if (valueSelect == idValue){array.push({{ team.id }});}
-    {% endfor %}
-}
-function player(){
-    {% for player in players %}
-    {% if player.teams is not null %}
-        {% for team in player.teams %}
-            idValue = {{ team.id }};
-            if (valueSelect == idValue){array.push({{ player.id }});}
-        {% endfor %}
-    {% endif %}
-    {% endfor %}
-}
-

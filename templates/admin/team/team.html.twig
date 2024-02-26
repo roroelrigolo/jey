@@ -11,15 +11,14 @@
         sort_filters:[
             { value: 'id', text: 'ID' },
             { value: 'title', text: 'Nom' },
-            { value: 'city', text: 'Ville' },
             { value: 'sport', text: 'Sport' },
             { value: 'league', text: 'Ligue' }]
     }) }}
     {{ component('Admin:Table:Table', {
-        titles: ['Id','Nom','Ville','Sport','Ligue','Valide',''],
-        cols: ['col-span-1','col-span-2','col-span-2','col-span-2','col-span-2','col-span-1','col-span-2'],
+        titles: ['Id','Nom','Sport','Ligue','Valide',''],
+        cols: ['col-span-1','col-span-4','col-span-2','col-span-2','col-span-1','col-span-2'],
         datas: datas,
-        features: ['','','','','','','flex justify-end'],
+        features: ['','','','','','flex justify-end'],
         url: 'app_admin_team_edit'
     }) }}
 {% endblock %}

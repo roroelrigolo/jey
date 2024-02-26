@@ -104,9 +104,7 @@
                 {% set get = mapping[input_name] %}
 
                 {% for item in get %}
-                    {% if input_name == "team" %}
-                        {% set textInput = item.city ~ ' ' ~ item.title %}
-                    {% elseif input_name == "player" %}
+                    {% if input_name == "player" %}
                         {% set textInput = item.lastName ~ ' ' ~ item.firstName %}
                     {% else %}
                         {% set textInput = item.title %}

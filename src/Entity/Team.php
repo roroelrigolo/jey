@@ -21,9 +21,6 @@ class Team
     #[ORM\OneToMany(mappedBy: 'team', targetEntity: Product::class)]
     private Collection $products;
 
-    #[ORM\Column(length: 255)]
-    private ?string $city = null;
-
     #[ORM\ManyToMany(targetEntity: Player::class, mappedBy: 'teams')]
     private Collection $players;
 
@@ -83,18 +80,6 @@ class Team
                 $product->setTeam(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getCity(): ?string
-    {
-        return $this->city;
-    }
-
-    public function setCity(string $city): static
-    {
-        $this->city = $city;
 
         return $this;
     }

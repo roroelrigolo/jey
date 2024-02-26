@@ -2,10 +2,15 @@
 
 namespace App\Controller\Front;
 
+use App\Entity\Brand;
 use App\Entity\Image;
+use App\Entity\League;
+use App\Entity\Player;
 use App\Entity\Product;
 use App\Entity\Sport;
+use App\Entity\Team;
 use App\Form\Front\ProductFormType;
+use App\Repository\BrandRepository;
 use App\Repository\ImageRepository;
 use App\Repository\LeagueRepository;
 use App\Repository\PlayerRepository;
@@ -25,19 +30,26 @@ class ProductController extends AbstractController
 {
     #[Route('/new', name: 'app_front_product_new', methods: ['GET', 'POST'])]
     public function new(Request $request, ProductRepository $productRepository, LeagueRepository $leagueRepository, TeamRepository $teamRepository,
-                        PlayerRepository $playerRepository, ImageRepository $imageRepository, SportRepository $sportRepository): Response
+                        PlayerRepository $playerRepository, ImageRepository $imageRepository, SportRepository $sportRepository, BrandRepository $brandRepository): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $product = new Product();
         $form = $this->createForm(ProductFormType::class, $product);
         $form->handleRequest($request);
 
+        if ($form->isSubmitted() && $form->isValid()) {
+            $product->setUser($this->getUser());
+            $product->setUuid(Uuid::uuid4()->toString());
+            $product->setCreatedAt(new \DateTimeImmutable());
+            $product->setUpdatedAt(new \DateTimeImmutable());
 
-        if ($form->isSubmitted()) {
+            $statement = 'Disponible';
+
+            // Traitement du sport
             $sportProduct = $_POST['search-input-sport'] ?? null;
             if (!empty($sportProduct)) {
                 $sportInBase = $sportRepository->findOneBy(['title'=>$sportProduct],[]);
-                if($sportInBase == null){
+                if($sportInBase === null){
                     $newSport = new Sport();
                     $newSport
                         ->setTitle(ucfirst($sportProduct))
@@ -45,21 +57,93 @@ class ProductController extends AbstractController
                         ->setAvailable(0);
                     $sportRepository->add($newSport);
                     $product->setSport($newSport);
+                    $statement = 'En attente de validation';
                 }
                 else {
                     $product->setSport($sportInBase);
                 }
             }
-        }
-        if ($form->isSubmitted() && $form->isValid()) {
-            var_dump("test");
-            /*
-            $product->setUser($this->getUser());
-            $product->setUuid(Uuid::uuid4()->toString());
-            $product->setStatement('Disponible');
-            $product->setCreatedAt(new \DateTimeImmutable());
-            $product->setUpdatedAt(new \DateTimeImmutable());
 
+            // Traitement de la ligue
+            $leagueProduct = $_POST['search-input-league'] ?? null;
+            if (!empty($leagueProduct)) {
+                $leagueInBase = $leagueRepository->findOneBy(['title'=>$leagueProduct],[]);
+                if($leagueInBase === null){
+                    $newLeague = new League();
+                    $newLeague
+                        ->setTitle(ucfirst($leagueProduct))
+                        ->setAvailable(0);
+                    $leagueRepository->add($newLeague);
+                    $product->setLeague($newLeague);
+                    $statement = 'En attente de validation';
+                }
+                else {
+                    $product->setLeague($leagueInBase);
+                }
+            }
+
+            // Traitement de l'équipe
+            $teamProduct = $_POST['search-input-team'] ?? null;
+            if (!empty($teamProduct)) {
+                $teamInBase = $teamRepository->findOneBy(['title'=>$teamProduct],[]);
+                if($teamInBase === null){
+                    $newTeam = new Team();
+                    $newTeam
+                        ->setTitle(ucfirst($teamProduct))
+                        ->setAvailable(0);
+                    $teamRepository->add($newTeam);
+                    $product->setTeam($newTeam);
+                    $statement = 'En attente de validation';
+                }
+                else {
+                    $product->setTeam($teamInBase);
+                }
+            }
+
+            // Traitement du joueur
+            $playerProduct = $_POST['search-input-player'] ?? null;
+            if (!empty($playerProduct)) {
+                $playerInBase = null;
+                $playersInBase = $playerRepository->findAll();
+                foreach ($playersInBase as $player){
+                    $playerNameComplete = $player->getLastName().' '.$player->getFirstName();
+                    if($playerNameComplete == $playerProduct){
+                        $playerInBase = $player;
+                    }
+                }
+                if($playerInBase === null){
+                    $newPlayer = new Player();
+                    $newPlayer
+                        ->setTemporaryName($playerProduct)
+                        ->setAvailable(0);
+                    $playerRepository->add($newPlayer);
+                    $product->setPlayer($newPlayer);
+                    $statement = 'En attente de validation';
+                }
+                else {
+                    $product->setPlayer($playerInBase);
+                }
+            }
+
+            // Traitement de la marque
+            $brandProduct = $_POST['search-input-brand'] ?? null;
+            if (!empty($brandProduct)) {
+                $brandInBase = $brandRepository->findOneBy(['title'=>$brandProduct],[]);
+                if($brandInBase === null){
+                    $newBrand = new Brand();
+                    $newBrand
+                        ->setTitle(ucfirst($brandProduct))
+                        ->setAvailable(0);
+                    $brandRepository->add($newBrand);
+                    $product->setBrand($newBrand);
+                    $statement = 'En attente de validation';
+                }
+                else {
+                    $product->setBrand($brandInBase);
+                }
+            }
+
+            $product->setStatement($statement);
             $productRepository->add($product);
 
             $files = array_filter($_FILES['images']['name']); //Use something similar before processing files.
@@ -85,15 +169,7 @@ class ProductController extends AbstractController
                 $image->setProduct($product);
                 $imageRepository->add($image);
             }
-
-            $id = $product->getId();
-            if( $_POST['submit'] == "Enregistrer"){
-                return $this->redirectToRoute('app_admin_product', [], Response::HTTP_SEE_OTHER);
-            }
-            else {
-                return $this->redirectToRoute('app_admin_product_edit', ['id'=>$id], Response::HTTP_SEE_OTHER);
-            }
-            */
+            return $this->redirectToRoute('app_front_home', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('front/product/new.html.twig', [

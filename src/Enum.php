@@ -30,7 +30,8 @@ class Enum  {
         'Disponible',
         'Réservé',
         'Vendu',
-        'Supprimé'
+        'Supprimé',
+        'En attente de validation',
     ];
 
     public static $numbers = [

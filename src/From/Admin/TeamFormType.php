@@ -20,9 +20,6 @@ class TeamFormType extends AbstractType
             ->add('title', TextType::class, [
                 'label' => "Nom"
             ])
-            ->add('city', TextType::class, [
-                'label' => "Ville"
-            ])
             ->add('leagues', EntityType::class, array(
                 'expanded' => true,
                 'class' => League::class,

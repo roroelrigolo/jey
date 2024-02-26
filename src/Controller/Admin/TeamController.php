@@ -37,7 +37,6 @@ class TeamController extends AbstractController
             $array = [
                 $teams[$i]->getId(),
                 $teams[$i]->getTitle(),
-                $teams[$i]->getCity(),
                 $sports,
                 $leagues,
                 $available,

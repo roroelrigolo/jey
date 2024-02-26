@@ -15,10 +15,10 @@ class Player
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $lastName = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $firstName = null;
 
     #[ORM\OneToMany(mappedBy: 'player', targetEntity: Product::class)]
@@ -29,6 +29,9 @@ class Player
 
     #[ORM\Column]
     private ?bool $available = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $temporaryName = null;
 
     public function __construct()
     {
@@ -127,6 +130,18 @@ class Player
     public function setAvailable(bool $available): static
     {
         $this->available = $available;
+
+        return $this;
+    }
+
+    public function getTemporaryName(): ?string
+    {
+        return $this->temporaryName;
+    }
+
+    public function setTemporaryName(?string $temporaryName): static
+    {
+        $this->temporaryName = $temporaryName;
 
         return $this;
     }
