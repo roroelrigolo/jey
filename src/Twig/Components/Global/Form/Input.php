@@ -4,6 +4,7 @@ namespace App\Twig\Components\Global\Form;
 use App\Entity\Player;
 use App\Entity\Team;
 use App\Repository\BrandRepository;
+use App\Repository\ColorRepository;
 use App\Repository\LeagueRepository;
 use App\Repository\PlayerRepository;
 use App\Repository\SportRepository;
@@ -31,6 +32,7 @@ class Input
         private SportRepository $sportRepository,
         private LeagueRepository $leagueRepository,
         private BrandRepository $brandRepository,
+        private ColorRepository $colorRepository,
     ){
     }
 
@@ -87,6 +89,14 @@ class Input
     public function getBrands(): array
     {
         return $this->brandRepository->findBy(['available'=>1],['title'=>'ASC']);
+    }
+
+    /**
+     * @return array
+     */
+    public function getColors(): array
+    {
+        return $this->colorRepository->findBy([],['title'=>'ASC']);
     }
 }
 

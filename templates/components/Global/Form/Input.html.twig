@@ -48,6 +48,22 @@
         </label>
     {% endif %}
 
+    {# Color input #}
+    {% if type == "color" %}
+        <div class="mb-3" id="group-{{ input_name }}">
+            <label class="w-full required">Couleurs</label>
+            <div class="grid grid-cols-12">
+                {% for color in this.colors %}
+                    <div class="w-full flex items-center gap-x-2 col-span-4">
+                        <input type="checkbox" id="colors[]" name="colors[]" value="{{ color.id }}">
+                        <div style="background: {{ color.value }}" class="rounded-full border w-[16px] h-[16px]"></div>
+                        {{ color.title }}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+
     {# Team input #}
     {% if type == "team" %}
         <div class="mb-3">

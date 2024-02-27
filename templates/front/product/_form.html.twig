@@ -8,13 +8,11 @@
         {component:'Global:Form:Input',form:form,input_name:'price'},
     ],
 }) }}
-{#
 {{ component('Global:Form:Group', {
     title: 'Images',
     id: 'images',
     custom: "image",
 }) }}
-#}
 {{ component('Global:Form:Group', {
     title: 'Caractéristiques sportives',
     id: 'sport-specifications',
@@ -35,7 +33,7 @@
         {component:'Global:Form:Input',form:form,input_name:'type'},
         {component:'Global:Form:Input',form:form,input_name:'size'},
         {component:'Global:Form:Input',form:form,input_name:'conditionnement'},
-        {component:'Global:Form:Input',form:form,input_name:'colors'},
+        {component:'Global:Form:Input',form:form,input_name:'colors',type: 'color'},
     ],
 }) }}
 <input type="submit" value="Add">
