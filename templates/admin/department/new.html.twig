@@ -1,0 +1,9 @@
+{% extends '/admin/base.html.twig' %}
+
+{% block title %}Jey{% endblock %}
+
+{% block body %}
+    {{ component('Admin:TitlePage', { title: 'Départements' }) }}
+    {{ component('Global:Form:Header', { title: 'Ajouter' }) }}
+    {{ component('Global:Form:FormAdmin', { form_link: '/admin/department/_form.html.twig', form: form }) }}
+{% endblock %}

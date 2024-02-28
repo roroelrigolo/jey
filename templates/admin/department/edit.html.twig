@@ -1,0 +1,11 @@
+{% extends '/admin/base.html.twig' %}
+
+{% block title %}Jey{% endblock %}
+
+{% block body %}
+    <script>{% include '/admin/sport/js.js.twig' %}</script>
+
+    {{ component('Admin:TitlePage', { title: 'Départements' }) }}
+    {{ component('Global:Form:Header', { title: 'Éditer' }) }}
+    {{ component('Global:Form:FormAdmin', { form_link: '/admin/department/_form.html.twig', form: form }) }}
+{% endblock %}

@@ -41,14 +41,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Product::class)]
     private Collection $products;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $location = null;
-
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: ProductLike::class)]
     private Collection $productLikes;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: ProductView::class)]
     private Collection $productViews;
+
+    #[ORM\ManyToOne(inversedBy: 'users')]
+    private ?Department $location = null;
 
     public function __construct()
     {
@@ -193,18 +193,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getLocation(): ?string
-    {
-        return $this->location;
-    }
-
-    public function setLocation(?string $location): static
-    {
-        $this->location = $location;
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, ProductLike>
      */
@@ -261,6 +249,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $productView->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getLocation(): ?Department
+    {
+        return $this->location;
+    }
+
+    public function setLocation(?Department $location): static
+    {
+        $this->location = $location;
 
         return $this;
     }

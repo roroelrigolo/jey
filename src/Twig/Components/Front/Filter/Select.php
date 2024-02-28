@@ -5,6 +5,7 @@ use App\Entity\Sport;
 use App\Enum;
 use App\Repository\BrandRepository;
 use App\Repository\ColorRepository;
+use App\Repository\DepartmentRepository;
 use App\Repository\LeagueRepository;
 use App\Repository\PlayerRepository;
 use App\Repository\SportRepository;
@@ -29,6 +30,7 @@ class Select
         private TeamRepository $teamRepository,
         private LeagueRepository $leagueRepository,
         private ColorRepository $colorRepository,
+        private DepartmentRepository $departmentRepository,
         private Enum $enum
     ) {
     }
@@ -51,16 +53,19 @@ class Select
             return $this->brandRepository->findBy([],['title'=>'ASC']);
         }
         elseif ($this->options_name == 'players'){
-            return $this->playerRepository->findBySport($this->sport->getId());
+            return $this->playerRepository->findBy([],['lastName'=>'ASC']);
         }
         elseif ($this->options_name == 'teams'){
-            return $this->teamRepository->findBySport($this->sport->getId());
+            return $this->teamRepository->findBy([],['title'=>'ASC']);
         }
         elseif ($this->options_name == 'leagues'){
-            return $this->leagueRepository->findBy(['sport'=>$this->sport],['title'=>'ASC']);
+            return $this->leagueRepository->findBy([],['title'=>'ASC']);
         }
         elseif ($this->options_name == 'colors'){
             return $this->colorRepository->findBy([],['title'=>'ASC']);
+        }
+        elseif ($this->options_name == 'departments'){
+            return $this->departmentRepository->findBy([],['title'=>'ASC']);
         }
         return [];
     }

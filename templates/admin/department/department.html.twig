@@ -1,0 +1,23 @@
+{% extends '/admin/base.html.twig' %}
+
+{% block title %}Jey{% endblock %}
+
+{% block body %}
+    {{ component('Admin:TitlePage', { title: 'Departements' }) }}
+
+    {{ component('Admin:Table:Header', {buttons:[
+        { tag: 'a', text: 'Ajouter un département', route: 'app_admin_department_new', class: 'secondaryadmin' },
+        { tag: 'a', text: 'Filtrer', class: 'secondaryadmin' }],
+        sort_filters:[
+            { value: 'id', text: 'ID' },
+            { value: 'title', text: 'Nom' },
+            { value: 'code', text: 'Code' }]
+    }) }}
+    {{ component('Admin:Table:Table', {
+        titles: ['Id','Code','Nom',''],
+        cols: ['col-span-1','col-span-1','col-span-9','col-span-1'],
+        datas: datas,
+        features: ['','','','flex justify-end'],
+        url: 'app_admin_department_edit'
+    }) }}
+{% endblock %}

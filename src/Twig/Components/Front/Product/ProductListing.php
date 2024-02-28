@@ -58,22 +58,37 @@ class ProductListing
                 $colors = $_GET["colors"];
                 unset($_GET["colors"]);
             }
-            $players = $this->productRepository->findBy($_GET,['created_at'=>'DESC']);
+            $departments = [];
+            if (isset($_GET["departments"])) {
+                $departments = $_GET["departments"];
+                unset($_GET["departments"]);
+            }
+            $products = $this->productRepository->findBy($_GET,['created_at'=>'DESC']);
             //On flitre avec les couleurs si définies
             if ($colors != []) {
-                $filteredPlayers = [];
-                foreach ($players as $player) {
-                    $colors_player = $player->getColors();
-                    foreach ($colors_player as $color_player) {
-                        if (in_array($color_player->getId(), $colors)) {
-                            $filteredPlayers[] = $player;
-                            break;
+                $filteredProducts = [];
+                foreach ($products as $product) {
+                    $colors_product = $product->getColors();
+                    foreach ($colors_product as $color_product) {
+                        if (in_array($color_product->getId(), $colors)) {
+                            $filteredProducts[] = $product;
                         }
                     }
                 }
-                $players = $filteredPlayers;
+                $products = $filteredProducts;
             }
-            return $players;
+            //On flitre avec les départements si définis
+            if ($departments != []) {
+                $filteredProducts = [];
+                foreach ($products as $product) {
+                    $department_product = $product->getUser()->getLocation();
+                    if (in_array($department_product->getId(), $departments)) {
+                        $filteredProducts[] = $product;
+                    }
+                }
+                $products = $filteredProducts;
+            }
+            return $products;
         }
         else{
             return $this->productRepository->findBy(['sport'=>$this->sport_id],['created_at'=>'DESC']);
