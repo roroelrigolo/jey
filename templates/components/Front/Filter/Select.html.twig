@@ -41,6 +41,8 @@
                             <label class="label" for="{{ filter.lastName }}">{{ filter.lastName }} {{ filter.firstName }}</label>
                         {% elseif options_name == 'colors' %}
                             <label class="label items-top flex" for="{{ filter.title }}"><p class="rounded-full border me-2 w-[20px] h-[20px]" style="background: {{ filter.value }}"></p>{{ filter.title }}</label>
+                        {% elseif options_name == 'departments' %}
+                            <label class="label" for="{{ filter.title }}">{{ filter.title }} ({{ filter.code }})</label>
                         {% else %}
                             <label class="label" for="{{ filter.title }}">{{ filter.title }}</label>
                         {% endif %}
