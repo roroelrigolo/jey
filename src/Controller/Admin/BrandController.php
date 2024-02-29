@@ -27,16 +27,16 @@ class BrandController extends AbstractController
         $datas = [];
         $availables = [];
 
-        for ($i=0;$i<count($brands);$i++){
-            $available = ($brands[$i]->isAvailable() == 1) ? "Oui" : "Non";
+        foreach ($brands as $brand){
+            $available = ($brand->isAvailable() == 1) ? "Oui" : "Non";
             $array = [
-                $brands[$i]->getId(),
-                $brands[$i]->getTitle(),
+                $brand->getId(),
+                $brand->getTitle(),
                 $available,
                 '<i class="fa-light fa-pen-to-square"></i>'
             ];
             array_push($datas,$array);
-            array_push($availables,$brands[$i]->isAvailable());
+            array_push($availables,$brand->isAvailable());
         }
 
         return $this->render('admin/brand/brand.html.twig', [

@@ -25,26 +25,26 @@ class TeamController extends AbstractController
         $datas = [];
         $availables = [];
 
-        for ($i=0;$i<count($teams);$i++){
+        foreach ($teams as $team){
             $leagues = "";
             $sports = "";
-            foreach ($teams[$i]->getLeagues() as $league){
+            foreach ($team->getLeagues() as $league){
                 $leagues .= $league->getTitle().' ';
                 foreach ($league->getSports() as $sport){
                     $sports .= $sport->getTitle().' ';
                 }
             }
-            $available = ($teams[$i]->isAvailable() == 1) ? "Oui" : "Non";
+            $available = ($team->isAvailable() == 1) ? "Oui" : "Non";
             $array = [
-                $teams[$i]->getId(),
-                $teams[$i]->getTitle(),
+                $team->getId(),
+                $team->getTitle(),
                 $sports,
                 $leagues,
                 $available,
                 '<i class="fa-light fa-pen-to-square"></i>'
             ];
             array_push($datas,$array);
-            array_push($availables,$teams[$i]->isAvailable());
+            array_push($availables,$team->isAvailable());
         }
 
         return $this->render('admin/team/team.html.twig', [

@@ -23,11 +23,11 @@ class DepartmentController extends AbstractController
         $departments = $departmentRepository->findBy([],[$filter=>$order]);
         $datas = [];
 
-        for ($i=0;$i<count($departments);$i++){
+        foreach ($departments as $department){
             $array = [
-                $departments[$i]->getId(),
-                $departments[$i]->getCode(),
-                $departments[$i]->getTitle(),
+                $department->getId(),
+                $department->getCode(),
+                $department->getTitle(),
                 '<i class="fa-light fa-pen-to-square"></i>'
             ];
             array_push($datas,$array);

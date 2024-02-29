@@ -29,15 +29,15 @@ class ProductController extends AbstractController
         $products = $productRepository->findBy([],[$filter=>$order]);
         $datas = [];
 
-        for ($i=0;$i<count($products);$i++){
+        foreach ($products as $product){
             $array = [
-                $products[$i]->getId(),
-                $products[$i]->getStatement(),
-                $products[$i]->getTitle(),
-                $products[$i]->getDescription(),
-                $products[$i]->getPrice().'€',
-                $products[$i]->getCreatedAt()->format('d/m/Y'),
-                $products[$i]->getUpdatedAt()->format('d/m/Y'),
+                $product->getId(),
+                $product->getStatement(),
+                $product->getTitle(),
+                $product->getDescription(),
+                $product->getPrice().'€',
+                $product->getCreatedAt()->format('d/m/Y'),
+                $product->getUpdatedAt()->format('d/m/Y'),
                 '<i class="fa-light fa-pen-to-square"></i>'
             ];
             array_push($datas,$array);

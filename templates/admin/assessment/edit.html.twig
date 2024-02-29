@@ -1,0 +1,12 @@
+{% extends '/admin/base.html.twig' %}
+
+{% block title %}Jey{% endblock %}
+
+{% block body %}
+    {{ component('Admin:TitlePage', { title: 'Avis & Réponses' }) }}
+    {{ component('Global:Form:Header', { title: 'Éditer' }) }}
+    {{ component('Global:Form:FormAdmin', { form_link: '/admin/assessment/_form.html.twig', form: form }) }}
+
+    {{ component('Global:Form:Header', { title: 'Réponse' }) }}
+    {{ component('Global:Form:FormAdmin', { form_link: '/admin/assessment/reply/_form.html.twig', form: form_reply }) }}
+{% endblock %}

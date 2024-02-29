@@ -50,11 +50,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToOne(inversedBy: 'users')]
     private ?Department $location = null;
 
+    #[ORM\OneToMany(mappedBy: 'depositor', targetEntity: Assessment::class)]
+    private Collection $assessments_depositor;
+
+    #[ORM\OneToMany(mappedBy: 'recipient', targetEntity: Assessment::class)]
+    private Collection $assessments_recipient;
+
+    #[ORM\OneToMany(mappedBy: 'depositor', targetEntity: Reply::class)]
+    private Collection $responses;
+
     public function __construct()
     {
         $this->products = new ArrayCollection();
         $this->productLikes = new ArrayCollection();
         $this->productViews = new ArrayCollection();
+        $this->assessments_depositor = new ArrayCollection();
+        $this->assessments_recipient = new ArrayCollection();
+        $this->responses = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -261,6 +273,96 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setLocation(?Department $location): static
     {
         $this->location = $location;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Assessment>
+     */
+    public function getAssessmentsDepositor(): Collection
+    {
+        return $this->assessments_depositor;
+    }
+
+    public function addAssessmentsDepositor(Assessment $assessmentsDepositor): static
+    {
+        if (!$this->assessments_depositor->contains($assessmentsDepositor)) {
+            $this->assessments_depositor->add($assessmentsDepositor);
+            $assessmentsDepositor->setDepositor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAssessmentsDepositor(Assessment $assessmentsDepositor): static
+    {
+        if ($this->assessments_depositor->removeElement($assessmentsDepositor)) {
+            // set the owning side to null (unless already changed)
+            if ($assessmentsDepositor->getDepositor() === $this) {
+                $assessmentsDepositor->setDepositor(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Assessment>
+     */
+    public function getAssessmentsRecipient(): Collection
+    {
+        return $this->assessments_recipient;
+    }
+
+    public function addAssessmentsRecipient(Assessment $assessmentsRecipient): static
+    {
+        if (!$this->assessments_recipient->contains($assessmentsRecipient)) {
+            $this->assessments_recipient->add($assessmentsRecipient);
+            $assessmentsRecipient->setRecipient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAssessmentsRecipient(Assessment $assessmentsRecipient): static
+    {
+        if ($this->assessments_recipient->removeElement($assessmentsRecipient)) {
+            // set the owning side to null (unless already changed)
+            if ($assessmentsRecipient->getRecipient() === $this) {
+                $assessmentsRecipient->setRecipient(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Reply>
+     */
+    public function getResponses(): Collection
+    {
+        return $this->responses;
+    }
+
+    public function addResponse(Reply $response): static
+    {
+        if (!$this->responses->contains($response)) {
+            $this->responses->add($response);
+            $response->setDepositor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeResponse(Reply $response): static
+    {
+        if ($this->responses->removeElement($response)) {
+            // set the owning side to null (unless already changed)
+            if ($response->getDepositor() === $this) {
+                $response->setDepositor(null);
+            }
+        }
 
         return $this;
     }

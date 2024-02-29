@@ -29,23 +29,23 @@ class PlayerController extends AbstractController
         $datas = [];
         $availables = [];
 
-        for ($i=0;$i<count($players);$i++){
+        foreach ($players as $player){
             $teams = "";
-            foreach ($players[$i]->getTeams() as $team){
+            foreach ($player->getTeams() as $team){
                 $teams .= $team->getTitle().' ';
             }
-            $available = ($players[$i]->isAvailable() == 1) ? "Oui" : "Non";
+            $available = ($player->isAvailable() == 1) ? "Oui" : "Non";
             $array = [
-                $players[$i]->getId(),
-                $players[$i]->getLastName(),
-                $players[$i]->getFirstName(),
+                $player->getId(),
+                $player->getLastName(),
+                $player->getFirstName(),
                 $teams,
                 $available,
-                $players[$i]->getTemporaryName(),
+                $player->getTemporaryName(),
                 '<i class="fa-light fa-pen-to-square"></i>'
             ];
             array_push($datas,$array);
-            array_push($availables,$players[$i]->isAvailable());
+            array_push($availables,$player->isAvailable());
         }
 
         return $this->render('admin/player/player.html.twig', [

@@ -27,11 +27,11 @@ class ColorController extends AbstractController
         $colors = $colorRepository->findBy([],[$filter=>$order]);
         $datas = [];
 
-        for ($i=0;$i<count($colors);$i++){
+        foreach ($colors as $color){
             $array = [
-                $colors[$i]->getId(),
-                $colors[$i]->getValue(),
-                $colors[$i]->getTitle(),
+                $color->getId(),
+                $color->getValue(),
+                $color->getTitle(),
                 '<i class="fa-light fa-pen-to-square"></i>'
             ];
             array_push($datas,$array);

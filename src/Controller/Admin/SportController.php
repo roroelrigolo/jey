@@ -26,18 +26,18 @@ class SportController extends AbstractController
         $datas = [];
         $availables = [];
 
-        for ($i=0;$i<count($sports);$i++){
-            $displayMenu = ($sports[$i]->isDisplayMenu() == 1) ? "Oui" : "Non";
-            $available = ($sports[$i]->isAvailable() == 1) ? "Oui" : "Non";
+        foreach ($sports as $sport){
+            $displayMenu = ($sport->isDisplayMenu() == 1) ? "Oui" : "Non";
+            $available = ($sport->isAvailable() == 1) ? "Oui" : "Non";
             $array = [
-                $sports[$i]->getId(),
-                $sports[$i]->getTitle(),
+                $sport->getId(),
+                $sport->getTitle(),
                 $displayMenu,
                 $available,
                 '<i class="fa-light fa-pen-to-square"></i>'
             ];
             array_push($datas,$array);
-            array_push($availables,$sports[$i]->isAvailable());
+            array_push($availables,$sport->isAvailable());
         }
 
         return $this->render('admin/sport/sport.html.twig', [

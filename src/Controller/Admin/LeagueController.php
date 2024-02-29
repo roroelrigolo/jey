@@ -24,21 +24,21 @@ class LeagueController extends AbstractController
         $datas = [];
         $availables = [];
 
-        for ($i=0;$i<count($leagues);$i++){
+        foreach ($leagues as $league){
             $sports = "";
-            foreach ($leagues[$i]->getSports() as $sport){
+            foreach ($league->getSports() as $sport){
                 $sports .= $sport->getTitle().' ';
             }
-            $available = ($leagues[$i]->isAvailable() == 1) ? "Oui" : "Non";
+            $available = ($league->isAvailable() == 1) ? "Oui" : "Non";
             $array = [
-                $leagues[$i]->getId(),
-                $leagues[$i]->getTitle(),
+                $league->getId(),
+                $league->getTitle(),
                 $sports,
                 $available,
                 '<i class="fa-light fa-pen-to-square"></i>'
             ];
             array_push($datas,$array);
-            array_push($availables,$leagues[$i]->isAvailable());
+            array_push($availables,$league->isAvailable());
         }
 
         return $this->render('admin/league/league.html.twig', [

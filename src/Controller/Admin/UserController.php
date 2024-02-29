@@ -27,13 +27,13 @@ class UserController extends AbstractController
         $users = $userRepository->findBy([],[$filter=>$order]);
         $datas = [];
 
-        for ($i=0;$i<count($users);$i++){
+        foreach ($users as $user){
             $array = [
-                $users[$i]->getId(),
-                $users[$i]->getName(),
-                $users[$i]->getFirstName(),
-                $users[$i]->getPseudo(),
-                $users[$i]->getEmail(),
+                $user->getId(),
+                $user->getName(),
+                $user->getFirstName(),
+                $user->getPseudo(),
+                $user->getEmail(),
                 '<i class="fa-light fa-pen-to-square"></i>'
             ];
             array_push($datas,$array);
