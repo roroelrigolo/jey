@@ -1,0 +1,24 @@
+{% extends '/admin/base.html.twig' %}
+
+{% block title %}Jey{% endblock %}
+
+{% block body %}
+    {{ component('Admin:TitlePage', { title: 'Signalements' }) }}
+
+    {{ component('Admin:Table:Header', {buttons:[
+        { tag: 'a', text: 'Ajouter un signalement', route: 'app_admin_alert_new', class: 'secondaryadmin' },
+        { tag: 'a', text: 'Filtrer', class: 'secondaryadmin' }],
+        sort_filters:[
+            { value: 'id', text: 'ID' },
+            { value: 'statut', text: 'Statut' },
+            { value: 'type', text: 'Type' }
+        ]
+    }) }}
+    {{ component('Admin:Table:Table', {
+        titles: ['Id','Déposeur','Type','Statut',''],
+        cols: ['col-span-1','col-span-4','col-span-3','col-span-3','col-span-1'],
+        datas: datas,
+        features: ['','','','','d-flex justify-end'],
+        url: 'app_admin_alert_edit'
+    }) }}
+{% endblock %}

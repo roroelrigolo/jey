@@ -30,9 +30,21 @@ class ProductController extends AbstractController
         $datas = [];
 
         foreach ($products as $product){
+            if($product->getStatement() == "Disponible"){
+                $statut = '<span class="w-10/12 block text-center bg-green bg-opacity-50 rounded text-greendark px-2">'.$product->getStatement().'</span>';
+            }
+            elseif($product->getStatement() == "Réservé"){
+                $statut = '<span class="w-10/12 block text-center bg-orange bg-opacity-50 rounded px-2 text-orangedark">'.$product->getStatement().'</span>';
+            }
+            elseif($product->getStatement() == "Vendu"){
+                $statut = '<span class="w-10/12 block text-center bg-tertiary bg-opacity-50 rounded px-2 text-primary">'.$product->getStatement().'</span>';
+            }
+            elseif($product->getStatement() == "A valider"){
+                $statut = '<span class="w-10/12 block text-center bg-red bg-opacity-50 rounded px-2 text-reddark">'.$product->getStatement().'</span>';
+            }
             $array = [
                 $product->getId(),
-                $product->getStatement(),
+                $statut,
                 $product->getTitle(),
                 $product->getDescription(),
                 $product->getPrice().'€',

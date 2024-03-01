@@ -82,12 +82,16 @@ class Product
     #[ORM\Column]
     private ?bool $flock = null;
 
+    #[ORM\OneToMany(mappedBy: 'product', targetEntity: Alert::class)]
+    private Collection $alerts;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
         $this->productLikes = new ArrayCollection();
         $this->productViews = new ArrayCollection();
         $this->colors = new ArrayCollection();
+        $this->alerts = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -421,6 +425,36 @@ class Product
     public function setFlock(bool $flock): static
     {
         $this->flock = $flock;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Alert>
+     */
+    public function getAlerts(): Collection
+    {
+        return $this->alerts;
+    }
+
+    public function addAlert(Alert $alert): static
+    {
+        if (!$this->alerts->contains($alert)) {
+            $this->alerts->add($alert);
+            $alert->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAlert(Alert $alert): static
+    {
+        if ($this->alerts->removeElement($alert)) {
+            // set the owning side to null (unless already changed)
+            if ($alert->getProduct() === $this) {
+                $alert->setProduct(null);
+            }
+        }
 
         return $this;
     }

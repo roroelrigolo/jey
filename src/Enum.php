@@ -30,8 +30,7 @@ class Enum  {
         'Disponible',
         'Réservé',
         'Vendu',
-        'Supprimé',
-        'En attente de validation',
+        'A valider',
     ];
 
     public static $numbers = [
@@ -151,6 +150,16 @@ class Enum  {
         '976' => 'Mayotte'
     ];
 
+    public static $alert_statuts = [
+        'A vérifier',
+        'Validé'
+    ];
+
+    public static $alert_types = [
+        'Annonce',
+        'Utilisateur'
+    ];
+
     /**
      * @return string[]
      */
@@ -189,6 +198,22 @@ class Enum  {
     public function getNumbers(): array
     {
         return self::$numbers;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getAlertTypes(): array
+    {
+        return self::$alert_types;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getAlertStatuts(): array
+    {
+        return self::$alert_statuts;
     }
 
 }

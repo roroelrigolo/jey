@@ -59,6 +59,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'depositor', targetEntity: Reply::class)]
     private Collection $responses;
 
+    #[ORM\OneToMany(mappedBy: 'depositor', targetEntity: Alert::class)]
+    private Collection $alerts_depositor;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Alert::class)]
+    private Collection $alerts_user;
+
     public function __construct()
     {
         $this->products = new ArrayCollection();
@@ -67,6 +73,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->assessments_depositor = new ArrayCollection();
         $this->assessments_recipient = new ArrayCollection();
         $this->responses = new ArrayCollection();
+        $this->alerts_depositor = new ArrayCollection();
+        $this->alerts_user = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -361,6 +369,66 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($response->getDepositor() === $this) {
                 $response->setDepositor(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Alert>
+     */
+    public function getAlertsDepositor(): Collection
+    {
+        return $this->alerts_depositor;
+    }
+
+    public function addAlertsDepositor(Alert $alertsDepositor): static
+    {
+        if (!$this->alerts_depositor->contains($alertsDepositor)) {
+            $this->alerts_depositor->add($alertsDepositor);
+            $alertsDepositor->setDepositor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAlertsDepositor(Alert $alertsDepositor): static
+    {
+        if ($this->alerts_depositor->removeElement($alertsDepositor)) {
+            // set the owning side to null (unless already changed)
+            if ($alertsDepositor->getDepositor() === $this) {
+                $alertsDepositor->setDepositor(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Alert>
+     */
+    public function getAlertsUser(): Collection
+    {
+        return $this->alerts_user;
+    }
+
+    public function addAlertsUser(Alert $alertsUser): static
+    {
+        if (!$this->alerts_user->contains($alertsUser)) {
+            $this->alerts_user->add($alertsUser);
+            $alertsUser->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAlertsUser(Alert $alertsUser): static
+    {
+        if ($this->alerts_user->removeElement($alertsUser)) {
+            // set the owning side to null (unless already changed)
+            if ($alertsUser->getUser() === $this) {
+                $alertsUser->setUser(null);
             }
         }
 
