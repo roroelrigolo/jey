@@ -5,7 +5,6 @@ use App\Entity\League;
 use App\Entity\Player;
 use App\Entity\Product;
 use App\Entity\Team;
-use App\Repository\TeamRepository;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent]

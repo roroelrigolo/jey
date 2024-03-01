@@ -27,6 +27,7 @@ class Button
             "secondaryadmin" => " bg-secondary text-primary hover:bg-black hover:text-secondary",
             "secondarylight" => " border border-secondary text-secondary hover:bg-primary",
             "tertiary" => " bg-tertiary text-white hover:bg-primary",
+            "delete" => " bg-red text-fullwhite hover:bg-black",
         ];
 
         $full_class .= isset($classMappings[$class]) ? $classMappings[$class] : '';

@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Department;
 use App\Form\Admin\DepartmentFormType;
 use App\Repository\DepartmentRepository;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -86,5 +87,16 @@ class DepartmentController extends AbstractController
             'department' => $department,
             'form' => $form->createView(),
         ]);
+    }
+
+    #[Route('/{id}', name: 'app_admin_department_delete', methods: ['POST'])]
+    public function delete(Request $request, DepartmentRepository $departmentRepository, $id): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        $department = $departmentRepository->find($id);
+        if ($this->isCsrfTokenValid('delete'.$department->getId(), $request->request->get('_token'))) {
+            $departmentRepository->remove($department);
+        }
+        return $this->redirectToRoute('app_admin_department', [], Response::HTTP_SEE_OTHER);
     }
 }

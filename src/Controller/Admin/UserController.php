@@ -63,7 +63,7 @@ class UserController extends AbstractController
             $userRepository->add($user);
             $id = $user->getId();
             if( $_POST['submit'] == "Enregistrer"){
-                return $this->redirectToRoute('app_user_sport', [], Response::HTTP_SEE_OTHER);
+                return $this->redirectToRoute('app_admin_user', [], Response::HTTP_SEE_OTHER);
             }
             else {
                 return $this->redirectToRoute('app_admin_user_edit', ['id'=>$id], Response::HTTP_SEE_OTHER);
@@ -106,5 +106,16 @@ class UserController extends AbstractController
             'user' => $user,
             'form' => $form->createView(),
         ]);
+    }
+
+    #[Route('/{id}', name: 'app_admin_user_delete', methods: ['POST'])]
+    public function delete(Request $request, UserRepository $userRepository, $id): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        $user = $userRepository->find($id);
+        if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
+            $userRepository->remove($user);
+        }
+        return $this->redirectToRoute('app_admin_user', [], Response::HTTP_SEE_OTHER);
     }
 }
