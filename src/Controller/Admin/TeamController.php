@@ -105,4 +105,15 @@ class TeamController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+    #[Route('/{id}', name: 'app_admin_team_delete', methods: ['POST'])]
+    public function delete(Request $request, TeamRepository $teamRepository, $id): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        $team = $teamRepository->find($id);
+        if ($this->isCsrfTokenValid('delete'.$team->getId(), $request->request->get('_token'))) {
+            $teamRepository->remove($team);
+        }
+        return $this->redirectToRoute('app_admin_team', [], Response::HTTP_SEE_OTHER);
+    }
 }

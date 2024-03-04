@@ -6,6 +6,6 @@
     <script>{% include '/admin/sport/js.js.twig' %}</script>
 
     {{ component('Admin:TitlePage', { title: 'Sports' }) }}
-    {{ component('Global:Form:Header', { title: 'Éditer' }) }}
+    {{ component('Global:Form:Header', { title: 'Éditer', id_entity: sport.id, type: 'sport' }) }}
     {{ component('Global:Form:FormAdmin', { form_link: '/admin/sport/_form.html.twig', form: form }) }}
 {% endblock %}

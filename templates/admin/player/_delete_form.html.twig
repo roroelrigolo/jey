@@ -1,0 +1,9 @@
+<form method="post" action="{{ path('app_admin_player_delete', {'id': player.id}) }}"
+      onsubmit="return confirm('Voulez vous vraiment supprimer ce joueur ?');">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ player.id) }}">
+    {{ component('Global:Button',{
+        tag: 'button',
+        text: 'Supprimer',
+        class: 'delete'
+    }) }}
+</form>

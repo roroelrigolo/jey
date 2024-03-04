@@ -1,0 +1,9 @@
+<form method="post" action="{{ path('app_admin_color_delete', {'id': color.id}) }}"
+      onsubmit="return confirm('Voulez vous vraiment supprimer cette couleur ?');">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ color.id) }}">
+    {{ component('Global:Button',{
+        tag: 'button',
+        text: 'Supprimer',
+        class: 'delete'
+    }) }}
+</form>

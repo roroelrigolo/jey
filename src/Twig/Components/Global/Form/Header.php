@@ -1,9 +1,29 @@
 <?php
 namespace App\Twig\Components\Global\Form;
 
+use App\Entity\Alert;
+use App\Entity\Assessment;
+use App\Entity\Brand;
+use App\Entity\Color;
 use App\Entity\Department;
+use App\Entity\League;
+use App\Entity\Player;
+use App\Entity\Product;
+use App\Entity\Reply;
+use App\Entity\Sport;
+use App\Entity\Team;
 use App\Entity\User;
+use App\Repository\AlertRepository;
+use App\Repository\AssessmentRepository;
+use App\Repository\BrandRepository;
+use App\Repository\ColorRepository;
 use App\Repository\DepartmentRepository;
+use App\Repository\LeagueRepository;
+use App\Repository\PlayerRepository;
+use App\Repository\ProductRepository;
+use App\Repository\ReplyRepository;
+use App\Repository\SportRepository;
+use App\Repository\TeamRepository;
 use App\Repository\UserRepository;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
@@ -17,6 +37,16 @@ class Header
     public function __construct(
         private UserRepository $userRepository,
         private DepartmentRepository $departmentRepository,
+        private AlertRepository $alertRepository,
+        private ColorRepository $colorRepository,
+        private BrandRepository $brandRepository,
+        private PlayerRepository $playerRepository,
+        private TeamRepository $teamRepository,
+        private LeagueRepository $leagueRepository,
+        private SportRepository $sportRepository,
+        private ProductRepository $productRepository,
+        private AssessmentRepository $assessmentRepository,
+        private ReplyRepository $replyRepository
     ){
     }
 
@@ -29,10 +59,90 @@ class Header
     }
 
     /**
-     * @return User
+     * @return Department
      */
     public function getDepartment(): Department
     {
         return $this->departmentRepository->find($this->id_entity);
+    }
+
+    /**
+     * @return Alert
+     */
+    public function getAlert(): Alert
+    {
+        return $this->alertRepository->find($this->id_entity);
+    }
+
+    /**
+     * @return Color
+     */
+    public function getColor(): Color
+    {
+        return $this->colorRepository->find($this->id_entity);
+    }
+
+    /**
+     * @return Brand
+     */
+    public function getBrand(): Brand
+    {
+        return $this->brandRepository->find($this->id_entity);
+    }
+
+    /**
+     * @return Player
+     */
+    public function getPlayer(): Player
+    {
+        return $this->playerRepository->find($this->id_entity);
+    }
+
+    /**
+     * @return Team
+     */
+    public function getTeam(): Team
+    {
+        return $this->teamRepository->find($this->id_entity);
+    }
+
+    /**
+     * @return League
+     */
+    public function getLeague(): League
+    {
+        return $this->leagueRepository->find($this->id_entity);
+    }
+
+    /**
+     * @return Sport
+     */
+    public function getSport(): Sport
+    {
+        return $this->sportRepository->find($this->id_entity);
+    }
+
+    /**
+     * @return Product
+     */
+    public function getProduct(): Product
+    {
+        return $this->productRepository->find($this->id_entity);
+    }
+
+    /**
+     * @return Assessment
+     */
+    public function getAssessment(): Assessment
+    {
+        return $this->assessmentRepository->find($this->id_entity);
+    }
+
+    /**
+     * @return Reply
+     */
+    public function getReply(): Reply
+    {
+        return $this->replyRepository->find($this->id_entity);
     }
 }

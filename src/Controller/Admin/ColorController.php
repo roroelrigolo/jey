@@ -92,4 +92,15 @@ class ColorController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+    #[Route('/{id}', name: 'app_admin_color_delete', methods: ['POST'])]
+    public function delete(Request $request, ColorRepository $colorRepository, $id): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        $color = $colorRepository->find($id);
+        if ($this->isCsrfTokenValid('delete'.$color->getId(), $request->request->get('_token'))) {
+            $colorRepository->remove($color);
+        }
+        return $this->redirectToRoute('app_admin_color', [], Response::HTTP_SEE_OTHER);
+    }
 }

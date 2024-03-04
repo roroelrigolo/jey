@@ -4,6 +4,6 @@
 
 {% block body %}
     {{ component('Admin:TitlePage', { title: 'Marques' }) }}
-    {{ component('Global:Form:Header', { title: 'Éditer' }) }}
+    {{ component('Global:Form:Header', { title: 'Éditer', id_entity: brand.id, type: 'brand' }) }}
     {{ component('Global:Form:FormAdmin', { form_link: '/admin/brand/_form.html.twig', form: form }) }}
 {% endblock %}

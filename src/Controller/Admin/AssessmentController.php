@@ -36,7 +36,7 @@ class AssessmentController extends AbstractController
             $array = [
                 $assessment->getId(),
                 $assessment->getContent(),
-                $assessment->getValue().'<i class="fa-solid fa-star"></i>',
+                $assessment->getValue().'<i class="text-secondary fa-solid fa-star"></i>',
                 $assessment->getDepositor()->getPseudo(),
                 $assessment->getRecipient()->getPseudo(),
                 $assessment->getCreatedAt()->format('d/m/Y'),
@@ -138,8 +138,32 @@ class AssessmentController extends AbstractController
 
         return $this->render('admin/assessment/edit.html.twig', [
             'assessment' => $assessment,
+            'reply' => $reply,
             'form' => $form->createView(),
             'form_reply' => $form_reply->createView(),
         ]);
+    }
+
+    #[Route('/{id}', name: 'app_admin_assessment_reply_delete', methods: ['POST'])]
+    public function deleteReply(Request $request, ReplyRepository $replyRepository, $id): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        $reply = $replyRepository->find($id);
+        if ($this->isCsrfTokenValid('delete'.$reply->getId(), $request->request->get('_token'))) {
+            $reply->setAssessment(null);
+            $replyRepository->remove($reply);
+        }
+        return $this->redirectToRoute('app_admin_assessment', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/{id}', name: 'app_admin_assessment_delete', methods: ['POST'])]
+    public function delete(Request $request, AssessmentRepository $assessmentRepository, $id): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        $assessment = $assessmentRepository->find($id);
+        if ($this->isCsrfTokenValid('delete'.$assessment->getId(), $request->request->get('_token'))) {
+            $assessmentRepository->remove($assessment);
+        }
+        return $this->redirectToRoute('app_admin_assessment', [], Response::HTTP_SEE_OTHER);
     }
 }

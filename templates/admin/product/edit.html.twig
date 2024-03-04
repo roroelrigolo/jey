@@ -6,6 +6,6 @@
     <script>{% include '/admin/product/js.js.twig' %}</script>
 
     {{ component('Admin:TitlePage', { title: 'Produits' }) }}
-    {{ component('Global:Form:Header', { title: 'Éditer' }) }}
+    {{ component('Global:Form:Header', { title: 'Éditer', id_entity: product.id, type: 'product' }) }}
     {{ component('Global:Form:FormAdmin', { form_link: '/admin/product/_form_edit.html.twig', form: form, product: product }) }}
 {% endblock %}

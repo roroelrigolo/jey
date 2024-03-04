@@ -6,6 +6,7 @@ use App\Entity\Image;
 use App\Entity\Sport;
 use App\Form\Admin\SportFormType;
 use App\Repository\ImageRepository;
+use App\Repository\LeagueRepository;
 use App\Repository\SportRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -94,5 +95,16 @@ class SportController extends AbstractController
             'sport' => $sport,
             'form' => $form->createView(),
         ]);
+    }
+
+    #[Route('/{id}', name: 'app_admin_sport_delete', methods: ['POST'])]
+    public function delete(Request $request, SportRepository $sportRepository, $id): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        $sport = $sportRepository->find($id);
+        if ($this->isCsrfTokenValid('delete'.$sport->getId(), $request->request->get('_token'))) {
+            $sportRepository->remove($sport);
+        }
+        return $this->redirectToRoute('app_admin_sport', [], Response::HTTP_SEE_OTHER);
     }
 }

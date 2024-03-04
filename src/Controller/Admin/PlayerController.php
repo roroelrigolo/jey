@@ -119,4 +119,15 @@ class PlayerController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+    #[Route('/{id}', name: 'app_admin_player_delete', methods: ['POST'])]
+    public function delete(Request $request, PlayerRepository $playerRepository, $id): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        $player = $playerRepository->find($id);
+        if ($this->isCsrfTokenValid('delete'.$player->getId(), $request->request->get('_token'))) {
+            $playerRepository->remove($player);
+        }
+        return $this->redirectToRoute('app_admin_player', [], Response::HTTP_SEE_OTHER);
+    }
 }

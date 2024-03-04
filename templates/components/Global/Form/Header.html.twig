@@ -2,9 +2,29 @@
     <p class="text-2xl">{{ title }}</p>
     {% if type is defined %}
         {% if type == 'user' %}
-            {% include 'admin/user/_delete_form.html.twig' with {user:this.user} %}
+            {% include 'admin/user/_delete_form.html.twig' with { user:this.user } %}
         {% elseif type == 'department' %}
-            {% include 'admin/department/_delete_form.html.twig' with {department:this.department} %}
+            {% include 'admin/department/_delete_form.html.twig' with { department:this.department } %}
+        {% elseif type == 'alert' %}
+            {% include 'admin/alert/_delete_form.html.twig' with { alert:this.alert } %}
+        {% elseif type == 'color' %}
+            {% include 'admin/color/_delete_form.html.twig' with { color:this.color } %}
+        {% elseif type == 'brand' %}
+            {% include 'admin/brand/_delete_form.html.twig' with { brand:this.brand } %}
+        {% elseif type == 'player' %}
+            {% include 'admin/player/_delete_form.html.twig' with { player:this.player } %}
+        {% elseif type == 'team' %}
+            {% include 'admin/team/_delete_form.html.twig' with { team:this.team } %}
+        {% elseif type == 'league' %}
+            {% include 'admin/league/_delete_form.html.twig' with { league:this.league } %}
+        {% elseif type == 'sport' %}
+            {% include 'admin/sport/_delete_form.html.twig' with { sport:this.sport } %}
+        {% elseif type == 'product' %}
+            {% include 'admin/product/_delete_form.html.twig' with { product:this.product } %}
+        {% elseif type == 'assessment' %}
+            {% include 'admin/assessment/_delete_form.html.twig' with { assessment:this.assessment } %}
+        {% elseif type == 'reply' %}
+            {% include 'admin/assessment/reply/_delete_form.html.twig' with { reply:this.reply } %}
         {% endif %}
     {% endif %}
 

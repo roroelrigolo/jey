@@ -94,4 +94,15 @@ class BrandController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+    #[Route('/{id}', name: 'app_admin_brand_delete', methods: ['POST'])]
+    public function delete(Request $request, BrandRepository $brandRepository, $id): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        $brand = $brandRepository->find($id);
+        if ($this->isCsrfTokenValid('delete'.$brand->getId(), $request->request->get('_token'))) {
+            $brandRepository->remove($brand);
+        }
+        return $this->redirectToRoute('app_admin_brand', [], Response::HTTP_SEE_OTHER);
+    }
 }

@@ -4,9 +4,13 @@
 
 {% block body %}
     {{ component('Admin:TitlePage', { title: 'Avis & Réponses' }) }}
-    {{ component('Global:Form:Header', { title: 'Éditer' }) }}
+    {{ component('Global:Form:Header', { title: 'Éditer avis', id_entity: assessment.id, type: 'assessment' }) }}
     {{ component('Global:Form:FormAdmin', { form_link: '/admin/assessment/_form.html.twig', form: form }) }}
 
-    {{ component('Global:Form:Header', { title: 'Réponse' }) }}
+    {% if reply.id is not null %}
+        {{ component('Global:Form:Header', { title: 'Éditer réponse', id_entity: reply.id, type: 'reply' }) }}
+    {% else %}
+        {{ component('Global:Form:Header', { title: 'Éditer réponse' }) }}
+    {% endif %}
     {{ component('Global:Form:FormAdmin', { form_link: '/admin/assessment/reply/_form.html.twig', form: form_reply }) }}
 {% endblock %}

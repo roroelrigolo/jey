@@ -97,4 +97,15 @@ class AlertController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+    #[Route('/{id}', name: 'app_admin_alert_delete', methods: ['POST'])]
+    public function delete(Request $request, AlertRepository $alertRepository, $id): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        $alert = $alertRepository->find($id);
+        if ($this->isCsrfTokenValid('delete'.$alert->getId(), $request->request->get('_token'))) {
+            $alertRepository->remove($alert);
+        }
+        return $this->redirectToRoute('app_admin_alert', [], Response::HTTP_SEE_OTHER);
+    }
 }

@@ -97,4 +97,15 @@ class LeagueController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+    #[Route('/{id}', name: 'app_admin_league_delete', methods: ['POST'])]
+    public function delete(Request $request, LeagueRepository $leagueRepository, $id): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        $league = $leagueRepository->find($id);
+        if ($this->isCsrfTokenValid('delete'.$league->getId(), $request->request->get('_token'))) {
+            $leagueRepository->remove($league);
+        }
+        return $this->redirectToRoute('app_admin_league', [], Response::HTTP_SEE_OTHER);
+    }
 }

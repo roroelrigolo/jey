@@ -1,0 +1,9 @@
+<form method="post" action="{{ path('app_admin_sport_delete', {'id': sport.id}) }}"
+      onsubmit="return confirm('Voulez vous vraiment supprimer ce sport ?');">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ sport.id) }}">
+    {{ component('Global:Button',{
+        tag: 'button',
+        text: 'Supprimer',
+        class: 'delete'
+    }) }}
+</form>

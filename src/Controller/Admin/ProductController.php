@@ -148,4 +148,15 @@ class ProductController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+    #[Route('/{id}', name: 'app_admin_product_delete', methods: ['POST'])]
+    public function delete(Request $request, ProductRepository $productRepository, $id): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        $product = $productRepository->find($id);
+        if ($this->isCsrfTokenValid('delete'.$product->getId(), $request->request->get('_token'))) {
+            $productRepository->remove($product);
+        }
+        return $this->redirectToRoute('app_admin_product', [], Response::HTTP_SEE_OTHER);
+    }
 }
