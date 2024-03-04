@@ -27,15 +27,10 @@ class AssessmentController extends AbstractController
         $datas = [];
 
         foreach ($assessments as $assessment){
-            if($replyRepository->findOneBy(['assessment'=>$assessment])){
-                $reply = 'Oui';
-            }
-            else{
-                $reply = 'Non';
-            }
+            $reply = $replyRepository->findOneBy(['assessment' => $assessment]) ? 'Oui' : 'Non';
             $array = [
                 $assessment->getId(),
-                $assessment->getContent(),
+                substr($assessment->getContent(), 0, 50).'...',
                 $assessment->getValue().'<i class="text-secondary fa-solid fa-star"></i>',
                 $assessment->getDepositor()->getPseudo(),
                 $assessment->getRecipient()->getPseudo(),

@@ -63,14 +63,6 @@ class PlayerController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            var_dump($_POST['teams']);
-            /*
-            $teams = [];
-            foreach($_POST['teams'] as $item){
-                array_push($teams,$item);
-            }
-            $player->setTeams($teams);
-            */
             $playerRepository->add($player);
             $id = $player->getId();
             if( $_POST['submit'] == "Enregistrer"){
@@ -97,13 +89,6 @@ class PlayerController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            /*
-            $teams = [];
-            foreach($_POST['teams'] as $item){
-                array_push($teams,$item);
-            }
-            $player->setTeams($teams);
-            */
             $playerRepository->add($player);
             if( $_POST['submit'] == "Enregistrer"){
                 return $this->redirectToRoute('app_admin_player', [], Response::HTTP_SEE_OTHER);

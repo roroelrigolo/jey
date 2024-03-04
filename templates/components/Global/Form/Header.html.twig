@@ -1,5 +1,6 @@
 <div class="bg-secondary rounded-t-lg p-8 flex items-center justify-between">
     <p class="text-2xl">{{ title }}</p>
+
     {% if type is defined %}
         {% if type == 'user' %}
             {% include 'admin/user/_delete_form.html.twig' with { user:this.user } %}

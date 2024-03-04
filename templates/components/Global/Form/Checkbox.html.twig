@@ -34,26 +34,33 @@
             {% endfor %}
         {% endif %}
     </div>
-    <input id="search-input-{{ input_name }}" type="text" class="border p-2 w-full mb-4" placeholder="Rechercher & cocher une équipe" onkeyup="changeListFilter('{{ input_name }}')">
-    <div class="flex flex-wrap justify-center gap-y-4">
-        <div class="w-full">
-            {% for child in form[input_name] %}
-                {% set checked = false %}
-                <div class="search-{{ input_name }} w-full flex gap-x-2">
-                    {{ form_widget(child, {'attr': {}}) }}
-                    {{ form_label(
-                        child,
-                        null,
-                        { 'label_attr': attrs }
-                    )
-                    }}
-                </div>
-            {% endfor %}
-        </div>
+    <input id="search-input-{{ input_name }}" type="text" class="border p-2 w-full" placeholder="Rechercher & cocher une équipe" onclick="displayListSelect('list-{{ input_name }}')" onkeyup="changeListFilter('{{ input_name }}')">
+    <div id="list-{{ input_name }}" class="flex flex-wrap justify-center gap-y-4 p-4 bg-white z-50 overflow-y-scroll max-h-[300px] mb-4 hidden">
+        {% for child in form[input_name] %}
+            {% set checked = false %}
+            <div class="search-{{ input_name }} w-full flex gap-x-2">
+                {{ form_widget(child, {'attr': {}}) }}
+                {{ form_label(
+                    child,
+                    null,
+                    { 'label_attr': attrs }
+                )
+                }}
+            </div>
+        {% endfor %}
     </div>
 {% endblock %}
 
 <script>
+    function displayListSelect(idList){
+        list = document.querySelector('#'+idList);
+        if(list.classList.contains('hidden')){
+            list.classList.remove('hidden');
+        }
+        else {
+            list.classList.add('hidden');
+        }
+    }
     function changeListFilter(input_name){
         inputId = '#search-input-'+input_name;
         classe = '.search-'+input_name;

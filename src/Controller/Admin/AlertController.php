@@ -24,12 +24,8 @@ class AlertController extends AbstractController
         $datas = [];
 
         foreach ($alerts as $alert){
-            if($alert->getStatut() == "A vérifier"){
-                $statut = '<span class="bg-red rounded px-2 text-secondary">'.$alert->getStatut().'</span>';
-            }
-            else {
-                $statut = '<span class="bg-primary rounded px-2 text-secondary">'.$alert->getStatut().'</span>';
-            }
+            $statutColor = $alert->getStatut() == "A vérifier" ? "bg-red" : "bg-primary";
+            $statut = '<span class="' . $statutColor . ' rounded px-2 text-secondary">' . $alert->getStatut() . '</span>';
 
             $array = [
                 $alert->getId(),

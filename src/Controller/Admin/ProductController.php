@@ -30,21 +30,28 @@ class ProductController extends AbstractController
         $datas = [];
 
         foreach ($products as $product){
-            if($product->getStatement() == "Disponible"){
-                $statut = '<span class="w-10/12 block text-center bg-green bg-opacity-50 rounded text-greendark px-2">'.$product->getStatement().'</span>';
+            $statement = $product->getStatement();
+            switch ($statement) {
+                case "Disponible":
+                    $class = "bg-green bg-opacity-50 rounded text-greendark";
+                    break;
+                case "Réservé":
+                    $class = "bg-orange bg-opacity-50 rounded text-orangedark";
+                    break;
+                case "Vendu":
+                    $class = "bg-tertiary bg-opacity-50 rounded text-primary";
+                    break;
+                case "A valider":
+                    $class = "bg-red bg-opacity-50 rounded text-reddark";
+                    break;
+                default:
+                    $class = "";
+                    break;
             }
-            elseif($product->getStatement() == "Réservé"){
-                $statut = '<span class="w-10/12 block text-center bg-orange bg-opacity-50 rounded px-2 text-orangedark">'.$product->getStatement().'</span>';
-            }
-            elseif($product->getStatement() == "Vendu"){
-                $statut = '<span class="w-10/12 block text-center bg-tertiary bg-opacity-50 rounded px-2 text-primary">'.$product->getStatement().'</span>';
-            }
-            elseif($product->getStatement() == "A valider"){
-                $statut = '<span class="w-10/12 block text-center bg-red bg-opacity-50 rounded px-2 text-reddark">'.$product->getStatement().'</span>';
-            }
+            $statement = '<span class="w-10/12 block text-center ' . $class . ' px-2">' . $statement . '</span>';
             $array = [
                 $product->getId(),
-                $statut,
+                $statement,
                 $product->getTitle(),
                 $product->getDescription(),
                 $product->getPrice().'€',
