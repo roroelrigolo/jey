@@ -1,16 +1,22 @@
-<nav class="fixed left-0 w-[300px] bg-primary min-h-full py-3 px-4">
-    <a class="flex items-center px-3 mt-3 mb-5" href="{{ path('app_front_home') }}">
+<nav class="fixed left-0 w-[300px] h-full overflow-y-scroll bg-primary">
+    <a class="bg-primary flex items-center px-8 py-8 sticky top-0" href="{{ path('app_front_home') }}">
         <img width="70px" src="/img/logo_carre_jaune.png">
         <h1 class="text-3xl	text-white mx-3">Jey.</h1>
     </a>
-    <ul class="px-3">
-        {% for item in items %}
-            {{ component('Admin:Nav:NavItems', {
-                'text': item[0],
-                'route': item[1],
-                'icon': item[2],
-                'url': item[3],
-            }) }}
+    <ul class="px-5 h-full ">
+        {% for group in items %}
+            <div class="bg-secondary rounded-xl p-3 my-3">
+                <p class="text-primary">{{ group[0] }}</p>
+                <p class="text-sm">{{ group[1] }}</p>
+            </div>
+            {% for item in group[2] %}
+                {{ component('Admin:Nav:NavItems', {
+                    'text': item[0],
+                    'route': item[1],
+                    'icon': item[2],
+                    'url': item[3],
+                }) }}
+            {% endfor %}
         {% endfor %}
     </ul>
 </nav>
