@@ -5,6 +5,7 @@ use App\Entity\Alert;
 use App\Entity\Assessment;
 use App\Entity\Brand;
 use App\Entity\Color;
+use App\Entity\Conversation;
 use App\Entity\Department;
 use App\Entity\League;
 use App\Entity\Player;
@@ -17,6 +18,7 @@ use App\Repository\AlertRepository;
 use App\Repository\AssessmentRepository;
 use App\Repository\BrandRepository;
 use App\Repository\ColorRepository;
+use App\Repository\ConversationRepository;
 use App\Repository\DepartmentRepository;
 use App\Repository\LeagueRepository;
 use App\Repository\PlayerRepository;
@@ -46,7 +48,8 @@ class Header
         private SportRepository $sportRepository,
         private ProductRepository $productRepository,
         private AssessmentRepository $assessmentRepository,
-        private ReplyRepository $replyRepository
+        private ReplyRepository $replyRepository,
+        private ConversationRepository $conversationRepository
     ){
     }
 
@@ -144,5 +147,13 @@ class Header
     public function getReply(): Reply
     {
         return $this->replyRepository->find($this->id_entity);
+    }
+
+    /**
+     * @return Conversation
+     */
+    public function getConversation(): Conversation
+    {
+        return $this->conversationRepository->find($this->id_entity);
     }
 }

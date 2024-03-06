@@ -26,6 +26,8 @@
             {% include 'admin/assessment/_delete_form.html.twig' with { assessment:this.assessment } %}
         {% elseif type == 'reply' %}
             {% include 'admin/assessment/reply/_delete_form.html.twig' with { reply:this.reply } %}
+        {% elseif type == 'conversation' %}
+            {% include 'admin/conversation/_delete_form.html.twig' with { conversation:this.conversation } %}
         {% endif %}
     {% endif %}
 

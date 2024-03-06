@@ -1,0 +1,25 @@
+{{ form_start(form) }}
+{% if app.request.attributes.get("_route") == 'app_admin_conversation_edit' %}
+    {{ component('Global:Form:Page', {
+        id: 'general',
+        inputs: [
+            {component:'Global:Form:Input',form:form,input_name:'product'},
+            {component:'Global:Form:Checkbox',form:form,input_name:'users',id_conversation: conversation.id,attributs:[{name:'class',value:''}]}
+        ],
+    }) }}
+{% else %}
+    {{ component('Global:Form:Page', {
+        id: 'general',
+        inputs: [
+            {component:'Global:Form:Input',form:form,input_name:'product'},
+            {component:'Global:Form:Checkbox',form:form,input_name:'users',attributs:[{name:'class',value:''}]}
+        ],
+    }) }}
+{% endif %}
+{{ component('Global:Form:Buttons', {
+    buttons: [
+        { tag: 'input', text: 'Enregistrer', class:'primary' },
+        { tag: 'input', text: 'Enregistrer & rester', class:'primary' }
+    ]
+}) }}
+{{ form_end(form) }}

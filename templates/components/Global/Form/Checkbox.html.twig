@@ -20,21 +20,37 @@
 {% block choice_widget %}
     {{ form_label(form[input_name], null ,{'label_attr': {'class': 'w-full'}}) }}
     <div class="flex gap-x-2">
-        {% if input_name == "teams" and app.request.attributes.get("_route") == 'app_admin_player_edit' %}
-            {% for team_player in this.player.teams|sort((a, b) => a.title <=> b.title) %}
-                <div class="bg-secondary text-primary px-4 py-2 mb-4 mt-2 rounded">{{ team_player.title }}</div>
-            {% endfor %}
-        {% elseif input_name == "leagues" and app.request.attributes.get("_route") == 'app_admin_team_edit' %}
-            {% for league_team in this.team.leagues|sort((a, b) => a.title <=> b.title) %}
-                <div class="bg-secondary text-primary px-4 py-2 mb-4 mt-2 rounded">{{ league_team.title }}</div>
-            {% endfor %}
-        {% elseif input_name == "sports" and app.request.attributes.get("_route") == 'app_admin_league_edit' %}
-            {% for sport_league in this.league.sports|sort((a, b) => a.title <=> b.title) %}
-                <div class="bg-secondary text-primary px-4 py-2 mb-4 mt-2 rounded">{{ sport_league.title }}</div>
-            {% endfor %}
+        {% if input_name == "teams"%}
+            {% set placeholder = "Rechercher & cocher un utilisateur" %}
+            {% if app.request.attributes.get("_route") == 'app_admin_player_edit' %}
+                {% for team_player in this.player.teams|sort((a, b) => a.title <=> b.title) %}
+                    <div class="bg-secondary text-primary px-4 py-2 mb-4 mt-2 rounded">{{ team_player.title }}</div>
+                {% endfor %}
+            {% endif %}
+        {% elseif input_name == "leagues" %}
+            {% set placeholder = "Rechercher & cocher une ligue" %}
+            {% if app.request.attributes.get("_route") == 'app_admin_team_edit' %}
+                {% for league_team in this.team.leagues|sort((a, b) => a.title <=> b.title) %}
+                    <div class="bg-secondary text-primary px-4 py-2 mb-4 mt-2 rounded">{{ league_team.title }}</div>
+                {% endfor %}
+            {% endif %}
+        {% elseif input_name == "sports" %}
+            {% set placeholder = "Rechercher & cocher un sport" %}
+            {% if app.request.attributes.get("_route") == 'app_admin_league_edit' %}
+                {% for sport_league in this.league.sports|sort((a, b) => a.title <=> b.title) %}
+                    <div class="bg-secondary text-primary px-4 py-2 mb-4 mt-2 rounded">{{ sport_league.title }}</div>
+                {% endfor %}
+            {% endif %}
+        {% elseif input_name == "users" %}
+            {% set placeholder = "Rechercher & cocher un utilisateur" %}
+            {% if app.request.attributes.get("_route") == 'app_admin_conversation_edit' %}
+                {% for conversation_user in this.conversation.users|sort((a, b) => a.pseudo <=> b.pseudo) %}
+                    <div class="bg-secondary text-primary px-4 py-2 mb-4 mt-2 rounded">{{ conversation_user.pseudo }}</div>
+                {% endfor %}
+            {% endif %}
         {% endif %}
     </div>
-    <input id="search-input-{{ input_name }}" type="text" class="border p-2 w-full" placeholder="Rechercher & cocher une équipe" onclick="displayListSelect('list-{{ input_name }}')" onkeyup="changeListFilter('{{ input_name }}')">
+    <input id="search-input-{{ input_name }}" type="text" class="border p-2 w-full" placeholder="{{ placeholder }}" onclick="displayListSelect('list-{{ input_name }}')" onkeyup="changeListFilter('{{ input_name }}')">
     <div id="list-{{ input_name }}" class="flex flex-wrap justify-center gap-y-4 p-4 bg-white z-50 overflow-y-scroll max-h-[300px] mb-4 hidden">
         {% for child in form[input_name] %}
             {% set checked = false %}
@@ -67,11 +83,11 @@
         checkboxs = document.querySelectorAll(classe);
         inputValue = document.querySelector(inputId).value.toUpperCase();
         for(i=0;i<checkboxs.length;i++){
-            if(!(checkboxs[i].classList.contains('hidden') && checkboxs[i].classList.contains('checked'))){
+            if(!(checkboxs[i].classList.contains('hidden') && checkboxs[i].classList.contains('checked')) || inputValue === ""){
                 if(checkboxs[i].classList.contains('hidden')){
                     checkboxs[i].classList.remove('hidden');
                 }
-                if (!checkboxs[i].querySelectorAll('label')[0].textContent.toUpperCase().includes(inputValue) || inputValue == "") {
+                if (!checkboxs[i].querySelectorAll('label')[0].textContent.toUpperCase().includes(inputValue)) {
                     checkboxs[i].classList.add('hidden');
                 }
             }

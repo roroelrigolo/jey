@@ -28,8 +28,15 @@ class ConversationController extends AbstractController
         $datas = [];
 
         foreach ($conversations as $conversation){
+            $users = "";
+            foreach ($conversation->getUsers() as $user){
+                $users .= $user->getPseudo()." ";
+            }
             $array = [
                 $conversation->getId(),
+                $conversation->getProduct()->getTitle(),
+                $users,
+                count($conversation->getMessages()),
                 '<i class="fa-light fa-pen-to-square"></i>'
             ];
             array_push($datas,$array);
@@ -54,7 +61,7 @@ class ConversationController extends AbstractController
             $conversationRepository->add($conversation);
             $id = $conversation->getId();
             if( $_POST['submit'] == "Enregistrer"){
-                return $this->redirectToRoute('app_conversation_alert', [], Response::HTTP_SEE_OTHER);
+                return $this->redirectToRoute('app_admin_conversation', [], Response::HTTP_SEE_OTHER);
             }
             else {
                 return $this->redirectToRoute('app_admin_conversation_edit', ['id'=>$id], Response::HTTP_SEE_OTHER);

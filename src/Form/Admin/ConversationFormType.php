@@ -31,16 +31,15 @@ class ConversationFormType extends AbstractType
                 }
             ))
             ->add('users', EntityType::class, array(
+                'expanded' => true,
                 'class' => User::class,
+                'required' => true,
                 'multiple' => true,
-                'required' => false,
-                'choice_label' => 'name',
-                'choice_value' => 'id',
-                'placeholder' => 'Selectionnez deux utilisateurs',
-                'label' => 'Utilisateur',
+                'choice_label' => 'pseudo',
+                'label' => 'Utilisateurs',
                 'query_builder' => function (UserRepository $er) {
                     return $er->createQueryBuilder('u')
-                        ->orderBy('u.name', 'ASC');
+                        ->orderBy('u.pseudo', 'ASC');
                 }
             ))
         ;

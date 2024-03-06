@@ -1,0 +1,21 @@
+{% extends '/admin/base.html.twig' %}
+
+{% block title %}Jey{% endblock %}
+
+{% block body %}
+    {{ component('Admin:TitlePage', { title: 'Conversations' }) }}
+
+    {{ component('Admin:Table:Header', {buttons:[
+        { tag: 'a', text: 'Ajouter une conversation', route: 'app_admin_conversation_new', class: 'secondaryadmin' },
+        { tag: 'a', text: 'Filtrer', class: 'secondaryadmin' }],
+        sort_filters:[
+            { value: 'id', text: 'ID' }]
+    }) }}
+    {{ component('Admin:Table:Table', {
+        titles: ['Id','Annonce','Utilisateurs','Messages',''],
+        cols: ['col-span-1','col-span-5','col-span-4','col-span-1','col-span-1'],
+        datas: datas,
+        features: ['','','','','d-flex justify-end'],
+        url: 'app_admin_conversation_edit'
+    }) }}
+{% endblock %}

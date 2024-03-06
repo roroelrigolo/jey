@@ -1,6 +1,7 @@
 <?php
 namespace App\Twig\Components\Global\Form;
 
+use App\Entity\Conversation;
 use App\Entity\League;
 use App\Entity\Player;
 use App\Entity\Product;
@@ -16,4 +17,5 @@ class FormAdmin
     public Player $player;
     public Team $team;
     public League $league;
+    public Conversation $conversation;
 }
