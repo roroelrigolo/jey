@@ -3,17 +3,18 @@
 {% block title %}Jey{% endblock %}
 
 {% block body %}
-    <div class="container mx-auto w-10/12 h-[600px] my-20">
+    <div class="container mx-auto w-10/12 h-[680px] my-10">
         <div class="grid grid-cols-12 border h-full">
-            <div class="col-span-3 border">
-                <p>Derniers messages</p>
-                <p>avec d’autres utilisateurs</p>
-                <div class="grid">
-                    {% for conversation in conversations %}
-                        <div class="w-full flex gap-x-2 hover:bg-gray p-4">
+            <div class="col-span-3 border-r">
+                <div class="p-4">
+                    <p class="text-xl text-primary font-bold">Vos derniers messages</p>
+                    <p>avec d’autres utilisateurs</p>
+                </div>
+                <div class="flex flex-col gap-y-2 h-[595px] overflow-y-scroll">
+                    {% for conversation in conversations|sort((a, b) => b.updatedAt <=> a.updatedAt) %}
+                        <a href="{{ path('app_front_conversation_show', {'uuid': conversation.uuid}) }}" class="w-full flex gap-x-2 {% if conversation_display.id == conversation.id %}bg-primarylight{% endif %} hover:bg-primarylight p-4">
                             <div>
-                                <div class="rounded-full bg-primary w-[50px] h-[50px]">
-                                </div>
+                                <div class="rounded-full bg-primary w-[50px] h-[50px]"></div>
                             </div>
                             <div class="w-full">
                                 <div class="flex justify-between">
@@ -31,15 +32,75 @@
                                     <img class="rounded-lg object-cover w-[50px] h-[50px]" src="/upload/product/img/{{ image.url }}">
                                 {% endfor %}
                             </div>
-                        </div>
+                        </a>
                     {% endfor %}
                 </div>
             </div>
-            <div class="col-span-9 border">
-
+            <div class="col-span-9 h-[650px]">
+                <div class="flex flex-col gap-y-2 h-[85%] overflow-y-scroll">
+                    <div class="bg-secondary flex gap-x-4 items-center p-4">
+                        <a href="{{ path('app_front_product_show', {'uuid': conversation_display.product.uuid}) }}">
+                            {% for image in conversation_display.product.images|slice(0,1) %}
+                                <img class="rounded-lg object-cover h-[120px]" src="/upload/product/img/{{ image.url }}">
+                            {% endfor %}
+                        </a>
+                        <a href="{{ path('app_front_product_show', {'uuid': conversation_display.product.uuid}) }}">
+                            <p class="font-bold hover:text-primary">{{ conversation_display.product.title }}</p>
+                            <p class="text-sm mb-2">{{ conversation_display.product.player.lastName }} {{ conversation_display.product.player.firstName }}</p>
+                            <p>{{ conversation_display.product.conditionnement }}</p>
+                            <p class="">{{ conversation_display.product.price }}€</p>
+                        </a>
+                    </div>
+                    <p class="text-center my-4 text-graydark w-1/2 mx-auto text-sm">Vous venez de démarrer une nouvelle conversation. Respectez les autres pour une conversation agréable. <br>Merci !☀️</p>
+                    <div class="w-full mb-4">
+                        {% for user in conversation_display.users %}
+                            {% if user.id != app.user.id %}
+                                <div class="flex gap-x-4 w-fit max-w-[90%] bg-secondarylight px-4 py-2 mx-4 rounded">
+                                    <div class="rounded-full bg-primary w-[50px] h-[50px]"></div>
+                                    <div>
+                                        <p>@{{ user.pseudo }}</p>
+                                        <p>⭐⭐⭐⭐⭐ - 55 évalutations</p>
+                                        <p><i class="fa-light fa-location-dot"></i> {{ user.location.title }}</p>
+                                        <p>Denière connexion : Il y a 3h</p>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    {% set date = "now"|date("d/m/y") %}
+                    {% for message in conversation_display.messages|sort((a, b) => a.createdAt <=> b.createdAt) %}
+                        {% if date != message.createdAt|date('d/m/y') %}
+                            <p class="w-full text-center">{{ message.createdAt|custom_time }}</p>
+                        {% endif %}
+                        {% set date = message.createdAt|date('d/m/y') %}
+                        {% if message.author.id == app.user.id %}
+                            <div class="w-full flex justify-end mb-4">
+                                <div class="w-fit max-w-[90%] bg-primarylight px-4 py-2 mx-4 rounded">
+                                    <p>{{ message.content }}</p>
+                                    <p class="text-xs text-graydark">{{ message.createdAt|date('d/m/y - H:i') }}</p>
+                                </div>
+                            </div>
+                        {% else %}
+                            <div class="w-full mb-4">
+                                <div class="w-fit max-w-[90%] bg-secondarylight px-4 py-2 mx-4 rounded">
+                                    <p>{{ message.content }}</p>
+                                    <p class="text-xs text-graydark">{{ message.createdAt|date('d/m/y - H:i') }}</p>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                    {% if conversation_display.product.statement != "Disponible" %}
+                        <div class="bg-primarylight p-4 mt-2 mb-6">
+                            <p class="font-bold">Trop tard, ce maillot n'est plus disponible</p>
+                            <p>Malheureusement, ce maillot a été vendu, réservé par un autre utilisateur ou bien supprimé</p>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="px-4">
+                    {% include 'front/conversation/message/_form.html.twig' %}
+                </div>
             </div>
         </div>
-
     </div>
 
 {% endblock %}

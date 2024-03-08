@@ -20,6 +20,7 @@ module.exports = {
         fullwhite: "#ffffff",
         black: "#131313",
         gray: "#D3D3D3FF",
+        graydark: "#888888",
         red: "#ff0000",
         reddark: "#850000",
         green: "#00c500",
