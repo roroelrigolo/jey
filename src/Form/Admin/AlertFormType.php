@@ -22,13 +22,13 @@ class AlertFormType extends AbstractType
             ->add('depositor', EntityType::class, array(
                 'class' => User::class,
                 'required' => true,
-                'choice_label' => 'name',
+                'choice_label' => 'pseudo',
                 'choice_value' => 'id',
                 'placeholder' => 'Selectionnez un utilisateur',
                 'label' => 'Déposeur',
                 'query_builder' => function (UserRepository $er) {
                     return $er->createQueryBuilder('u')
-                        ->orderBy('u.name', 'ASC');
+                        ->orderBy('u.pseudo', 'ASC');
                 }
             ))
             ->add('statut', ChoiceType::class, [
@@ -58,13 +58,13 @@ class AlertFormType extends AbstractType
             ->add('user', EntityType::class, array(
                 'class' => User::class,
                 'required' => false,
-                'choice_label' => 'name',
+                'choice_label' => 'pseudo',
                 'choice_value' => 'id',
                 'placeholder' => 'Selectionnez un utilisateur',
                 'label' => 'Utilisateur',
                 'query_builder' => function (UserRepository $er) {
                     return $er->createQueryBuilder('u')
-                        ->orderBy('u.name', 'ASC');
+                        ->orderBy('u.pseudo', 'ASC');
                 }
             ))
         ;

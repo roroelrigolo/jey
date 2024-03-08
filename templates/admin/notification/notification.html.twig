@@ -1,0 +1,23 @@
+{% extends '/admin/base.html.twig' %}
+
+{% block title %}Jey{% endblock %}
+
+{% block body %}
+    {{ component('Admin:TitlePage', { title: 'Notifications' }) }}
+
+    {{ component('Admin:Table:Header', {buttons:[
+        { tag: 'a', text: 'Ajouter une notification', route: 'app_admin_notification_new', class: 'secondaryadmin' },
+        { tag: 'a', text: 'Filtrer', class: 'secondaryadmin' }],
+        sort_filters:[
+            { value: 'id', text: 'ID' },
+            { value: 'type', text: 'Type' },
+        ]
+    }) }}
+    {{ component('Admin:Table:Table', {
+        titles: ['Id','Type','Utilisateur','Vue',''],
+        cols: ['col-span-1','col-span-5','col-span-4','col-span-1','col-span-1'],
+        datas: datas,
+        features: ['','','','','d-flex justify-end'],
+        url: 'app_admin_notification_edit'
+    }) }}
+{% endblock %}

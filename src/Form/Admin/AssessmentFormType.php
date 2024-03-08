@@ -26,25 +26,25 @@ class AssessmentFormType extends AbstractType
             ->add('depositor', EntityType::class, array(
                 'class' => User::class,
                 'required' => true,
-                'choice_label' => 'name',
+                'choice_label' => 'pseudo',
                 'choice_value' => 'id',
                 'placeholder' => 'Selectionnez un utilisateur',
                 'label' => 'Déposeur',
                 'query_builder' => function (UserRepository $er) {
                     return $er->createQueryBuilder('u')
-                        ->orderBy('u.name', 'ASC');
+                        ->orderBy('u.pseudo', 'ASC');
                 }
             ))
             ->add('recipient', EntityType::class, array(
                 'class' => User::class,
                 'required' => true,
-                'choice_label' => 'name',
+                'choice_label' => 'pseudo',
                 'choice_value' => 'id',
                 'placeholder' => 'Selectionnez un utilisateur',
                 'label' => 'Receveur',
                 'query_builder' => function (UserRepository $er) {
                     return $er->createQueryBuilder('u')
-                        ->orderBy('u.name', 'ASC');
+                        ->orderBy('u.pseudo', 'ASC');
                 }
             ))
         ;

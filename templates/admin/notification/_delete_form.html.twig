@@ -1,0 +1,9 @@
+<form method="post" action="{{ path('app_admin_notification_delete', {'id': notification.id}) }}"
+      onsubmit="return confirm('Voulez vous vraiment supprimer cette notification ?');">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ notification.id) }}">
+    {{ component('Global:Button',{
+        tag: 'button',
+        text: 'Supprimer',
+        class: 'delete'
+    }) }}
+</form>

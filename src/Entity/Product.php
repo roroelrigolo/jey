@@ -88,6 +88,9 @@ class Product
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: Conversation::class)]
     private Collection $conversations;
 
+    #[ORM\OneToMany(mappedBy: 'product', targetEntity: Notification::class)]
+    private Collection $notifications;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
@@ -96,6 +99,7 @@ class Product
         $this->colors = new ArrayCollection();
         $this->alerts = new ArrayCollection();
         $this->conversations = new ArrayCollection();
+        $this->notifications = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -487,6 +491,36 @@ class Product
             // set the owning side to null (unless already changed)
             if ($conversation->getProduct() === $this) {
                 $conversation->setProduct(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Notification>
+     */
+    public function getNotifications(): Collection
+    {
+        return $this->notifications;
+    }
+
+    public function addNotification(Notification $notification): static
+    {
+        if (!$this->notifications->contains($notification)) {
+            $this->notifications->add($notification);
+            $notification->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNotification(Notification $notification): static
+    {
+        if ($this->notifications->removeElement($notification)) {
+            // set the owning side to null (unless already changed)
+            if ($notification->getProduct() === $this) {
+                $notification->setProduct(null);
             }
         }
 

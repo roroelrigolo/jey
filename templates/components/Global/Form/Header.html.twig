@@ -28,6 +28,10 @@
             {% include 'admin/assessment/reply/_delete_form.html.twig' with { reply:this.reply } %}
         {% elseif type == 'conversation' %}
             {% include 'admin/conversation/_delete_form.html.twig' with { conversation:this.conversation } %}
+        {% elseif type == 'notification' %}
+            {% include 'admin/notification/_delete_form.html.twig' with { notification:this.notification } %}
+        {% elseif type == 'notificationType' %}
+            {% include 'admin/notification_type/_delete_form.html.twig' with { notification_type:this.notificationType } %}
         {% endif %}
     {% endif %}
 

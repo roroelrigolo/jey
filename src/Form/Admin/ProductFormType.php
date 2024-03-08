@@ -160,13 +160,13 @@ class ProductFormType extends AbstractType
             ->add('user', EntityType::class, array(
                 'class' => User::class,
                 'required' => true,
-                'choice_label' => 'name',
+                'choice_label' => 'pseudo',
                 'choice_value' => 'id',
                 'placeholder' => 'Selectionnez un utilisateur',
                 'label' => 'Utilisateur',
                 'query_builder' => function (UserRepository $er) {
                     return $er->createQueryBuilder('u')
-                        ->orderBy('u.name', 'ASC');
+                        ->orderBy('u.pseudo', 'ASC');
                 }
             ))
         ;

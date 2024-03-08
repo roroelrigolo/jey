@@ -8,6 +8,8 @@ use App\Entity\Color;
 use App\Entity\Conversation;
 use App\Entity\Department;
 use App\Entity\League;
+use App\Entity\Notification;
+use App\Entity\NotificationType;
 use App\Entity\Player;
 use App\Entity\Product;
 use App\Entity\Reply;
@@ -21,6 +23,8 @@ use App\Repository\ColorRepository;
 use App\Repository\ConversationRepository;
 use App\Repository\DepartmentRepository;
 use App\Repository\LeagueRepository;
+use App\Repository\NotificationRepository;
+use App\Repository\NotificationTypeRepository;
 use App\Repository\PlayerRepository;
 use App\Repository\ProductRepository;
 use App\Repository\ReplyRepository;
@@ -49,7 +53,9 @@ class Header
         private ProductRepository $productRepository,
         private AssessmentRepository $assessmentRepository,
         private ReplyRepository $replyRepository,
-        private ConversationRepository $conversationRepository
+        private ConversationRepository $conversationRepository,
+        private NotificationRepository $notificationRepository,
+        private NotificationTypeRepository $notificationTypeRepository
     ){
     }
 
@@ -156,4 +162,21 @@ class Header
     {
         return $this->conversationRepository->find($this->id_entity);
     }
+
+    /**
+     * @return Notification
+     */
+    public function getNotification(): Notification
+    {
+        return $this->notificationRepository->find($this->id_entity);
+    }
+
+    /**
+     * @return NotificationType
+     */
+    public function getNotificationType(): NotificationType
+    {
+        return $this->notificationTypeRepository->find($this->id_entity);
+    }
+
 }
