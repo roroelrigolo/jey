@@ -2,13 +2,11 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Alert;
 use App\Entity\Conversation;
-use App\Form\Admin\AlertFormType;
 use App\Form\Admin\ConversationFormType;
-use App\Repository\AlertRepository;
 use App\Repository\ConversationRepository;
 use App\Repository\MessageRepository;
+use Symfony\Component\Uid\Uuid;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -56,6 +54,7 @@ class ConversationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $conversation->setUuid(Uuid::uuid4()->toString());
             $conversation->setCreatedAt(new \DateTimeImmutable());
             $conversation->setUpdatedAt(new \DateTimeImmutable());
             $conversationRepository->add($conversation);

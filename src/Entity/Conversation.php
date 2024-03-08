@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\ConversationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ConversationRepository::class)]
@@ -29,6 +30,9 @@ class Conversation
 
     #[ORM\ManyToOne(inversedBy: 'conversations')]
     private ?Product $product = null;
+
+    #[ORM\Column(type: Types::GUID)]
+    private ?string $uuid = null;
 
     public function __construct()
     {
@@ -127,6 +131,18 @@ class Conversation
     public function setProduct(?Product $product): static
     {
         $this->product = $product;
+
+        return $this;
+    }
+
+    public function getUuid(): ?string
+    {
+        return $this->uuid;
+    }
+
+    public function setUuid(string $uuid): static
+    {
+        $this->uuid = $uuid;
 
         return $this;
     }

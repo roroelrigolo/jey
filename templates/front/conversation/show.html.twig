@@ -35,8 +35,27 @@
                     {% endfor %}
                 </div>
             </div>
-            <div class="col-span-9 border">
-
+            <div class="col-span-9 border p-4">
+                <div class="flex flex-col justify-end gap-y-4 h-full">
+                    {% for message in conversation_display.messages|sort((a, b) => a.updatedAt <=> b.updatedAt) %}
+                        {% if message.author.id == app.user.id %}
+                            <div class="w-full flex justify-end">
+                                <p class="w-fit max-w-[90%] bg-primarylight px-4 py-2 rounded">
+                                    {{ message.content }}
+                                </p>
+                            </div>
+                        {% else %}
+                            <div class="w-full">
+                                <p class="w-fit max-w-[90%] bg-secondarylight px-4 py-2 rounded">
+                                    {{ message.content }}
+                                </p>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                    <div>
+                        <input type="text" class="w-full">
+                    </div>
+                </div>
             </div>
         </div>
 
