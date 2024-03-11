@@ -28,13 +28,16 @@ class AppExtension extends AbstractExtension
                 $time .= $difference->m . "moi";
             } else {
                 if ($difference->d > 0) {
-                    $time .= $difference->d . "j";
+                    $time .= ($difference->h > 12) ? ($difference->d + 1) : $difference->d;
+                    $time .= "j";
                 } else {
                     if ($difference->h > 0) {
-                        $time .= $difference->h . "h";
+                        $time .= ($difference->i > 30) ? ($difference->h + 1) : $difference->h;
+                        $time .= "h";
                     } else {
                         if ($difference->i > 0) {
-                            $time .= $difference->i . "min";
+                            $time .= ($difference->s > 30) ? ($difference->i + 1) : $difference->i;
+                            $time .= "min";
                         } else {
                             if ($difference->s > 0) {
                                 $time .= $difference->s . "s";

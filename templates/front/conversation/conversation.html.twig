@@ -37,42 +37,20 @@
                 </div>
             </div>
             <div class="col-span-9 h-[650px]">
-                <div class="flex flex-col gap-y-2 h-[85%] overflow-y-scroll">
-                    <div class="bg-secondary flex gap-x-4 items-center p-4">
-                        <a href="{{ path('app_front_product_show', {'uuid': conversation_display.product.uuid}) }}">
-                            {% for image in conversation_display.product.images|slice(0,1) %}
-                                <img class="rounded-lg object-cover h-[120px]" src="/upload/product/img/{{ image.url }}">
-                            {% endfor %}
-                        </a>
-                        <a href="{{ path('app_front_product_show', {'uuid': conversation_display.product.uuid}) }}">
-                            <p class="font-bold hover:text-primary">{{ conversation_display.product.title }}</p>
-                            <p class="text-sm mb-2">{{ conversation_display.product.player.lastName }} {{ conversation_display.product.player.firstName }}</p>
-                            <p>{{ conversation_display.product.conditionnement }}</p>
-                            <p class="">{{ conversation_display.product.price }}€</p>
-                        </a>
-                    </div>
-                    <p class="text-center my-4 text-graydark w-1/2 mx-auto text-sm">Vous venez de démarrer une nouvelle conversation. Respectez les autres pour une conversation agréable. <br>Merci !☀️</p>
-                    <div class="w-full mb-4">
-                        {% for user in conversation_display.users %}
-                            {% if user.id != app.user.id %}
-                                <div class="flex gap-x-4 w-fit max-w-[90%] bg-secondarylight px-4 py-2 mx-4 rounded">
-                                    <div class="rounded-full bg-primary w-[50px] h-[50px]"></div>
-                                    <div>
-                                        <p>@{{ user.pseudo }}</p>
-                                        <p>⭐⭐⭐⭐⭐ - 55 évalutations</p>
-                                        <p><i class="fa-light fa-location-dot"></i> {{ user.location.title }}</p>
-                                        <p>Denière connexion : Il y a 3h</p>
-                                    </div>
-                                </div>
-                            {% endif %}
-                        {% endfor %}
-                    </div>
+                <div class="flex flex-col-reverse gap-y-2 h-[85%] overflow-y-scroll">
+                    {% if conversation_display.product.statement != "Disponible" %}
+                        <div class="bg-primarylight p-4 mt-2 mb-6">
+                            <p class="font-bold">Trop tard, ce maillot n'est plus disponible</p>
+                            <p>Malheureusement, ce maillot a été vendu, réservé par un autre utilisateur ou bien supprimé</p>
+                        </div>
+                    {% endif %}
                     {% set date = "now"|date("d/m/y") %}
-                    {% for message in conversation_display.messages|sort((a, b) => a.createdAt <=> b.createdAt) %}
-                        {% if date != message.createdAt|date('d/m/y') %}
-                            <p class="w-full text-center">{{ message.createdAt|custom_time }}</p>
+                    {% set olddate = null %}
+                    {% set today = false %}
+                    {% for message in conversation_display.messages|sort((a, b) => b.createdAt <=> a.createdAt) %}
+                        {% if olddate != null and olddate|date('d/m/y') != message.createdAt|date('d/m/y') %}
+                            <p class="w-full text-center">{{ olddate|custom_time }}</p>
                         {% endif %}
-                        {% set date = message.createdAt|date('d/m/y') %}
                         {% if message.author.id == app.user.id %}
                             <div class="w-full flex justify-end mb-4">
                                 <div class="w-fit max-w-[90%] bg-primarylight px-4 py-2 mx-4 rounded">
@@ -88,13 +66,38 @@
                                 </div>
                             </div>
                         {% endif %}
+                        {% set olddate = message.createdAt %}
                     {% endfor %}
-                    {% if conversation_display.product.statement != "Disponible" %}
-                        <div class="bg-primarylight p-4 mt-2 mb-6">
-                            <p class="font-bold">Trop tard, ce maillot n'est plus disponible</p>
-                            <p>Malheureusement, ce maillot a été vendu, réservé par un autre utilisateur ou bien supprimé</p>
-                        </div>
-                    {% endif %}
+                    <p class="w-full text-center">{{ olddate|custom_time }}</p>
+                    <div class="w-full mb-4">
+                        {% for user in conversation_display.users %}
+                            {% if user.id != app.user.id %}
+                                <div class="flex gap-x-4 w-fit max-w-[90%] bg-secondarylight px-4 py-2 mx-4 rounded">
+                                    <div class="rounded-full bg-primary w-[50px] h-[50px]"></div>
+                                    <div>
+                                        <p>@{{ user.pseudo }}</p>
+                                        <p>⭐⭐⭐⭐⭐ - 55 évalutations</p>
+                                        <p><i class="fa-light fa-location-dot"></i> {{ user.location.title }}</p>
+                                        <p>Denière connexion : Il y a 3h</p>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    <p class="text-center my-4 text-graydark w-1/2 mx-auto text-sm">Vous venez de démarrer une nouvelle conversation. Respectez les autres pour une conversation agréable. <br>Merci !☀️</p>
+                    <div class="bg-secondary flex gap-x-4 items-center p-4">
+                        <a href="{{ path('app_front_product_show', {'uuid': conversation_display.product.uuid}) }}">
+                            {% for image in conversation_display.product.images|slice(0,1) %}
+                                <img class="rounded-lg object-cover h-[120px]" src="/upload/product/img/{{ image.url }}">
+                            {% endfor %}
+                        </a>
+                        <a href="{{ path('app_front_product_show', {'uuid': conversation_display.product.uuid}) }}">
+                            <p class="font-bold hover:text-primary">{{ conversation_display.product.title }}</p>
+                            <p class="text-sm mb-2">{{ conversation_display.product.player.lastName }} {{ conversation_display.product.player.firstName }}</p>
+                            <p>{{ conversation_display.product.conditionnement }}</p>
+                            <p class="">{{ conversation_display.product.price }}€</p>
+                        </a>
+                    </div>
                 </div>
                 <div class="px-4">
                     {% include 'front/conversation/message/_form.html.twig' %}
