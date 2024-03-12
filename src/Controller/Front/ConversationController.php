@@ -9,6 +9,7 @@ use App\Repository\ConversationRepository;;
 use App\Repository\MessageRepository;
 use App\Repository\SportRepository;
 use App\Repository\UserRepository;
+use App\Service\NotificationService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -37,7 +38,8 @@ class ConversationController extends AbstractController
     }
 
     #[Route('/{uuid}', name: 'app_front_conversation_show')]
-    public function show(Request $request, MessageRepository $messageRepository, ConversationRepository $conversationRepository, SportRepository $sportRepository, $uuid): Response
+    public function show(Request $request, MessageRepository $messageRepository, ConversationRepository $conversationRepository, SportRepository $sportRepository,
+                         NotificationService $notificationService, $uuid): Response
     {
         $conversation = $conversationRepository->findOneBy(['uuid'=>$uuid]);
         $user = $this->getUser();
@@ -52,6 +54,8 @@ class ConversationController extends AbstractController
             $message->setCreatedAt(new \DateTimeImmutable());
             $message->setUpdatedAt(new \DateTimeImmutable());
             $messageRepository->add($message);
+
+            $notificationService->addNotificationMessage($user, $message);
 
             $conversation->setUpdatedAt(new \DateTimeImmutable());
             $conversationRepository->add($conversation);
