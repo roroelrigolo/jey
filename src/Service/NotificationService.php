@@ -2,7 +2,6 @@
 namespace App\Service;
 
 use App\Entity\Notification;
-use App\Entity\NotificationType;
 use App\Repository\NotificationRepository;
 use App\Repository\NotificationTypeRepository;
 
