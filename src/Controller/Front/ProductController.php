@@ -177,13 +177,12 @@ class ProductController extends AbstractController
             'leagues' => $leagueRepository->findAll(),
             'teams' => $teamRepository->findAll(),
             'players' => $playerRepository->findAll(),
-            'sports' => $sportRepository->findBy(['displayMenu'=>1],['title'=>'ASC']),
             'form' => $form->createView(),
         ]);
     }
 
     #[Route('/{uuid}', name: 'app_front_product_show')]
-    public function show($uuid, ProductRepository $productRepository, SportRepository $sportRepository, ProductViewRepository $productViewRepository): Response
+    public function show($uuid, ProductRepository $productRepository, ProductViewRepository $productViewRepository): Response
     {
         $product = $productRepository->findOneBy(['uuid'=>$uuid]);
         $sport = $product->getSport();
@@ -194,7 +193,6 @@ class ProductController extends AbstractController
         return $this->render('front/product/show.html.twig', [
             'product' => $product,
             'productSimilary' => $productRepository->findBy(['sport'=>$sport],['created_at'=>'DESC']),
-            'sports' => $sportRepository->findBy(['displayMenu'=>1],['title'=>'ASC'])
         ]);
     }
 

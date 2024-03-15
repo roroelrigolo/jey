@@ -12,10 +12,10 @@ use Symfony\Component\Routing\Annotation\Route;
 class FavoriteController extends AbstractController
 {
     #[Route('/', name: 'app_front_favorite')]
-    public function home(SportRepository $sportRepository): Response
+    public function home(): Response
     {
         return $this->render('front/favorite/favorite.html.twig', [
-            'sports' => $sportRepository->findBy(['displayMenu'=>1],['title'=>'ASC'])
+
         ]);
     }
 

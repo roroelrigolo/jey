@@ -21,8 +21,7 @@ class SportController extends AbstractController
         $title = substr($title,1);
 
         return $this->render('front/sport/show.html.twig', [
-            'sport' => $sportRepository->findOneBy(['id'=>$id,'title'=>$title]),
-            'sports' => $sportRepository->findBy(['displayMenu'=>1],['title'=>'ASC'])
+            'sport' => $sportRepository->findOneBy(['id'=>$id,'title'=>$title])
         ]);
     }
 

@@ -1,0 +1,141 @@
+<ul class="flex gap-x-2">
+    {% set parameter = app.request.attributes.get('_route_params') %}
+    {% for sport in this.sports %}
+        {% set active = false %}
+        {% if parameter != [] and parameter['slug'] is defined and parameter['slug'] == sport.id~'-'~sport.title %}
+            {% set active = true %}
+        {% endif %}
+        <li class="me-4">
+            <p id="sport-{{ sport.id }}" onclick="displaySubMenu({{ sport.id }})" class="sport {% if active == true %}underline decoration-secondary decoration-2 underline-offset-8{% endif %} hover:underline hover:decoration-secondary hover:decoration-2 hover:underline-offset-8">{{ sport.title }}</p>
+            <div id="sub-menu-sport-{{ sport.id }}" class="sub-menu-sport shadow-md fixed bg-fullwhite px-12 py-8 hidden w-full flex gap-x-4 left-0 mt-[49px]">
+                <div class="w-1/2 px-4">
+                    <div class="flex justify-between items-center mb-4">
+                        <p class="font-bold text-xl">Ligues</p>
+                        <a href="{{ path('app_front_sport_show', {'slug': sport.id|trans~'-'~sport.title}) }}" class="text-primary font-bold hover:text-secondary">Voir tout</a>
+                    </div>
+                    <div class="grid grid-cols-4 gap-2">
+                        {% for league in sport.leagues|sort((a, b) => a.title <=> b.title)  %}
+                            <div id="sport-{{ sport.id }}-league-{{ league.id }}" onclick="displaySubTeam({{ sport.id }},{{ league.id }})" class="league cursor-pointer p-4 rounded bg-white flex justify-between items-center hover:bg-secondarylight">
+                                <p>{{ league.title }}</p>
+                                <i class="fa-regular fa-chevron-right"></i>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="w-1/2 px-4">
+                    {% for league in sport.leagues|sort((a, b) => a.title <=> b.title)  %}
+                        <div id="sub-team-sport-{{ sport.id }}-league-{{ league.id }}" class="sub-team hidden">
+                            <div class="flex justify-between items-center mb-4">
+                                <p class="font-bold text-xl">Equipes</p>
+                                <a href="{{ path('app_front_sport_show', {'slug': sport.id|trans~'-'~sport.title}) }}?league[]={{ league.id }}" class="text-primary font-bold hover:text-secondary">Voir tout</a>
+                            </div>
+                            {% if league.teams|length == 0 %}
+                                <p>Désolé, aucune équipe n'est disponible pour cette ligue</p>
+                            {% else %}
+                                <div class="grid grid-cols-4 gap-2">
+                                    {% for team in league.teams|sort((a, b) => a.title <=> b.title) %}
+                                        <div class="hover:underline hover:decoration-secondary hover:decoration-2 hover:underline-offset-8">
+                                            <a href="{{ path('app_front_sport_show', {'slug': sport.id|trans~'-'~sport.title}) }}?league[]={{ league.id }}&team[]={{ team.id }}">{{ team.title }}</a>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </li>
+    {% endfor %}
+</ul>
+
+
+<script>
+    function displaySubMenu(id){
+        subMenu = document.querySelector('#sub-menu-sport-'+id);
+        allSubSports = document.querySelectorAll('.sub-menu-sport');
+        allSports = document.querySelectorAll('.sport');
+        sport = document.querySelector('#sport-'+id);
+        nav = document.getElementsByTagName('nav')[0];
+
+        allSubSports.forEach((subMenu)=>{
+            if(!subMenu.classList.contains('hidden') && subMenu.id !== 'sub-menu-sport-'+id){
+                subMenu.classList.add('hidden');
+            }
+        })
+        allSports.forEach((sport)=>{
+            if(sport.classList.contains('underline')){
+                classSport('remove',sport);
+            }
+        })
+        if(subMenu.classList.contains('hidden')){
+            subMenu.classList.remove('hidden');
+            classSport('add',sport);
+        }
+        else {
+            subMenu.classList.add('hidden');
+            classSport('remove',sport);
+        }
+        document.addEventListener('click', function(event) {
+            if(!(subMenu.classList.contains('hidden'))){
+                const outsideClick = !nav.contains(event.target);
+                if (outsideClick === true){
+                    subMenu.classList.add('hidden');
+                    classSport('remove',sport);
+                }
+            }
+        })
+    }
+
+    function classSport(action, sport){
+        if(action === "add"){
+            sport.classList.add('underline');
+            sport.classList.add('decoration-secondary');
+            sport.classList.add('decoration-2');
+            sport.classList.add('underline-offset-8');
+        }
+        else {
+            sport.classList.remove('underline');
+            sport.classList.remove('decoration-secondary');
+            sport.classList.remove('decoration-2');
+            sport.classList.remove('underline-offset-8');
+        }
+    }
+
+    function displaySubTeam(sportId, leagueId){
+        allSubTeams = document.querySelectorAll('.sub-team');
+        subTeam = document.querySelector('#sub-team-sport-'+sportId+'-league-'+leagueId);
+        league = document.querySelector('#sport-'+sportId+'-league-'+leagueId);
+
+        allLeagues = document.querySelectorAll('.league');
+        allLeagues.forEach((league)=>{
+            if(league.classList.contains('bg-secondarylight')){
+                classLeague('remove',league);
+            }
+        })
+
+        allSubTeams.forEach((subTeam)=>{
+            if(!subTeam.classList.contains('hidden') && subTeam.id !== 'sub-team-sport-'+sportId+'-league-'+leagueId){
+                subTeam.classList.add('hidden');
+            }
+        })
+        if(subTeam.classList.contains('hidden')){
+            subTeam.classList.remove('hidden');
+            classLeague('add',league);
+        }
+        else {
+            subTeam.classList.add('hidden');
+            classLeague('remove',league);
+        }
+    }
+
+    function classLeague(action, league){
+        if(action === "add"){
+            league.classList.remove('bg-white');
+            league.classList.add('bg-secondarylight');
+        }
+        else {
+            league.classList.add('bg-white');
+            league.classList.remove('bg-secondarylight');
+        }
+    }
+</script>

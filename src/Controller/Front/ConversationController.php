@@ -19,7 +19,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ConversationController extends AbstractController
 {
     #[Route('/', name: 'app_front_conversation')]
-    public function home(ConversationRepository $conversationRepository, SportRepository $sportRepository, UserRepository $userRepository): Response
+    public function home(ConversationRepository $conversationRepository, UserRepository $userRepository): Response
     {
         $user = $this->getUser();
         if (!empty($user->getConversations())) {
@@ -32,13 +32,12 @@ class ConversationController extends AbstractController
             return $this->redirectToRoute('app_front_conversation_show', ['uuid'=>$latestConversation->getUuid()], Response::HTTP_SEE_OTHER);
         }
         return $this->render('front/conversation/conversation.html.twig', [
-            'sports' => $sportRepository->findBy(['displayMenu'=>1],['title'=>'ASC']),
             'conversations' => $user->getConversations()
         ]);
     }
 
     #[Route('/{uuid}', name: 'app_front_conversation_show')]
-    public function show(Request $request, MessageRepository $messageRepository, ConversationRepository $conversationRepository, SportRepository $sportRepository,
+    public function show(Request $request, MessageRepository $messageRepository, ConversationRepository $conversationRepository,
                          NotificationService $notificationService, $uuid): Response
     {
         $conversation = $conversationRepository->findOneBy(['uuid'=>$uuid]);
@@ -64,7 +63,6 @@ class ConversationController extends AbstractController
         }
 
         return $this->render('front/conversation/conversation.html.twig', [
-            'sports' => $sportRepository->findBy(['displayMenu'=>1],['title'=>'ASC']),
             'conversations' => $user->getConversations(),
             'conversation_display' => $conversation,
             'form' => $form->createView()

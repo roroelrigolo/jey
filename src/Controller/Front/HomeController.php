@@ -12,18 +12,18 @@ use Symfony\Component\Routing\Annotation\Route;
 class HomeController extends AbstractController
 {
     #[Route('/', name: 'app_front_home')]
-    public function home(ProductRepository $productRepository, SportRepository $sportRepository): Response
+    public function home(): Response
     {
         return $this->render('front/home.html.twig', [
-            'sports' => $sportRepository->findBy(['displayMenu'=>1],['title'=>'ASC'])
+
         ]);
     }
 
     #[Route('/search', name: 'app_search')]
-    public function search(SportRepository $sportRepository): Response
+    public function search(): Response
     {
         return $this->render('front/search.html.twig', [
-            'sports' => $sportRepository->findBy(['displayMenu'=>1],['title'=>'ASC'])
+
         ]);
     }
 

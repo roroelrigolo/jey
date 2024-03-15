@@ -13,10 +13,9 @@ use Symfony\Component\Routing\Annotation\Route;
 class PlayerController extends AbstractController
 {
     #[Route('/new', name: 'app_front_player_add')]
-    public function add(SportRepository $sportRepository): Response
+    public function add(): Response
     {
         return $this->render('front/player/new.html.twig', [
-            'sports' => $sportRepository->findBy(['displayMenu'=>1],['title'=>'ASC'])
         ]);
     }
 
