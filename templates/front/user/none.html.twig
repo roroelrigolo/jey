@@ -1,0 +1,12 @@
+{% extends '/front/base.html.twig' %}
+
+{% block title %}Jey{% endblock %}
+
+{% block body %}
+    <div class="container mx-auto w-1/2 text-center mb-20 py-20">
+        <p class="text-7xl font-bold mb-8">Oups...😲</p>
+        <p class="text-7xl font-bold mb-8">404</p>
+        <p class="text-xl mb-8">Nous sommes désolés, il n'existe pas d'utilisateurs avec le pseudo <span class="text-primary font-bold">{{ pseudo }}</span></p>
+        {{ component('Global:Button', { tag: 'a', text: "Page d'accueil", route: 'app_front_home', class: 'primary', size: 'text-xl' }) }}
+    </div>
+{% endblock %}
