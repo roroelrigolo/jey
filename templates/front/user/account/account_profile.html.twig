@@ -1,0 +1,19 @@
+{% extends '/front/base.html.twig' %}
+
+{% block title %}Jey{% endblock %}
+
+{% block body %}
+    <div class="container mx-auto w-3/4 flex gap-x-6 mb-20 py-20">
+        {{ component('Front:Nav:NavAccount',{}) }}
+        <div class="w-3/4 bg-fullwhite p-8">
+            <div class="flex justify-between">
+                <p class="text-xl text-primary font-bold mb-4">Mon profil</p>
+                <p class="text-sm text-gray">Dernière mise à jour : {{ app.user.updatedAt|custom_time }}</p>
+            </div>
+
+            {{ component('Global:Alert:Alert',{}) }}
+
+            {% include '/front/user/account/_form_account.html.twig' %}
+        </div>
+    </div>
+{% endblock %}

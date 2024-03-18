@@ -1,0 +1,40 @@
+{{ form_start(form, {'attr' : {'enctype': 'multipart/form-data','class': 'w-full'} }) }}
+<div class="grid gap-y-6">
+    <div class="flex gap-x-4">
+        <div class="flex flex-col w-1/2">
+            {{ form_label(form.name) }}
+            {{ form_widget(form.name, {'attr': {'class': 'bg-white rounded'}}) }}
+        </div>
+        <div class="flex flex-col w-1/2">
+            {{ form_label(form.firstName) }}
+            {{ form_widget(form.firstName, {'attr': {'class': 'bg-white rounded'}}) }}
+        </div>
+    </div>
+    <div class="flex gap-x-4">
+        <div class="flex flex-col w-1/2">
+            {{ form_label(form.pseudo) }}
+            {{ form_widget(form.pseudo, {'attr': {'class': 'bg-white rounded'}}) }}
+        </div>
+        <div class="flex flex-col w-1/2">
+            {{ form_label(form.location) }}
+            {{ form_widget(form.location, {'attr': {'class': 'bg-white rounded'}}) }}
+        </div>
+    </div>
+    <div class="flex gap-x-4">
+        <div class="flex flex-col w-full">
+            <div class="flex flex-col w-full">
+                <label>Email</label>
+                <input type="email" disabled="disabled" class="bg-white rounded" value="{{ app.user.email }}">
+                <i class="text-sm text-graydark">*Vous ne pouvez pas modifier votre adresse mail</i>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="flex justify-end mt-4">
+    {{ component('Global:Button',{
+        tag: 'button',
+        text: 'Enregistrer',
+        class: 'primary'
+    }) }}
+</div>
+{{ form_end(form) }}

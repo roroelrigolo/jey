@@ -2,11 +2,8 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Sport;
 use App\Entity\User;
-use App\Form\Admin\SportFormType;
 use App\Form\Admin\UserFormType;
-use App\Repository\SportRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -53,6 +50,8 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $user->setCreatedAt(new \DateTimeImmutable());
+            $user->setUpdatedAt(new \DateTimeImmutable());
             $user->setRoles(array("ROLE_USER"));
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
@@ -85,6 +84,7 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $user->setUpdatedAt(new \DateTimeImmutable());
             if($form->get('password')->getData()){
                 $user->setPassword(
                     $userPasswordHasher->hashPassword(

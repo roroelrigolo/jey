@@ -1,0 +1,17 @@
+{% for message in app.flashes('warning') %}
+    <div class="rounded-lg text-nowrap h-fit px-4 py-2 me-2 mb-2 bg-warning text-warningdark">
+        {{ message }}
+    </div>
+{% endfor %}
+
+{% for message in app.flashes('success') %}
+    <div class="rounded-lg text-nowrap h-fit px-4 py-2 me-2 mb-2 bg-success text-successdark">
+        {{ message }}
+    </div>
+{% endfor %}
+
+{% for message in app.flashes('danger') %}
+    <div class="rounded-lg text-nowrap h-fit px-4 py-2 me-2 mb-2 bg-danger text-dangerdark">
+        {{ message }}
+    </div>
+{% endfor %}

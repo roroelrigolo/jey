@@ -1,0 +1,5 @@
+<a href="{{ path(item[1]) }}">
+    <div class="{% if app.request.attributes.get('_route') == item[1] %}text-primary bg-secondary border-primary{% else %}border-transparent{% endif %} p-4 border-s-4 hover:text-primary hover:bg-secondary hover:border-primary">
+        <p>{{ item[0] }}</p>
+    </div>
+</a>

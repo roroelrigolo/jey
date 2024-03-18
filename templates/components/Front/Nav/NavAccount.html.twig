@@ -1,0 +1,19 @@
+<div class="w-1/4 bg-fullwhite py-4">
+    <div class="flex flex-col gap-y-4 items-center py-4">
+        <div class="rounded-full bg-primary w-[75px] h-[75px]"></div>
+        <div class="text-center">
+            <p>{{ app.user.name }} {{ app.user.firstName }}</p>
+            <p>@{{ app.user.pseudo }}</p>
+        </div>
+    </div>
+    {% set items = [
+        ['Mon profil','app_front_user_account_profile'],
+        ['Mes annonces','app_front_user_account_product'],
+        ['Mot de passe','app_front_user_account_password'],
+    ] %}
+    {% for item in items %}
+        {{ component('Front:Nav:NavAccountItem',{
+            item: item
+        }) }}
+    {% endfor %}
+</div>
