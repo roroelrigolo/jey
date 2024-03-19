@@ -1,0 +1,76 @@
+{% extends '/front/base.html.twig' %}
+
+{% block title %}Jey{% endblock %}
+
+{% block body %}
+    <div class="container mx-auto w-3/4 flex gap-x-6 mb-20 py-20">
+        {{ component('Front:Nav:NavAccount',{}) }}
+        <div class="w-3/4 bg-fullwhite p-8">
+            <p class="text-xl text-primary font-bold mb-4">Avis</p>
+            <div class="flex gap-x-4 mb-4">
+                <p id="nav-recipients" onclick="switchAssessment('recipients','depositors')" class="underline decoration-secondary decoration-2 underline-offset-8 hover:underline hover:decoration-secondary hover:decoration-2 hover:underline-offset-8">Reçus</p>
+                <p id="nav-depositors" onclick="switchAssessment('depositors','recipients')" class="hover:underline hover:decoration-secondary hover:decoration-2 hover:underline-offset-8">Laissés</p>
+            </div>
+            <div id="recipients" class="grid gap-y-4">
+                {% for assessment in app.user.assessmentsRecipient %}
+                    <div class="flex gap-x-4 p-4">
+                        <div class="rounded-full bg-primary min-w-[50px] h-[50px]"></div>
+                        <div class="grid gap-y-4">
+                            <div>
+                                <p class="text-primary">@{{ assessment.depositor.pseudo }}</p>
+                                <p>{{ assessment.value }}⭐</p>
+                                <p>{{ assessment.content }}</p>
+                                <p class="text-sm text-gray">{{ assessment.createdAt|custom_time }}</p>
+                            </div>
+                            <div>
+                                {% if assessment.reply is not null %}
+                                    <p>{{ assessment.reply.content }}</p>
+                                    <p class="text-sm text-gray">{{ assessment.reply.createdAt|custom_time }}</p>
+                                {% else %}
+                                    Répondre :
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <div id="depositors" class="grid gap-y-4 hidden">
+                {% for assessment in app.user.assessmentsDepositor %}
+                    <div class="flex gap-x-4 p-4">
+                        <div class="rounded-full bg-primary min-w-[50px] h-[50px]"></div>
+                        <div>
+                            <p class="text-primary">@{{ assessment.recipient.pseudo }}</p>
+                            <p>{{ assessment.value }}⭐</p>
+                            <p>{{ assessment.content }}</p>
+                            <p class="text-sm text-gray">{{ assessment.createdAt|custom_time }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function switchAssessment(idDisplay, idHidden){
+            assessmentsDisplay = document.querySelector('#'+idDisplay);
+            assessmentsHidden = document.querySelector('#'+idHidden);
+
+            assessmentsDisplay.classList.remove('hidden');
+            assessmentsHidden.classList.add('hidden');
+
+            navDisplay = document.querySelector('#nav-'+idDisplay);
+            navHidden = document.querySelector('#nav-'+idHidden);
+
+            navDisplay.classList.add('underline');
+            navDisplay.classList.add('decoration-secondary');
+            navDisplay.classList.add('decoration-2');
+            navDisplay.classList.add('underline-offset-8');
+
+            navHidden.classList.remove('underline');
+            navHidden.classList.remove('decoration-secondary');
+            navHidden.classList.remove('decoration-2');
+            navHidden.classList.remove('underline-offset-8');
+        }
+    </script>
+{% endblock %}
+

@@ -67,6 +67,13 @@ class UserController extends AbstractController
         ]);
     }
 
+    #[Route('/myaccount/assessment', name: 'app_front_user_account_assessment')]
+    public function account_assessment(): Response
+    {
+        return $this->render('front/user/account/account_assessment.html.twig', [
+        ]);
+    }
+
     #[Route('/myaccount/password', name: 'app_front_user_account_password', methods: ['GET', 'POST'])]
     public function account_password(Request $request, UserRepository $userRepository, UserPasswordHasherInterface $userPasswordHasher): Response
     {

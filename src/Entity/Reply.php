@@ -14,9 +14,6 @@ class Reply
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    private ?Assessment $assessment = null;
-
     #[ORM\ManyToOne(inversedBy: 'responses')]
     private ?User $depositor = null;
 
@@ -29,21 +26,13 @@ class Reply
     #[ORM\Column]
     private ?\DateTimeImmutable $updated_at = null;
 
+    #[ORM\OneToOne(inversedBy: 'reply', cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Assessment $assessment = null;
+
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getAssessment(): ?Assessment
-    {
-        return $this->assessment;
-    }
-
-    public function setAssessment(?Assessment $assessment): static
-    {
-        $this->assessment = $assessment;
-
-        return $this;
     }
 
     public function getDepositor(): ?User
@@ -90,6 +79,18 @@ class Reply
     public function setUpdatedAt(\DateTimeImmutable $updated_at): static
     {
         $this->updated_at = $updated_at;
+
+        return $this;
+    }
+
+    public function getAssessment(): ?Assessment
+    {
+        return $this->assessment;
+    }
+
+    public function setAssessment(Assessment $assessment): static
+    {
+        $this->assessment = $assessment;
 
         return $this;
     }

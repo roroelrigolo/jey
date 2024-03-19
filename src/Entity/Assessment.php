@@ -32,6 +32,9 @@ class Assessment
     #[ORM\Column]
     private ?\DateTimeImmutable $updated_at = null;
 
+    #[ORM\OneToOne(mappedBy: 'assessment', cascade: ['persist', 'remove'])]
+    private ?Reply $reply = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -105,6 +108,23 @@ class Assessment
     public function setUpdatedAt(\DateTimeImmutable $updated_at): static
     {
         $this->updated_at = $updated_at;
+
+        return $this;
+    }
+
+    public function getReply(): ?Reply
+    {
+        return $this->reply;
+    }
+
+    public function setReply(Reply $reply): static
+    {
+        // set the owning side of the relation if necessary
+        if ($reply->getAssessment() !== $this) {
+            $reply->setAssessment($this);
+        }
+
+        $this->reply = $reply;
 
         return $this;
     }
