@@ -2,6 +2,8 @@
 {{ component('Global:Form:Page', {
     id: 'general',
     inputs: [
+        {component:'Global:Form:Input',form:form,input_name:'type'},
+        {component:'Global:Form:Input',form:form,input_name:'category'},
         {component:'Global:Form:Input',form:form,input_name:'title'},
         {component:'Global:Form:Input',form:form,input_name:'content'},
     ],

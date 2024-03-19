@@ -56,6 +56,12 @@ class Enum  {
         'Utilisateur'
     ];
 
+    public static $notification_categorys = [
+        'Messages',
+        'Abonnements',
+        'Annonces'
+    ];
+
     /**
      * @return string[]
      */
@@ -110,6 +116,14 @@ class Enum  {
     public function getAlertStatuts(): array
     {
         return self::$alert_statuts;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getNotificationCategorys(): array
+    {
+        return self::$notification_categorys;
     }
 
 }

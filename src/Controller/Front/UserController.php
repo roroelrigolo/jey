@@ -2,8 +2,10 @@
 
 namespace App\Controller\Front;
 
+use App\Enum;
 use App\Form\Admin\AccountFormType;
 use App\Form\Admin\PasswordFormType;
+use App\Repository\NotificationTypeRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,15 +17,15 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserController extends AbstractController
 {
     #[Route('/myaccount/profile', name: 'app_front_user_account_profile', methods: ['GET', 'POST'])]
-    public function account_profile(Request $request, UserRepository $userRepository): Response
+    public function account_profile(Request $request, UserRepository $userRepository, NotificationTypeRepository $notificationTypeRepository): Response
     {
         $user = $this->getUser();
         $form = $this->createForm(AccountFormType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $user_pseudo_exist = $userRepository->findOneBy(['pseudo'=>$form->get('pseudo')->getData()]);
-            if($user_pseudo_exist != null && $user_pseudo_exist->getId() != $user->getId()){
+            $userPseudoExist = $userRepository->findOneBy(['pseudo'=>$form->get('pseudo')->getData()]);
+            if($userPseudoExist != null && $userPseudoExist->getId() != $user->getId()){
                 $this->addFlash('danger', 'Désolé, vous ne pouvez pas utiliser ce pseudo car il est déjà utilisé par un autre utilisateur');
                 return $this->redirectToRoute('app_front_user_account_profile', [], Response::HTTP_SEE_OTHER);
             }
@@ -34,8 +36,26 @@ class UserController extends AbstractController
             }
         }
 
+        $notificationsType = $notificationTypeRepository->findAll();
+        if ($_POST != null){
+            foreach ($notificationsType as $notificationType){
+                $checkbox = $_POST['notification_type-'.$notificationType->getId()];
+                if ($checkbox){
+                    $user->addNotificationsType($notificationType);
+                }
+                else {
+                    $user->removeNotificationsType($notificationType);
+                }
+            }
+            $user->setUpdatedAt(new \DateTimeImmutable());
+            $this->addFlash('success', 'Compte modifié avec succès');
+            $userRepository->add($user);
+        }
+
         return $this->render('front/user/account/account_profile.html.twig', [
             'form' => $form->createView(),
+            'notificationsType' => $notificationsType,
+            'notificationCategorys' => Enum::$notification_categorys
         ]);
     }
 

@@ -80,6 +80,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?\DateTimeImmutable $updatedAt = null;
 
+    #[ORM\ManyToMany(targetEntity: NotificationType::class, inversedBy: 'users')]
+    private Collection $notifications_type;
+
     public function __construct()
     {
         $this->products = new ArrayCollection();
@@ -93,6 +96,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->conversations = new ArrayCollection();
         $this->messages = new ArrayCollection();
         $this->notifications = new ArrayCollection();
+        $this->notifications_type = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -560,6 +564,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setUpdatedAt(\DateTimeImmutable $updatedAt): static
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, NotificationType>
+     */
+    public function getNotificationsType(): Collection
+    {
+        return $this->notifications_type;
+    }
+
+    public function addNotificationsType(NotificationType $notificationsType): static
+    {
+        if (!$this->notifications_type->contains($notificationsType)) {
+            $this->notifications_type->add($notificationsType);
+        }
+
+        return $this;
+    }
+
+    public function removeNotificationsType(NotificationType $notificationsType): static
+    {
+        $this->notifications_type->removeElement($notificationsType);
 
         return $this;
     }

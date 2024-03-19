@@ -27,6 +27,8 @@ class NotificationTypeController extends AbstractController
         foreach ($notifications_type as $notification_type){
             $array = [
                 $notification_type->getId(),
+                $notification_type->getType(),
+                $notification_type->getCategory(),
                 $notification_type->getTitle(),
                 $notification_type->getContent(),
                 '<i class="fa-light fa-pen-to-square"></i>'

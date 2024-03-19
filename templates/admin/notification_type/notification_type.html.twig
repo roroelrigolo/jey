@@ -10,14 +10,16 @@
         { tag: 'a', text: 'Filtrer', class: 'secondaryadmin' }],
         sort_filters:[
             { value: 'id', text: 'ID' },
+            { value: 'type', text: 'Type' },
+            { value: 'category', text: 'Catégorie' },
             { value: 'title', text: 'Titre' },
         ]
     }) }}
     {{ component('Admin:Table:Table', {
-        titles: ['Id','Titre','Message',''],
-        cols: ['col-span-1','col-span-4','col-span-6','col-span-1'],
+        titles: ['Id','Type','Catégorie','Titre','Message',''],
+        cols: ['col-span-1','col-span-2','col-span-2','col-span-2','col-span-4','col-span-1'],
         datas: datas,
-        features: ['','','','d-flex justify-end'],
+        features: ['','','','','','d-flex justify-end'],
         url: 'app_admin_notification_type_edit'
     }) }}
 {% endblock %}

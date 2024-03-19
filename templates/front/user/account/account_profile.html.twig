@@ -5,15 +5,55 @@
 {% block body %}
     <div class="container mx-auto w-3/4 flex gap-x-6 mb-20 py-20">
         {{ component('Front:Nav:NavAccount',{}) }}
-        <div class="w-3/4 bg-fullwhite p-8">
-            <div class="flex justify-between">
-                <p class="text-xl text-primary font-bold mb-4">Mon profil</p>
-                <p class="text-sm text-gray">Dernière mise à jour : {{ app.user.updatedAt|custom_time }}</p>
+
+        <div class="w-3/4">
+            <div class="bg-fullwhite p-8 mb-4">
+                <div class="flex justify-between">
+                    <p class="text-xl text-primary font-bold mb-4">Profil</p>
+                    <p class="text-sm text-gray">Dernière mise à jour : {{ app.user.updatedAt|custom_time }}</p>
+                </div>
+                {{ component('Global:Alert:Alert',{}) }}
+                {% include '/front/user/account/_form_account.html.twig' %}
             </div>
-
-            {{ component('Global:Alert:Alert',{}) }}
-
-            {% include '/front/user/account/_form_account.html.twig' %}
+            <div class="bg-fullwhite p-8">
+                <div class="flex justify-between">
+                    <p class="text-xl text-primary font-bold">Notifications</p>
+                    <p class="text-sm text-gray">Dernière mise à jour : {{ app.user.updatedAt|custom_time }}</p>
+                </div>
+                <p class="text-gray  mb-4">Veuillez selectionnez les notifications que vous voulez recevoir</p>
+                <div>
+                    <form name="notifications_user_form" method="post" enctype="multipart/form-data" class="grid grid-cols-2">
+                        {% for category in notificationCategorys %}
+                            <div class="grid-rows-1 mb-2">
+                                <p class="text-lg text-primary font-bold">{{ category }}</p>
+                                {% for notificationType in notificationsType %}
+                                    {% if notificationType.category == category %}
+                                        {% set active = false %}
+                                        {% for userNotification in app.user.notificationsType %}
+                                            {% if userNotification.id == notificationType.id %}
+                                                {% set active = true %}
+                                            {% endif %}
+                                        {% endfor %}
+                                        <div>
+                                            <input type="hidden" name="notification_type-{{ notificationType.id }}" value="0" />
+                                            <input type="checkbox" name="notification_type-{{ notificationType.id }}" id="notification_type-{{ notificationType.id }}" {% if active == true %}checked="checked"{% endif %} value="1">
+                                            {{ notificationType.type }}
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        {% endfor %}
+                        <div class="flex justify-end mt-4">
+                            {{ component('Global:Button',{
+                                tag: 'button',
+                                text: 'Enregistrer',
+                                class: 'primary'
+                            }) }}
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
+
     </div>
 {% endblock %}
