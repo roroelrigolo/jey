@@ -66,6 +66,9 @@ class UserController extends AbstractController
             elseif (!preg_match('/[a-zA-Z]/', $form->get('password')->getData())){
                 $this->addFlash('danger', 'Le mot de passe doit contenir au minimum 1 lettre [a-z] ou [A-Z]');
             }
+            elseif (!preg_match('/[^a-zA-Z0-9]/', $form->get('password')->getData())){
+                $this->addFlash('danger', 'Le mot de passe doit contenir au minimum 1 caractère spécial');
+            }
             else {
                 $user->setUpdatedAt(new \DateTimeImmutable());
                 $user->setPassword(
