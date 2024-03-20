@@ -49,7 +49,7 @@ class NotificationFormType extends AbstractType
             ))
             ->add('message', EntityType::class, array(
                 'class' => Message::class,
-                'required' => true,
+                'required' => false,
                 'choice_label' => 'content',
                 'choice_value' => 'id',
                 'placeholder' => 'Selectionnez un message',
@@ -61,7 +61,7 @@ class NotificationFormType extends AbstractType
             ))
             ->add('product', EntityType::class, array(
                 'class' => Product::class,
-                'required' => true,
+                'required' => false,
                 'choice_label' => 'title',
                 'choice_value' => 'id',
                 'placeholder' => 'Selectionnez un produit',

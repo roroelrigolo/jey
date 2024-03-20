@@ -8,22 +8,27 @@
             {{ component('Front:Nav:Nav') }}
         </div>
     </div>
-    <div class="w-3/12 flex justify-end items-center gap-x-4">
+    <div class="w-3/12 flex justify-end items-center">
         {% if app.user is null %}
             {{ component('Global:Button', { tag: 'a', text: 'Se connecter', route: 'app_login', class: 'secondary' }) }}
             {{ component('Global:Button', { tag: 'a', text: 'Se créer un compte', route: 'app_register', class: 'primary' }) }}
         {% else %}
             {{ component('Global:Button', { tag: 'a', text: 'Vendre un maillot', route: 'app_front_product_new', class: 'primary' }) }}
-            <a href="{{ path('app_front_favorite') }}">
+            <a class="p-2 rounded hover:bg-secondarylight" href="{{ path('app_front_favorite') }}">
                 <i class="fa-light fa-heart text-xl"></i>
             </a>
-            <a href="{{ path('app_front_conversation') }}">
+            <a class="p-2 rounded hover:bg-secondarylight" href="{{ path('app_front_conversation') }}">
                 <i class="fa-light fa-messages text-xl"></i>
             </a>
-            <a href="{{ path('app_front_user_account_profile') }}">
+            <p class="p-2 rounded hover:bg-secondarylight">
+                <i class="fa-light fa-bell text-xl" onclick="toggleNotifications()"></i>
+            </p>
+            <a class="p-2 rounded hover:bg-secondarylight" href="{{ path('app_front_user_account_profile') }}">
                 <i class="fa-light fa-user text-xl"></i>
             </a>
         {% endif %}
     </div>
 </nav>
+
+{{ component('Front:Notification:Notification', { user_id: app.user.id }) }}
 
