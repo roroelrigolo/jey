@@ -23,7 +23,7 @@ class ProductListing
     public function getBestProducts(): array
     {
         //On récupère les produits les plus populaires en fonction d'un ratio de popularité 80% favoris/20% vues
-        $products = $this->productRepository->findAll();
+        $products = $this->productRepository->findBy(['statement'=> 'Disponible']);
         $array_product_ratio = array();
         foreach ($products as $product){
             $popular_ratio = (count($product->getProductViews())*0.2+count($product->getProductLikes())*0.8);
@@ -41,12 +41,12 @@ class ProductListing
 
     public function getLastProducts(): array
     {
-        return $this->productRepository->findBy([],['created_at'=>'DESC'], 15);
+        return $this->productRepository->findBy(['statement'=> 'Disponible'],['created_at'=>'DESC'], 15);
     }
 
     public function getUserProducts(): array
     {
-        return $this->productRepository->findBy(['user'=>$this->user_id],['created_at'=>'DESC']);
+        return $this->productRepository->findBy(['user'=>$this->user_id, 'statement'=> 'Disponible'],['created_at'=>'DESC']);
     }
 
     public function getSportProducts(): array
@@ -63,6 +63,7 @@ class ProductListing
                 $departments = $_GET["departments"];
                 unset($_GET["departments"]);
             }
+            array_push($_GET, ['statement'=> 'Disponible']);
             $products = $this->productRepository->findBy($_GET,['created_at'=>'DESC']);
             //On flitre avec les couleurs si définies
             if ($colors != []) {
@@ -91,7 +92,7 @@ class ProductListing
             return $products;
         }
         else{
-            return $this->productRepository->findBy(['sport'=>$this->sport_id],['created_at'=>'DESC']);
+            return $this->productRepository->findBy(['sport'=>$this->sport_id, 'statement'=> 'Disponible'],['created_at'=>'DESC']);
         }
     }
 }

@@ -91,6 +91,12 @@ class Product
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: Notification::class)]
     private Collection $notifications;
 
+    #[ORM\ManyToOne]
+    private ?User $buyer = null;
+
+    #[ORM\OneToMany(mappedBy: 'product', targetEntity: CancelBook::class)]
+    private Collection $cancelBooks;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
@@ -100,6 +106,7 @@ class Product
         $this->alerts = new ArrayCollection();
         $this->conversations = new ArrayCollection();
         $this->notifications = new ArrayCollection();
+        $this->cancelBooks = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -521,6 +528,48 @@ class Product
             // set the owning side to null (unless already changed)
             if ($notification->getProduct() === $this) {
                 $notification->setProduct(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getBuyer(): ?User
+    {
+        return $this->buyer;
+    }
+
+    public function setBuyer(?User $buyer): static
+    {
+        $this->buyer = $buyer;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CancelBook>
+     */
+    public function getCancelBooks(): Collection
+    {
+        return $this->cancelBooks;
+    }
+
+    public function addCancelBook(CancelBook $cancelBook): static
+    {
+        if (!$this->cancelBooks->contains($cancelBook)) {
+            $this->cancelBooks->add($cancelBook);
+            $cancelBook->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCancelBook(CancelBook $cancelBook): static
+    {
+        if ($this->cancelBooks->removeElement($cancelBook)) {
+            // set the owning side to null (unless already changed)
+            if ($cancelBook->getProduct() === $this) {
+                $cancelBook->setProduct(null);
             }
         }
 

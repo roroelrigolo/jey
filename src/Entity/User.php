@@ -83,6 +83,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToMany(targetEntity: NotificationType::class, inversedBy: 'users')]
     private Collection $notifications_type;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: CancelBook::class)]
+    private Collection $cancelBooks;
+
     public function __construct()
     {
         $this->products = new ArrayCollection();
@@ -97,6 +100,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->messages = new ArrayCollection();
         $this->notifications = new ArrayCollection();
         $this->notifications_type = new ArrayCollection();
+        $this->cancelBooks = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -588,6 +592,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function removeNotificationsType(NotificationType $notificationsType): static
     {
         $this->notifications_type->removeElement($notificationsType);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CancelBook>
+     */
+    public function getCancelBooks(): Collection
+    {
+        return $this->cancelBooks;
+    }
+
+    public function addCancelBook(CancelBook $cancelBook): static
+    {
+        if (!$this->cancelBooks->contains($cancelBook)) {
+            $this->cancelBooks->add($cancelBook);
+            $cancelBook->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCancelBook(CancelBook $cancelBook): static
+    {
+        if ($this->cancelBooks->removeElement($cancelBook)) {
+            // set the owning side to null (unless already changed)
+            if ($cancelBook->getUser() === $this) {
+                $cancelBook->setUser(null);
+            }
+        }
 
         return $this;
     }

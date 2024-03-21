@@ -12,13 +12,14 @@ class Button
     public array $route_parameter = [];
     public string $class = "";
     public string $size;
+    public string $custom_class;
 
     /**
      * @param string $class
      */
     public function setClass(string $class): void
     {
-        $full_class = 'rounded-lg text-nowrap h-fit px-4 py-2 me-2';
+        $full_class = 'text-center rounded-lg text-nowrap h-fit px-4 py-2 me-2';
 
         $classMappings = [
             "primary" => " bg-primary text-secondary hover:bg-black",

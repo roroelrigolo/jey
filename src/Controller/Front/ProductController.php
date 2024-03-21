@@ -3,6 +3,7 @@
 namespace App\Controller\Front;
 
 use App\Entity\Brand;
+use App\Entity\CancelBook;
 use App\Entity\Conversation;
 use App\Entity\Image;
 use App\Entity\League;
@@ -10,8 +11,10 @@ use App\Entity\Player;
 use App\Entity\Product;
 use App\Entity\Sport;
 use App\Entity\Team;
+use App\Entity\User;
 use App\Form\Front\ProductFormType;
 use App\Repository\BrandRepository;
+use App\Repository\CancelBookRepository;
 use App\Repository\ConversationRepository;
 use App\Repository\ImageRepository;
 use App\Repository\LeagueRepository;
@@ -185,8 +188,7 @@ class ProductController extends AbstractController
     }
 
     #[Route('/{uuid}', name: 'app_front_product_show', methods: ['GET', 'POST'])]
-    public function show($uuid, ProductRepository $productRepository, ProductViewRepository $productViewRepository, ConversationRepository $conversationRepository,
-                        UserRepository $userRepository): Response
+    public function show($uuid, ProductRepository $productRepository, ProductViewRepository $productViewRepository): Response
     {
         $product = $productRepository->findOneBy(['uuid'=>$uuid]);
         $sport = $product->getSport();
@@ -194,42 +196,135 @@ class ProductController extends AbstractController
         $view = new ViewService();
         $view->setViewProduct($this->getUser(),$product,$productViewRepository);
 
-        if($_POST != null) {
-            if($_POST['action'] == "contact"){
-                $conversationsUser = $this->getUser()->getConversations();
-                $exist = false;
-                foreach ($conversationsUser as $conversation){
-                    if($conversation->getProduct()->getId() == $product->getId()){
-                        $exist = true;
-                        return $this->redirectToRoute('app_front_conversation_show', ['uuid'=>$conversation->getUuid()], Response::HTTP_SEE_OTHER);
-                    }
-                }
-                if($exist == false){
-                    $conversation = new Conversation();
-                    $conversation->setUuid(Uuid::uuid4()->toString());
-                    $conversation->setProduct($product);
-                    $conversation->setCreatedAt(new \DateTimeImmutable());
-                    $conversation->setUpdatedAt(new \DateTimeImmutable());
-                    $conversation->setRemove(1);
-                    $conversationRepository->add($conversation);
-
-                    $userProduct = $product->getUser();
-                    $userProduct->addConversation($conversation);
-                    $userRepository->add($userProduct);
-
-                    $user = $this->getUser();
-                    $user->addConversation($conversation);
-                    $userRepository->add($user);
-
-                    return $this->redirectToRoute('app_front_conversation_show', ['uuid'=>$conversation->getUuid()], Response::HTTP_SEE_OTHER);
-                }
-            }
-        }
-
         return $this->render('front/product/show.html.twig', [
             'product' => $product,
             'productSimilary' => $productRepository->findBy(['sport'=>$sport],['created_at'=>'DESC']),
         ]);
+    }
+
+    #[Route('/{uuid}/contact', name: 'app_front_product_contact', methods: ['GET', 'POST'])]
+    public function contact($uuid, ProductRepository $productRepository, ConversationRepository $conversationRepository, UserRepository $userRepository): Response
+    {
+        $product = $productRepository->findOneBy(['uuid'=>$uuid]);
+        $conversationsUser = $this->getUser()->getConversations();
+        $exist = false;
+        foreach ($conversationsUser as $conversation){
+            if($conversation->getProduct()->getId() == $product->getId()){
+                $exist = true;
+                return $this->redirectToRoute('app_front_conversation_show', ['uuid'=>$conversation->getUuid()], Response::HTTP_SEE_OTHER);
+            }
+        }
+        if($exist == false){
+            $conversation = new Conversation();
+            $conversation->setUuid(Uuid::uuid4()->toString());
+            $conversation->setProduct($product);
+            $conversation->setCreatedAt(new \DateTimeImmutable());
+            $conversation->setUpdatedAt(new \DateTimeImmutable());
+            $conversation->setRemove(1);
+            $conversationRepository->add($conversation);
+
+            $userProduct = $product->getUser();
+            $userProduct->addConversation($conversation);
+            $userRepository->add($userProduct);
+
+            $user = $this->getUser();
+            $user->addConversation($conversation);
+            $userRepository->add($user);
+
+            return $this->redirectToRoute('app_front_conversation_show', ['uuid'=>$conversation->getUuid()], Response::HTTP_SEE_OTHER);
+        }
+    }
+
+    #[Route('/{uuid}/book', name: 'app_front_product_book', methods: ['GET', 'POST'])]
+    public function book($uuid, ProductRepository $productRepository, ConversationRepository $conversationRepository, UserRepository $userRepository): Response
+    {
+        $product = $productRepository->findOneBy(['uuid'=>$uuid]);
+        $conversationsUser = $this->getUser()->getConversations();
+        $exist = false;
+        foreach ($conversationsUser as $conversation){
+            if($conversation->getProduct()->getId() == $product->getId()){
+                $exist = true;
+                $product->setBuyer($this->getUser());
+                $product->setStatement('Réservé');
+                $productRepository->add($product);
+
+                $conversation->setRemove(0);
+                $conversationRepository->add($conversation);
+
+                return $this->redirectToRoute('app_front_conversation_show', ['uuid'=>$conversation->getUuid()], Response::HTTP_SEE_OTHER);
+            }
+        }
+        if($exist == false){
+            $conversation = new Conversation();
+            $conversation->setUuid(Uuid::uuid4()->toString());
+            $conversation->setProduct($product);
+            $conversation->setCreatedAt(new \DateTimeImmutable());
+            $conversation->setUpdatedAt(new \DateTimeImmutable());
+            $conversation->setRemove(0);
+            $conversationRepository->add($conversation);
+
+            $userProduct = $product->getUser();
+            $userProduct->addConversation($conversation);
+            $userRepository->add($userProduct);
+
+            $user = $this->getUser();
+            $user->addConversation($conversation);
+            $userRepository->add($user);
+
+            $product->setBuyer($this->getUser());
+            $product->setStatement('Réservé');
+            $productRepository->add($product);
+
+            return $this->redirectToRoute('app_front_conversation_show', ['uuid'=>$conversation->getUuid()], Response::HTTP_SEE_OTHER);
+        }
+    }
+
+    #[Route('/{uuid}/valid_book', name: 'app_front_product_valid_book', methods: ['GET', 'POST'])]
+    public function validlBook($uuid, ProductRepository $productRepository, CancelBookRepository $cancelBookRepository, ConversationRepository $conversationRepository): Response
+    {
+        $product = $productRepository->findOneBy(['uuid'=>$uuid]);
+        $user = $this->getUser();
+
+        //We check if the person who book is the person accessing this url
+        if($product->getBuyer() != null and $product->getBuyer()->getId() == $user->getId()){
+            $product->setStatement("Vendu");
+
+            foreach ($user->getConversations() as $conversation){
+                if($conversation->getProduct()->getId() == $product->getId()){
+                    $conversation->setUpdatedAt(new \DateTimeImmutable());
+                    $conversationRepository->add($conversation);
+                    return $this->redirectToRoute('app_front_conversation_show', ['uuid'=>$conversation->getUuid()], Response::HTTP_SEE_OTHER);
+                }
+            }
+        }
+    }
+
+    #[Route('/{uuid}/cancel_book', name: 'app_front_product_cancel_book', methods: ['GET', 'POST'])]
+    public function cancelBook($uuid, ProductRepository $productRepository, CancelBookRepository $cancelBookRepository, ConversationRepository $conversationRepository): Response
+    {
+        $product = $productRepository->findOneBy(['uuid'=>$uuid]);
+        $user = $this->getUser();
+
+        //We check if the person who book is the person accessing this url
+        if($product->getBuyer() != null and $product->getBuyer()->getId() == $user->getId()){
+            $product->setBuyer(null);
+            $product->setStatement("Disponible");
+
+            if(!$cancelBookRepository->findOneBy(['user'=>$user,'product'=>$product])){
+                $cancel_book = new CancelBook();
+                $cancel_book->setUser($user);
+                $cancel_book->setProduct($product);
+                $cancelBookRepository->add($cancel_book);
+            }
+
+            foreach ($user->getConversations() as $conversation){
+                if($conversation->getProduct()->getId() == $product->getId()){
+                    $conversation->setUpdatedAt(new \DateTimeImmutable());
+                    $conversationRepository->add($conversation);
+                    return $this->redirectToRoute('app_front_conversation_show', ['uuid'=>$conversation->getUuid()], Response::HTTP_SEE_OTHER);
+                }
+            }
+        }
     }
 
 }

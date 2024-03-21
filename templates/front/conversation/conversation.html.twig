@@ -90,11 +90,56 @@
                                 </div>
                             {% endif %}
                         {% endfor %}
-                        {% if conversation_display.product.statement != "Disponible" %}
-                            <div class="bg-primarylight p-4 mt-2 mb-6">
-                                <p class="font-bold">Trop tard, ce maillot n'est plus disponible</p>
-                                <p>Malheureusement, ce maillot a été vendu, réservé par un autre utilisateur ou bien supprimé</p>
-                            </div>
+                        {% if conversation_display.product.buyer is not null %}
+                            {% if conversation_display.product.buyer.id == app.user.id %}
+                                {% if conversation_display.product.statement == "Réservé" %}
+                                    <div class="bg-primarylight p-4 mt-2 mb-6">
+                                        <p class="font-bold">Félicitation, vous avez réservé ce maillot 👏</p>
+                                        <p>Veuillez échanger avec le vendeur afin de pouvoir récuperer le maillot</p>
+                                        <div class="flex gap-x-4 mt-4">
+                                            <form method="post" action="{{ path('app_front_product_valid_book', {'uuid': conversation_display.product.uuid }) }}"
+                                                  onsubmit="return confirm('Voulez vous vraiment confirmer la réception du maillot ?');">
+                                                {{ component('Global:Button',{
+                                                    tag: 'button',
+                                                    text: "J'ai reçu le maillot",
+                                                    class: 'primary'
+                                                }) }}
+                                            </form>
+                                            <form method="post" action="{{ path('app_front_product_cancel_book', {'uuid': conversation_display.product.uuid }) }}"
+                                                  onsubmit="return confirm('Voulez vous vraiment annuler votre réservation ?');">
+                                                {{ component('Global:Button',{
+                                                    tag: 'button',
+                                                    text: "Annuler ma réservation",
+                                                    class: 'delete'
+                                                }) }}
+                                            </form>
+                                        </div>
+                                    </div>
+                                    {# TO DO MESSAGES ANNONCE DELETE ET PARTIE VENDEUR #}
+                                {% elseif conversation_display.product.statement == "Vendu" %}
+                                    <div class="bg-primarylight p-4 mt-2 mb-6">
+                                        <p class="font-bold">Félicitation, vous avez confimé avoir reçu ce maillot 👏</p>
+                                        <p>Merci d'avoir utilisé notre plateforme ! N'hésitez pas à donner votre avis sur les échanges avec le vendeur</p>
+                                        <div class="flex gap-x-4 mt-4">
+
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% else %}
+                                <div class="bg-primarylight p-4 mt-2 mb-6">
+                                    <p class="font-bold">Trop tard, ce maillot n'est plus disponible</p>
+                                    <p>Malheureusement, ce maillot a été vendu, réservé par un autre utilisateur ou bien supprimé</p>
+                                </div>
+                            {% endif %}
+                        {% else %}
+                            {% for cancelBooks in app.user.cancelBooks %}
+                                {% if cancelBooks.product.id == conversation_display.product.id %}
+                                    <div class="bg-primarylight p-4 mt-2 mb-6">
+                                        <p class="font-bold">Vous avez annulé votre réservation !</p>
+                                        <p>Cette annonce est donc de nouveau disponible</p>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
                         {% endif %}
                     </div>
                 </div>
