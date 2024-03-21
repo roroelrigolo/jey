@@ -36,8 +36,8 @@
                     {% endfor %}
                 </div>
             </div>
-            <div class="col-span-9 h-[706px] bg-fullwhite rounded">
-                <div class="overflow-y-auto flex flex-col-reverse h-[83%]">
+            <div class="col-span-9 flex flex-col justify-between h-[706px] bg-fullwhite rounded">
+                <div class="overflow-y-auto flex flex-col-reverse max-h-[83%]">
                     <div class="flex flex-col gap-y-2">
                         <div class="bg-secondary flex gap-x-4 items-center p-4">
                             <a href="{{ path('app_front_product_show', {'uuid': conversation_display.product.uuid}) }}">
@@ -105,4 +105,13 @@
         </div>
     </div>
 
+    <script>
+        window.addEventListener('beforeunload', function (e) {
+            // Envoyer une requête AJAX au serveur
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/conversation/exit', true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.send(JSON.stringify({data: 'optional_data'}));
+        });
+    </script>
 {% endblock %}

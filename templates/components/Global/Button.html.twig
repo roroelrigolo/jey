@@ -6,11 +6,11 @@
 {% endif %}
 
 {% if tag == "a" %}
-    <a class="{{ class }} {% if size is defined %}{{ size }}{% else %}text-sm{% endif %}" href="{% if route is defined %}{% if route_parameter is defined %}{{ path(route, parameter) }}{% else %}{{ path(route) }}{% endif %}{% endif %}">{{ text }}</a>
+    <a class="{{ class }} text-center {% if size is defined %}{{ size }}{% else %}text-sm{% endif %}" href="{% if route is defined %}{% if route_parameter is defined %}{{ path(route, parameter) }}{% else %}{{ path(route) }}{% endif %}{% endif %}">{{ text }}</a>
 {% elseif tag == "input" %}
-    <input name="submit" id='submit' type='submit' value="{{ text }}" class="{{ class }} {% if size is defined %}{{ size }}{% else %}text-sm{% endif %}">
+    <input name="submit" id='submit' type='submit' value="{{ text }}" class="{{ class }} text-center {% if size is defined %}{{ size }}{% else %}text-sm{% endif %}">
 {% elseif tag == "button" %}
-    <button class="{{ class }} {% if size is defined %}{{ size }}{% else %}text-sm{% endif %}">{{ text }}</button>
+    <button class="{{ class }} text-center {% if size is defined %}{{ size }}{% else %}text-sm{% endif %}">{{ text }}</button>
 {% endif %}
 
 

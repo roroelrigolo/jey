@@ -74,11 +74,26 @@
                     <p>{{ product.conditionnement }}</p>
                     <p>{{ product.type }}</p>
                 </div>
-            </div>
-            <div class="bg-fullwhite p-4 flex items-center">
-                <a href="" class="btn-gold-plein bd-blue-1">Réserver</a>
-                <a href="" class="btn-blue-vide bd-blue-1">Contacter le vendeur</a>
-                <a href="" class="btn-blue-vide bd-blue-1">Ajouter aux favoris</a>
+
+                {% if app.user %}
+                    {% if app.user.id != product.user.id %}
+                        <div class="flex flex-col justify-center gap-y-4 w-1/2 mx-auto">
+                            <form class="w-full" method="post" enctype="multipart/form-data">
+                                <input type="hidden" class="hidden" id="action" name="action" value="book">
+                                {{ component('Global:Button', { tag: 'input', text: 'Réserver', class: 'secondary' }) }}
+                            </form>
+                            <form class="w-full" method="post">
+                                <input type="hidden" class="hidden" id="action" name="action" value="contact">
+                                {{ component('Global:Button', { tag: 'input', text: 'Contacter le vendeur', class: 'primary' }) }}
+                            </form>
+                        </div>
+                    {% endif %}
+                {% else %}
+                    <div class="flex flex-col justify-center gap-y-4 w-1/2 mx-auto">
+                        {{ component('Global:Button', { tag: 'a', text: 'Réserver', route: 'app_front_home', class: 'secondary' }) }}
+                        {{ component('Global:Button', { tag: 'a', text: 'Contacter le vendeur', route: 'app_front_home', class: 'primary' }) }}
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>

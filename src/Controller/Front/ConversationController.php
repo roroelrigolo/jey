@@ -2,6 +2,7 @@
 
 namespace App\Controller\Front;
 
+use App\Entity\Conversation;
 use App\Entity\Message;
 use App\Form\Front\MessageFormType;
 use App\Repository\ConversationRepository;;
@@ -36,6 +37,19 @@ class ConversationController extends AbstractController
         ]);
     }
 
+    #[Route('/exit', name: 'app_front_conversation_exit')]
+    public function exit(ConversationRepository $conversationRepository): Response
+    {
+        $user = $this->getUser();
+        if (!empty($user->getConversations())) {
+            foreach ($user->getConversations() as $conversation) {
+               if($conversation->isRemove() == 1){
+                   $conversationRepository->remove($conversation);
+               }
+            }
+        }
+    }
+
     #[Route('/{uuid}', name: 'app_front_conversation_show')]
     public function show(Request $request, MessageRepository $messageRepository, ConversationRepository $conversationRepository,
                          NotificationService $notificationService, $uuid): Response
@@ -57,6 +71,7 @@ class ConversationController extends AbstractController
             $notificationService->addNotificationMessage($user, $message);
 
             $conversation->setUpdatedAt(new \DateTimeImmutable());
+            $conversation->setRemove(0);
             $conversationRepository->add($conversation);
 
             return $this->redirectToRoute('app_front_conversation_show', ['uuid'=>$uuid], Response::HTTP_SEE_OTHER);

@@ -34,6 +34,9 @@ class Conversation
     #[ORM\Column(type: Types::GUID)]
     private ?string $uuid = null;
 
+    #[ORM\Column]
+    private ?bool $remove = null;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
@@ -143,6 +146,18 @@ class Conversation
     public function setUuid(string $uuid): static
     {
         $this->uuid = $uuid;
+
+        return $this;
+    }
+
+    public function isRemove(): ?bool
+    {
+        return $this->remove;
+    }
+
+    public function setRemove(bool $remove): static
+    {
+        $this->remove = $remove;
 
         return $this;
     }

@@ -30,5 +30,8 @@
     </div>
 </nav>
 
-{{ component('Front:Notification:Notification', { user_id: app.user.id }) }}
+{% if app.user %}
+    {{ component('Front:Notification:Notification', { user_id: app.user.id }) }}
+{% endif %}
+
 

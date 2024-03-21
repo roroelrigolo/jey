@@ -57,6 +57,7 @@ class ConversationController extends AbstractController
             $conversation->setUuid(Uuid::uuid4()->toString());
             $conversation->setCreatedAt(new \DateTimeImmutable());
             $conversation->setUpdatedAt(new \DateTimeImmutable());
+            $conversation->setRemove(1);
             $conversationRepository->add($conversation);
             $id = $conversation->getId();
             if( $_POST['submit'] == "Enregistrer"){

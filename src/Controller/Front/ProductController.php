@@ -3,6 +3,7 @@
 namespace App\Controller\Front;
 
 use App\Entity\Brand;
+use App\Entity\Conversation;
 use App\Entity\Image;
 use App\Entity\League;
 use App\Entity\Player;
@@ -11,6 +12,7 @@ use App\Entity\Sport;
 use App\Entity\Team;
 use App\Form\Front\ProductFormType;
 use App\Repository\BrandRepository;
+use App\Repository\ConversationRepository;
 use App\Repository\ImageRepository;
 use App\Repository\LeagueRepository;
 use App\Repository\PlayerRepository;
@@ -18,6 +20,7 @@ use App\Repository\ProductRepository;
 use App\Repository\ProductViewRepository;
 use App\Repository\SportRepository;
 use App\Repository\TeamRepository;
+use App\Repository\UserRepository;
 use App\Service\ViewService;
 use Ramsey\Uuid\Uuid;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -181,14 +184,47 @@ class ProductController extends AbstractController
         ]);
     }
 
-    #[Route('/{uuid}', name: 'app_front_product_show')]
-    public function show($uuid, ProductRepository $productRepository, ProductViewRepository $productViewRepository): Response
+    #[Route('/{uuid}', name: 'app_front_product_show', methods: ['GET', 'POST'])]
+    public function show($uuid, ProductRepository $productRepository, ProductViewRepository $productViewRepository, ConversationRepository $conversationRepository,
+                        UserRepository $userRepository): Response
     {
         $product = $productRepository->findOneBy(['uuid'=>$uuid]);
         $sport = $product->getSport();
 
         $view = new ViewService();
         $view->setViewProduct($this->getUser(),$product,$productViewRepository);
+
+        if($_POST != null) {
+            if($_POST['action'] == "contact"){
+                $conversationsUser = $this->getUser()->getConversations();
+                $exist = false;
+                foreach ($conversationsUser as $conversation){
+                    if($conversation->getProduct()->getId() == $product->getId()){
+                        $exist = true;
+                        return $this->redirectToRoute('app_front_conversation_show', ['uuid'=>$conversation->getUuid()], Response::HTTP_SEE_OTHER);
+                    }
+                }
+                if($exist == false){
+                    $conversation = new Conversation();
+                    $conversation->setUuid(Uuid::uuid4()->toString());
+                    $conversation->setProduct($product);
+                    $conversation->setCreatedAt(new \DateTimeImmutable());
+                    $conversation->setUpdatedAt(new \DateTimeImmutable());
+                    $conversation->setRemove(1);
+                    $conversationRepository->add($conversation);
+
+                    $userProduct = $product->getUser();
+                    $userProduct->addConversation($conversation);
+                    $userRepository->add($userProduct);
+
+                    $user = $this->getUser();
+                    $user->addConversation($conversation);
+                    $userRepository->add($user);
+
+                    return $this->redirectToRoute('app_front_conversation_show', ['uuid'=>$conversation->getUuid()], Response::HTTP_SEE_OTHER);
+                }
+            }
+        }
 
         return $this->render('front/product/show.html.twig', [
             'product' => $product,
