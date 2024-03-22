@@ -1,0 +1,9 @@
+<form class="w-full" method="post" action="{{ path('app_front_product_book', {'uuid': uuid }) }}"
+      onsubmit="return confirm('Voulez vous vraiment réserver ce maillot ?');">
+    {{ component('Global:Button',{
+        tag: 'button',
+        text: "Réserver",
+        class: class,
+        custom_class: custom_class
+    }) }}
+</form>

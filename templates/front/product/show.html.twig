@@ -86,23 +86,8 @@
 
                 {% if display_btn == true %}
                     <div class="flex flex-col justify-center gap-y-4 w-1/2 mx-auto">
-                        <form class="w-full" method="post" action="{{ path('app_front_product_book', {'uuid': product.uuid }) }}"
-                              onsubmit="return confirm('Voulez vous vraiment réserver ce maillot ?');">
-                            {{ component('Global:Button',{
-                                tag: 'button',
-                                text: "Réserver",
-                                class: 'secondary',
-                                custom_class: 'w-full'
-                            }) }}
-                        </form>
-                        <form class="w-full" method="post" action="{{ path('app_front_product_contact', {'uuid': product.uuid }) }}">
-                            {{ component('Global:Button',{
-                                tag: 'button',
-                                text: "Contacter le vendeur",
-                                class: 'primary',
-                                custom_class: 'w-full'
-                            }) }}
-                        </form>
+                        {{ component('Front:Action:Book',{ uuid: product.uuid, class: 'secondary', custom_class: 'w-full' }) }}
+                        {{ component('Front:Action:Contact',{ uuid: product.uuid, class: 'primary', custom_class: 'w-full' }) }}
                     </div>
                 {% endif %}
             </div>

@@ -39,18 +39,25 @@
             <div class="col-span-9 flex flex-col justify-between h-[706px] bg-fullwhite rounded">
                 <div class="overflow-y-auto flex flex-col-reverse max-h-[83%]">
                     <div class="flex flex-col gap-y-2">
-                        <div class="bg-secondary flex gap-x-4 items-center p-4">
-                            <a href="{{ path('app_front_product_show', {'uuid': conversation_display.product.uuid}) }}">
-                                {% for image in conversation_display.product.images|slice(0,1) %}
-                                    <img class="rounded-lg object-cover h-[120px]" src="/upload/product/img/{{ image.url }}">
-                                {% endfor %}
-                            </a>
-                            <a href="{{ path('app_front_product_show', {'uuid': conversation_display.product.uuid}) }}">
-                                <p class="font-bold hover:text-primary">{{ conversation_display.product.title }}</p>
-                                <p class="text-sm mb-2">{{ conversation_display.product.player.lastName }} {{ conversation_display.product.player.firstName }}</p>
-                                <p>{{ conversation_display.product.conditionnement }}</p>
-                                <p class="">{{ conversation_display.product.price }}€</p>
-                            </a>
+                        <div class="bg-secondary flex justify-between p-4">
+                            <div class="flex gap-x-4 items-center">
+                                <a href="{{ path('app_front_product_show', {'uuid': conversation_display.product.uuid}) }}">
+                                    {% for image in conversation_display.product.images|slice(0,1) %}
+                                        <img class="rounded-lg object-cover h-[120px]" src="/upload/product/img/{{ image.url }}">
+                                    {% endfor %}
+                                </a>
+                                <a href="{{ path('app_front_product_show', {'uuid': conversation_display.product.uuid}) }}">
+                                    <p class="font-bold hover:text-primary">{{ conversation_display.product.title }}</p>
+                                    <p class="text-sm mb-2">{{ conversation_display.product.player.lastName }} {{ conversation_display.product.player.firstName }}</p>
+                                    <p>{{ conversation_display.product.conditionnement }}</p>
+                                    <p class="">{{ conversation_display.product.price }}€</p>
+                                </a>
+                            </div>
+                            <div>
+                                {% if conversation_display.product.statement == "Disponible" %}
+                                    {{ component('Front:Action:Book',{ uuid: conversation_display.product.uuid, class: 'primary' }) }}
+                                {% endif %}
+                            </div>
                         </div>
                         <p class="text-center my-4 text-graydark w-1/2 mx-auto text-sm">Vous venez de démarrer une nouvelle conversation. Respectez les autres pour une conversation agréable. <br>Merci !☀️</p>
                         <div class="w-full mb-4">
@@ -97,22 +104,8 @@
                                         <p class="font-bold">Félicitation, vous avez réservé ce maillot 👏</p>
                                         <p>Veuillez échanger avec le vendeur afin de pouvoir récuperer le maillot</p>
                                         <div class="flex gap-x-4 mt-4">
-                                            <form method="post" action="{{ path('app_front_product_valid_book', {'uuid': conversation_display.product.uuid }) }}"
-                                                  onsubmit="return confirm('Voulez vous vraiment confirmer la réception du maillot ?');">
-                                                {{ component('Global:Button',{
-                                                    tag: 'button',
-                                                    text: "J'ai reçu le maillot",
-                                                    class: 'primary'
-                                                }) }}
-                                            </form>
-                                            <form method="post" action="{{ path('app_front_product_cancel_book', {'uuid': conversation_display.product.uuid }) }}"
-                                                  onsubmit="return confirm('Voulez vous vraiment annuler votre réservation ?');">
-                                                {{ component('Global:Button',{
-                                                    tag: 'button',
-                                                    text: "Annuler ma réservation",
-                                                    class: 'delete'
-                                                }) }}
-                                            </form>
+                                            {{ component('Front:Action:ConfirmBook',{ uuid: conversation_display.product.uuid, class: 'primary' }) }}
+                                            {{ component('Front:Action:CancelBook',{ uuid: conversation_display.product.uuid, class: 'delete' }) }}
                                         </div>
                                     </div>
                                     {# TO DO MESSAGES ANNONCE DELETE ET PARTIE VENDEUR #}
