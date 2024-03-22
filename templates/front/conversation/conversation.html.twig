@@ -152,11 +152,18 @@
 
     <script>
         window.addEventListener('beforeunload', function (e) {
-            // Envoyer une requête AJAX au serveur
-            var xhr = new XMLHttpRequest();
-            xhr.open('POST', '/conversation/exit', true);
-            xhr.setRequestHeader('Content-Type', 'application/json');
-            xhr.send(JSON.stringify({data: 'optional_data'}));
+            var form = document.querySelector('#message_form');
+            // Vérifier si le formulaire a été soumis
+            if (!form || form.getAttribute('data-submit') === 'true') {
+                return;
+            }
+            else {
+                // Envoyer une requête AJAX au serveur
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', '/conversation/exit', true);
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.send(JSON.stringify({data: 'optional_data'}));
+            }
         });
     </script>
 {% endblock %}
