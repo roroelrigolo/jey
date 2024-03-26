@@ -100,7 +100,7 @@
             <!-- Carousel wrapper -->
             <div class="relative h-[700px] overflow-hidden rounded-lg">
                 {% for image in product.images %}
-                    <div class="hidden duration-700 ease-in-out py-4" data-carousel-item>
+                    <div class="hidden duration-700 ease-in-out py-4 bg-gray" data-carousel-item>
                         <img src="/upload/product/img/{{ image.url }}" class="h-full mx-auto" alt="...">
                     </div>
                 {% endfor %}
