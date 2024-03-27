@@ -1,0 +1,14 @@
+{% if app.user.id == this.product.user.id %}
+    <div class="bg-primarylight p-4 mt-2 mb-6">
+        <p class="font-bold">Ce maillot n'est plus disponible</p>
+        <p>Ce maillot a été vendu, réservé par un autre utilisateur ou bien supprimé</p>
+        <p class="text-xs text-graydark">{{ this.messageStep.updatedAt|date('d/m/y - H:i') }}</p>
+    </div>
+{% else %}
+    <div class="bg-primarylight p-4 mt-2 mb-6">
+        <p class="font-bold">Ce maillot n'est plus disponible</p>
+        <p>Ce maillot a été vendu/réservé par un autre utilisateur ou bien supprimé</p>
+        <p class="text-xs text-graydark">{{ this.messageStep.updatedAt|date('d/m/y - H:i') }}</p>
+    </div>
+{% endif %}
+

@@ -1,0 +1,24 @@
+{% if app.user.id == this.product.user.id %}
+    <div class="bg-primarylight p-4 mt-2 mb-6">
+        <p class="font-bold">Félicitation, {{ component('Global:LinkUser', { pseudo: this.product.buyer.pseudo }) }} à réservé votre maillot</p>
+        <p>Veuillez échanger avec lui afin de pouvoir vendre le maillot. Une fois l'échange effectué, veuillez attendre la confirmation de la part de l'acheteur</p>
+        <div class="flex gap-x-4 my-4">
+            {% if this.product.statement == "Réservé" %}
+                {{ component('Front:Action:CancelBook',{ uuid: this.product.uuid, class: 'delete' }) }}
+            {% endif %}
+        </div>
+        <p class="text-xs text-graydark">{{ this.messageStep.updatedAt|date('d/m/y - H:i') }}</p>
+    </div>
+{% else %}
+    <div class="bg-primarylight p-4 mt-2 mb-6">
+        <p class="font-bold">Félicitation, vous avez réservé ce maillot à {{ component('Global:LinkUser', { pseudo: this.product.user.pseudo }) }}</p>
+        <p>Veuillez échanger avec lui afin de pouvoir récuperer le maillot</p>
+        <div class="flex gap-x-4 my-4">
+            {% if this.product.statement == "Réservé" %}
+                {{ component('Front:Action:ConfirmBook',{ uuid: this.product.uuid, class: 'primary' }) }}
+                {{ component('Front:Action:CancelBook',{ uuid: this.product.uuid, class: 'delete' }) }}
+            {% endif %}
+        </div>
+        <p class="text-xs text-graydark">{{ this.messageStep.updatedAt|date('d/m/y - H:i') }}</p>
+    </div>
+{% endif %}

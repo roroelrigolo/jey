@@ -76,64 +76,41 @@
                             {% endfor %}
                         </div>
                         {% set date = "now"|date('d/m/y') %}
-                        {% for message in conversation_display.messages|sort((a, b) => a.createdAt <=> b.createdAt) %}
-                            {% if date != message.createdAt|date('d/m/y') %}
-                                <p class="w-full text-center">{{ message.createdAt|custom_time }}</p>
-                            {% endif %}
-                            {% set date = message.createdAt|date('d/m/y') %}
-                            {% if message.author.id == app.user.id %}
-                                <div class="w-full flex justify-end mb-4">
-                                    <div class="w-fit max-w-[90%] bg-primarylight px-4 py-2 mx-4 rounded">
-                                        <p>{{ message.content }}</p>
-                                        <p class="text-xs text-graydark">{{ message.createdAt|date('d/m/y - H:i') }}</p>
+                        {% for message in alls_messages|sort((a, b) => a[1] <=> b[1]) %}
+                            {% if message[0] == 'message' %}
+                                {% set message = message[2] %}
+                                {% if date != message.createdAt|date('d/m/y') %}
+                                    <p class="w-full text-center">{{ message.createdAt|custom_time }}</p>
+                                {% endif %}
+                                {% set date = message.createdAt|date('d/m/y') %}
+                                {% if message.author.id == app.user.id %}
+                                    <div class="w-full flex justify-end mb-4">
+                                        <div class="w-fit max-w-[90%] bg-primarylight px-4 py-2 mx-4 rounded">
+                                            <p>{{ message.content }}</p>
+                                            <p class="text-xs text-graydark">{{ message.createdAt|date('d/m/y - H:i') }}</p>
+                                        </div>
                                     </div>
-                                </div>
+                                {% else %}
+                                    <div class="w-full mb-4">
+                                        <div class="w-fit max-w-[90%] bg-secondarylight px-4 py-2 mx-4 rounded">
+                                            <p>{{ message.content }}</p>
+                                            <p class="text-xs text-graydark">{{ message.createdAt|date('d/m/y - H:i') }}</p>
+                                        </div>
+                                    </div>
+                                {% endif %}
                             {% else %}
-                                <div class="w-full mb-4">
-                                    <div class="w-fit max-w-[90%] bg-secondarylight px-4 py-2 mx-4 rounded">
-                                        <p>{{ message.content }}</p>
-                                        <p class="text-xs text-graydark">{{ message.createdAt|date('d/m/y - H:i') }}</p>
-                                    </div>
-                                </div>
+                                {% set messageStep = message[2] %}
+                                {% if messageStep.type == "Book" %}
+                                    {{ component('Front:Conversation:MessageStep:Book',{ message_step_id: messageStep.id, product_id: conversation_display.product.id }) }}
+                                {% elseif messageStep.type == "ConfirmBook" %}
+                                    {{ component('Front:Conversation:MessageStep:ConfirmBook',{ message_step_id: messageStep.id, product_id: conversation_display.product.id, conversation_id: conversation_display.id, user_id: app.user.id }) }}
+                                {% elseif messageStep.type == "CancelBook" %}
+                                    {{ component('Front:Conversation:MessageStep:CancelBook',{ message_step_id: messageStep.id, product_id: conversation_display.product.id }) }}
+                                {% elseif messageStep.type == "Sell" %}
+                                    {{ component('Front:Conversation:MessageStep:Sell',{ message_step_id: messageStep.id, product_id: conversation_display.product.id }) }}
+                                {% endif %}
                             {% endif %}
                         {% endfor %}
-                        {% if conversation_display.product.buyer is not null %}
-                            {% if conversation_display.product.buyer.id == app.user.id %}
-                                {% if conversation_display.product.statement == "Réservé" %}
-                                    <div class="bg-primarylight p-4 mt-2 mb-6">
-                                        <p class="font-bold">Félicitation, vous avez réservé ce maillot 👏</p>
-                                        <p>Veuillez échanger avec le vendeur afin de pouvoir récuperer le maillot</p>
-                                        <div class="flex gap-x-4 mt-4">
-                                            {{ component('Front:Action:ConfirmBook',{ uuid: conversation_display.product.uuid, class: 'primary' }) }}
-                                            {{ component('Front:Action:CancelBook',{ uuid: conversation_display.product.uuid, class: 'delete' }) }}
-                                        </div>
-                                    </div>
-                                    {# TO DO MESSAGES ANNONCE DELETE ET PARTIE VENDEUR #}
-                                {% elseif conversation_display.product.statement == "Vendu" %}
-                                    <div class="bg-primarylight p-4 mt-2 mb-6">
-                                        <p class="font-bold">Félicitation, vous avez confimé avoir reçu ce maillot 👏</p>
-                                        <p>Merci d'avoir utilisé notre plateforme ! N'hésitez pas à donner votre avis sur les échanges avec le vendeur</p>
-                                        <div class="flex gap-x-4 mt-4">
-                                            {{ component('Front:Action:Assessment',{ uuid: conversation_display.product.uuid, class: 'primary' }) }}
-                                        </div>
-                                    </div>
-                                {% endif %}
-                            {% else %}
-                                <div class="bg-primarylight p-4 mt-2 mb-6">
-                                    <p class="font-bold">Trop tard, ce maillot n'est plus disponible</p>
-                                    <p>Malheureusement, ce maillot a été vendu, réservé par un autre utilisateur ou bien supprimé</p>
-                                </div>
-                            {% endif %}
-                        {% else %}
-                            {% for cancelBooks in app.user.cancelBooks %}
-                                {% if cancelBooks.product.id == conversation_display.product.id %}
-                                    <div class="bg-primarylight p-4 mt-2 mb-6">
-                                        <p class="font-bold">Vous avez annulé votre réservation !</p>
-                                        <p>Cette annonce est donc de nouveau disponible</p>
-                                    </div>
-                                {% endif %}
-                            {% endfor %}
-                        {% endif %}
                     </div>
                 </div>
                 <div class="px-4">

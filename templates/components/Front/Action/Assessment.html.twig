@@ -1,4 +1,4 @@
-<form class="w-full" method="post" action="{{ path('app_front_assessment_new', {'uuid': uuid }) }}">
+<form class="w-full" method="post" action="{{ path('app_front_assessment_new', {'uuid_product': uuid_product, 'uuid_conversation': uuid_conversation }) }}">
     {{ component('Global:Button',{
         tag: 'button',
         text: "Évaluer le vendeur",

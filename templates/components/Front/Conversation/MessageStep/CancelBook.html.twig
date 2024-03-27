@@ -1,0 +1,13 @@
+{% if app.user.id == this.product.user.id %}
+    <div class="bg-primarylight p-4 mt-2 mb-6">
+        <p class="font-bold">La réservation a été annulée !</p>
+        <p>Votre annonce est donc de nouveau disponible</p>
+        <p class="text-xs text-graydark">{{ this.messageStep.updatedAt|date('d/m/y - H:i') }}</p>
+    </div>
+{% else %}
+    <div class="bg-primarylight p-4 mt-2 mb-6">
+        <p class="font-bold">La réservation a été annulée !</p>
+        <p>Cette annonce est donc de nouveau disponible</p>
+        <p class="text-xs text-graydark">{{ this.messageStep.updatedAt|date('d/m/y - H:i') }}</p>
+    </div>
+{% endif %}

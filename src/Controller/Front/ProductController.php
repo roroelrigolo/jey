@@ -7,6 +7,7 @@ use App\Entity\CancelBook;
 use App\Entity\Conversation;
 use App\Entity\Image;
 use App\Entity\League;
+use App\Entity\MessageStep;
 use App\Entity\Player;
 use App\Entity\Product;
 use App\Entity\Sport;
@@ -18,12 +19,14 @@ use App\Repository\CancelBookRepository;
 use App\Repository\ConversationRepository;
 use App\Repository\ImageRepository;
 use App\Repository\LeagueRepository;
+use App\Repository\MessageStepRepository;
 use App\Repository\PlayerRepository;
 use App\Repository\ProductRepository;
 use App\Repository\ProductViewRepository;
 use App\Repository\SportRepository;
 use App\Repository\TeamRepository;
 use App\Repository\UserRepository;
+use App\Service\MessageStepService;
 use App\Service\ViewService;
 use Ramsey\Uuid\Uuid;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -236,7 +239,8 @@ class ProductController extends AbstractController
     }
 
     #[Route('/{uuid}/book', name: 'app_front_product_book', methods: ['GET', 'POST'])]
-    public function book($uuid, ProductRepository $productRepository, ConversationRepository $conversationRepository, UserRepository $userRepository): Response
+    public function book($uuid, ProductRepository $productRepository, ConversationRepository $conversationRepository, UserRepository $userRepository,
+                         MessageStepRepository $messageStepRepository, MessageStepService $messageStepService): Response
     {
         $product = $productRepository->findOneBy(['uuid'=>$uuid]);
         $conversationsUser = $this->getUser()->getConversations();
@@ -250,6 +254,8 @@ class ProductController extends AbstractController
 
                 $conversation->setRemove(0);
                 $conversationRepository->add($conversation);
+
+                $messageStepService->addMessageStep('Book',$conversation);
 
                 return $this->redirectToRoute('app_front_conversation_show', ['uuid'=>$conversation->getUuid()], Response::HTTP_SEE_OTHER);
             }
@@ -275,12 +281,14 @@ class ProductController extends AbstractController
             $product->setStatement('Réservé');
             $productRepository->add($product);
 
+            $messageStepService->addMessageStep('Book',$conversation);
+
             return $this->redirectToRoute('app_front_conversation_show', ['uuid'=>$conversation->getUuid()], Response::HTTP_SEE_OTHER);
         }
     }
 
     #[Route('/{uuid}/valid_book', name: 'app_front_product_valid_book', methods: ['GET', 'POST'])]
-    public function validlBook($uuid, ProductRepository $productRepository, CancelBookRepository $cancelBookRepository, ConversationRepository $conversationRepository): Response
+    public function validlBook($uuid, ProductRepository $productRepository, ConversationRepository $conversationRepository, MessageStepService $messageStepService): Response
     {
         $product = $productRepository->findOneBy(['uuid'=>$uuid]);
         $user = $this->getUser();
@@ -293,6 +301,7 @@ class ProductController extends AbstractController
                 if($conversation->getProduct()->getId() == $product->getId()){
                     $conversation->setUpdatedAt(new \DateTimeImmutable());
                     $conversationRepository->add($conversation);
+                    $messageStepService->addMessageStep('ConfirmBook',$conversation);
                     return $this->redirectToRoute('app_front_conversation_show', ['uuid'=>$conversation->getUuid()], Response::HTTP_SEE_OTHER);
                 }
             }
@@ -300,7 +309,8 @@ class ProductController extends AbstractController
     }
 
     #[Route('/{uuid}/cancel_book', name: 'app_front_product_cancel_book', methods: ['GET', 'POST'])]
-    public function cancelBook($uuid, ProductRepository $productRepository, CancelBookRepository $cancelBookRepository, ConversationRepository $conversationRepository): Response
+    public function cancelBook($uuid, ProductRepository $productRepository, CancelBookRepository $cancelBookRepository, ConversationRepository $conversationRepository,
+                               MessageStepService $messageStepService): Response
     {
         $product = $productRepository->findOneBy(['uuid'=>$uuid]);
         $user = $this->getUser();
@@ -321,6 +331,7 @@ class ProductController extends AbstractController
                 if($conversation->getProduct()->getId() == $product->getId()){
                     $conversation->setUpdatedAt(new \DateTimeImmutable());
                     $conversationRepository->add($conversation);
+                    $messageStepService->addMessageStep('CancelBook',$conversation);
                     return $this->redirectToRoute('app_front_conversation_show', ['uuid'=>$conversation->getUuid()], Response::HTTP_SEE_OTHER);
                 }
             }

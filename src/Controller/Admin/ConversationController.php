@@ -6,6 +6,8 @@ use App\Entity\Conversation;
 use App\Form\Admin\ConversationFormType;
 use App\Repository\ConversationRepository;
 use App\Repository\MessageRepository;
+use App\Repository\MessageStepRepository;
+use App\Repository\NotificationRepository;
 use Symfony\Component\Uid\Uuid;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -100,13 +102,20 @@ class ConversationController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_admin_conversation_delete', methods: ['POST'])]
-    public function delete(Request $request, ConversationRepository $conversationRepository, MessageRepository $messageRepository, $id): Response
+    public function delete($id, Request $request, ConversationRepository $conversationRepository, MessageRepository $messageRepository,
+                           NotificationRepository $notificationRepository, MessageStepRepository $messageStepRepository): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $conversation = $conversationRepository->find($id);
         if ($this->isCsrfTokenValid('delete'.$conversation->getId(), $request->request->get('_token'))) {
             foreach ($conversation->getMessages() as $message){
+                foreach ($message->getNotifications() as $notification){
+                    $notificationRepository->remove($notification);
+                }
                 $messageRepository->remove($message);
+            }
+            foreach ($conversation->getMessageSteps() as $messageStep){
+                $messageStepRepository->remove($messageStep);
             }
             $conversationRepository->remove($conversation);
         }

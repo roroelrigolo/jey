@@ -5,6 +5,7 @@ namespace App\Controller\Front;
 use App\Entity\Assessment;
 use App\Form\Front\AssessmentFormType;
 use App\Repository\AssessmentRepository;
+use App\Repository\ConversationRepository;
 use App\Repository\ProductRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,11 +15,12 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/assessment')]
 class AssessmentController extends AbstractController
 {
-    #[Route('/{uuid}/new', name: 'app_front_assessment_new', methods: ['GET', 'POST'])]
-    public function new($uuid, Request $request, AssessmentRepository $assessmentRepository, ProductRepository $productRepository): Response
+    #[Route('/{uuid_product}/{uuid_conversation}/new', name: 'app_front_assessment_new', methods: ['GET', 'POST'])]
+    public function new($uuid_product, $uuid_conversation, Request $request, AssessmentRepository $assessmentRepository, ProductRepository $productRepository,
+                        ConversationRepository $conversationRepository): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
-        $product = $productRepository->findOneBy(['uuid'=>$uuid]);
+        $product = $productRepository->findOneBy(['uuid'=>$uuid_product]);
         if($product->getUser()->getId() != $this->getUser()->getId()){
             $recipient = $product->getUser();
         }
@@ -38,7 +40,11 @@ class AssessmentController extends AbstractController
             $assessment->setUpdatedAt(new \DateTimeImmutable());
             $assessmentRepository->add($assessment);
 
-            return $this->redirectToRoute('app_admin_assessment', [], Response::HTTP_SEE_OTHER);
+            $conversation = $conversationRepository->findOneBy(['uuid'=>$uuid_conversation]);
+            $conversation->setUpdatedAt(new \DateTimeImmutable());
+            $conversationRepository->add($conversation);
+
+            return $this->redirectToRoute('app_front_conversation_show', ['uuid'=>$uuid_conversation], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('front/assessment/new.html.twig', [

@@ -1,9 +1,21 @@
-<form method="post" action="{{ path('app_front_product_cancel_book', {'uuid': uuid }) }}"
-      onsubmit="return confirm('Voulez vous vraiment annuler votre réservation ?');">
-    {{ component('Global:Button',{
-        tag: 'button',
-        text: "Annuler ma réservation",
-        class: class,
-        custom_class: custom_class
-    }) }}
-</form>
+{% if app.user.id == this.product.user.id %}
+    <form method="post" action="{{ path('app_front_product_cancel_book', {'uuid': uuid }) }}"
+          onsubmit="return confirm('Voulez vous vraiment annuler la réservation ?');">
+        {{ component('Global:Button',{
+            tag: 'button',
+            text: "Annuler la réservation",
+            class: class,
+            custom_class: custom_class
+        }) }}
+    </form>
+{% else %}
+    <form method="post" action="{{ path('app_front_product_cancel_book', {'uuid': uuid }) }}"
+          onsubmit="return confirm('Voulez vous vraiment annuler votre réservation ?');">
+        {{ component('Global:Button',{
+            tag: 'button',
+            text: "Annuler ma réservation",
+            class: class,
+            custom_class: custom_class
+        }) }}
+    </form>
+{% endif %}

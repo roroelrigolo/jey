@@ -62,6 +62,14 @@ class Enum  {
         'Annonces'
     ];
 
+    public static $message_step_type = [
+        'Book',
+        'ConfirmBook',
+        'CancelBook',
+        'Sell',
+        'End'
+    ];
+
     /**
      * @return string[]
      */

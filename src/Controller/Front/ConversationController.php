@@ -55,7 +55,17 @@ class ConversationController extends AbstractController
                          NotificationService $notificationService, $uuid): Response
     {
         $conversation = $conversationRepository->findOneBy(['uuid'=>$uuid]);
-        $user = $this->getUser();
+
+        $messages = $conversation->getMessages();
+        $messageSteps = $conversation->getMessageSteps();
+
+        $alls_messages = [];
+        foreach ($messages as $message){
+            array_push($alls_messages, ['message',$message->getUpdatedAt(),$message]);
+        }
+        foreach ($messageSteps as $messageStep){
+            array_push($alls_messages, ['messageStep',$messageStep->getUpdatedAt(),$messageStep]);
+        }
 
         $message = new Message();
         $form = $this->createForm(MessageFormType::class, $message);
@@ -68,7 +78,11 @@ class ConversationController extends AbstractController
             $message->setUpdatedAt(new \DateTimeImmutable());
             $messageRepository->add($message);
 
-            $notificationService->addNotificationMessage($user, $message);
+            foreach ($conversation->getUsers() as $user){
+                if($user->getId() != $this->getUser()->getId()){
+                    $notificationService->addNotificationMessage($user, $message);
+                }
+            }
 
             $conversation->setUpdatedAt(new \DateTimeImmutable());
             $conversation->setRemove(0);
@@ -78,7 +92,8 @@ class ConversationController extends AbstractController
         }
 
         return $this->render('front/conversation/conversation.html.twig', [
-            'conversations' => $user->getConversations(),
+            'conversations' => $this->getUser()->getConversations(),
+            'alls_messages' => $alls_messages,
             'conversation_display' => $conversation,
             'form' => $form->createView()
         ]);
