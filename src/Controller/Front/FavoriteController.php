@@ -14,6 +14,7 @@ class FavoriteController extends AbstractController
     #[Route('/', name: 'app_front_favorite')]
     public function home(): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
         return $this->render('front/favorite/favorite.html.twig', [
 
         ]);

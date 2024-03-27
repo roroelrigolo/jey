@@ -19,7 +19,7 @@ class AssessmentController extends AbstractController
     public function new($uuid_product, $uuid_conversation, Request $request, AssessmentRepository $assessmentRepository, ProductRepository $productRepository,
                         ConversationRepository $conversationRepository): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        $this->denyAccessUnlessGranted('ROLE_USER');
         $product = $productRepository->findOneBy(['uuid'=>$uuid_product]);
         if($product->getUser()->getId() != $this->getUser()->getId()){
             $recipient = $product->getUser();

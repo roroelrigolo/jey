@@ -41,7 +41,7 @@ class ProductController extends AbstractController
     public function new(Request $request, ProductRepository $productRepository, LeagueRepository $leagueRepository, TeamRepository $teamRepository,
                         PlayerRepository $playerRepository, ImageRepository $imageRepository, SportRepository $sportRepository, BrandRepository $brandRepository): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        $this->denyAccessUnlessGranted('ROLE_USER');
         $product = new Product();
         $form = $this->createForm(ProductFormType::class, $product);
         $form->handleRequest($request);
@@ -208,6 +208,7 @@ class ProductController extends AbstractController
     #[Route('/{uuid}/contact', name: 'app_front_product_contact', methods: ['GET', 'POST'])]
     public function contact($uuid, ProductRepository $productRepository, ConversationRepository $conversationRepository, UserRepository $userRepository): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
         $product = $productRepository->findOneBy(['uuid'=>$uuid]);
         $conversationsUser = $this->getUser()->getConversations();
         $exist = false;
@@ -240,8 +241,9 @@ class ProductController extends AbstractController
 
     #[Route('/{uuid}/book', name: 'app_front_product_book', methods: ['GET', 'POST'])]
     public function book($uuid, ProductRepository $productRepository, ConversationRepository $conversationRepository, UserRepository $userRepository,
-                         MessageStepRepository $messageStepRepository, MessageStepService $messageStepService): Response
+                         MessageStepService $messageStepService): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
         $product = $productRepository->findOneBy(['uuid'=>$uuid]);
         $conversationsUser = $this->getUser()->getConversations();
         $exist = false;
@@ -288,8 +290,10 @@ class ProductController extends AbstractController
     }
 
     #[Route('/{uuid}/valid_book', name: 'app_front_product_valid_book', methods: ['GET', 'POST'])]
-    public function validlBook($uuid, ProductRepository $productRepository, ConversationRepository $conversationRepository, MessageStepService $messageStepService): Response
+    public function validlBook($uuid, ProductRepository $productRepository, ConversationRepository $conversationRepository,
+                               MessageStepService $messageStepService): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
         $product = $productRepository->findOneBy(['uuid'=>$uuid]);
         $user = $this->getUser();
 
@@ -312,6 +316,7 @@ class ProductController extends AbstractController
     public function cancelBook($uuid, ProductRepository $productRepository, CancelBookRepository $cancelBookRepository, ConversationRepository $conversationRepository,
                                MessageStepService $messageStepService): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
         $product = $productRepository->findOneBy(['uuid'=>$uuid]);
         $user = $this->getUser();
 

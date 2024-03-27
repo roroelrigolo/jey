@@ -19,6 +19,7 @@ class UserController extends AbstractController
     #[Route('/myaccount/profile', name: 'app_front_user_account_profile', methods: ['GET', 'POST'])]
     public function account_profile(Request $request, UserRepository $userRepository, NotificationTypeRepository $notificationTypeRepository): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
         $user = $this->getUser();
         $form = $this->createForm(AccountFormType::class, $user);
         $form->handleRequest($request);
@@ -63,6 +64,7 @@ class UserController extends AbstractController
     #[Route('/myaccount/product', name: 'app_front_user_account_product')]
     public function account_product(): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
         return $this->render('front/user/account/account_product.html.twig', [
         ]);
     }
@@ -70,6 +72,7 @@ class UserController extends AbstractController
     #[Route('/myaccount/assessment', name: 'app_front_user_account_assessment')]
     public function account_assessment(): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
         return $this->render('front/user/account/account_assessment.html.twig', [
         ]);
     }
@@ -77,6 +80,7 @@ class UserController extends AbstractController
     #[Route('/myaccount/password', name: 'app_front_user_account_password', methods: ['GET', 'POST'])]
     public function account_password(Request $request, UserRepository $userRepository, UserPasswordHasherInterface $userPasswordHasher): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
         $user = $this->getUser();
         $form = $this->createForm(PasswordFormType::class, $user);
         $form->handleRequest($request);

@@ -22,6 +22,7 @@ class ConversationController extends AbstractController
     #[Route('/', name: 'app_front_conversation')]
     public function home(ConversationRepository $conversationRepository, UserRepository $userRepository): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
         $user = $this->getUser();
         if (!empty($user->getConversations())) {
             $latestConversation = null;
@@ -40,6 +41,7 @@ class ConversationController extends AbstractController
     #[Route('/exit', name: 'app_front_conversation_exit')]
     public function exit(ConversationRepository $conversationRepository): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
         $user = $this->getUser();
         if (!empty($user->getConversations())) {
             foreach ($user->getConversations() as $conversation) {
@@ -54,6 +56,7 @@ class ConversationController extends AbstractController
     public function show(Request $request, MessageRepository $messageRepository, ConversationRepository $conversationRepository,
                          NotificationService $notificationService, $uuid): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
         $conversation = $conversationRepository->findOneBy(['uuid'=>$uuid]);
 
         $messages = $conversation->getMessages();
