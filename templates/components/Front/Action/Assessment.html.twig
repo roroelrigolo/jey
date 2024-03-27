@@ -1,0 +1,8 @@
+<form class="w-full" method="post" action="{{ path('app_front_assessment_new', {'uuid': uuid }) }}">
+    {{ component('Global:Button',{
+        tag: 'button',
+        text: "Évaluer le vendeur",
+        class: class,
+        custom_class: custom_class
+    }) }}
+</form>

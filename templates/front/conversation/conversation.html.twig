@@ -114,7 +114,7 @@
                                         <p class="font-bold">Félicitation, vous avez confimé avoir reçu ce maillot 👏</p>
                                         <p>Merci d'avoir utilisé notre plateforme ! N'hésitez pas à donner votre avis sur les échanges avec le vendeur</p>
                                         <div class="flex gap-x-4 mt-4">
-
+                                            {{ component('Front:Action:Assessment',{ uuid: conversation_display.product.uuid, class: 'primary' }) }}
                                         </div>
                                     </div>
                                 {% endif %}

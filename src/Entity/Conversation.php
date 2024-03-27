@@ -37,10 +37,14 @@ class Conversation
     #[ORM\Column]
     private ?bool $remove = null;
 
+    #[ORM\OneToMany(mappedBy: 'conversation', targetEntity: MessageStep::class)]
+    private Collection $messageSteps;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
         $this->messages = new ArrayCollection();
+        $this->messageSteps = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -158,6 +162,36 @@ class Conversation
     public function setRemove(bool $remove): static
     {
         $this->remove = $remove;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, MessageStep>
+     */
+    public function getMessageSteps(): Collection
+    {
+        return $this->messageSteps;
+    }
+
+    public function addMessageStep(MessageStep $messageStep): static
+    {
+        if (!$this->messageSteps->contains($messageStep)) {
+            $this->messageSteps->add($messageStep);
+            $messageStep->setConversation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMessageStep(MessageStep $messageStep): static
+    {
+        if ($this->messageSteps->removeElement($messageStep)) {
+            // set the owning side to null (unless already changed)
+            if ($messageStep->getConversation() === $this) {
+                $messageStep->setConversation(null);
+            }
+        }
 
         return $this;
     }

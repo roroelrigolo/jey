@@ -3,8 +3,8 @@
 namespace App\Controller\Front;
 
 use App\Enum;
-use App\Form\Admin\AccountFormType;
-use App\Form\Admin\PasswordFormType;
+use App\Form\Front\AccountFormType;
+use App\Form\Front\PasswordFormType;
 use App\Repository\NotificationTypeRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

@@ -35,6 +35,9 @@ class Assessment
     #[ORM\OneToOne(mappedBy: 'assessment', cascade: ['persist', 'remove'])]
     private ?Reply $reply = null;
 
+    #[ORM\ManyToOne(inversedBy: 'assessments')]
+    private ?Product $product = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -125,6 +128,18 @@ class Assessment
         }
 
         $this->reply = $reply;
+
+        return $this;
+    }
+
+    public function getProduct(): ?Product
+    {
+        return $this->product;
+    }
+
+    public function setProduct(?Product $product): static
+    {
+        $this->product = $product;
 
         return $this;
     }

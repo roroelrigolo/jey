@@ -1,0 +1,15 @@
+{% extends '/front/base.html.twig' %}
+
+{% block title %}Jey{% endblock %}
+
+{% block body %}
+    <div class="container mx-auto w-3/4 flex gap-x-6 mb-20 py-20">
+        <div class="mx-auto w-1/2 bg-fullwhite p-8">
+            <p class="text-xl text-primary font-bold">Ajouter un avis</p>
+            <p class="mb-4">Afin d'aider les autres utilisateurs, veuillez donner votre avis sur votre échange avec {{ component('Global:LinkUser', { pseudo: recipient.pseudo }) }}</p>
+            {% include '/front/assessment/_form.html.twig' %}
+        </div>
+    </div>
+
+{% endblock %}
+

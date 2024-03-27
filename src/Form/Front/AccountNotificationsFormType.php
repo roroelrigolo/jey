@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Form\Admin;
+namespace App\Form\Front;
 
 use App\Entity\NotificationType;
 use App\Entity\User;

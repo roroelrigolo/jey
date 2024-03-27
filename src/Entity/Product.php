@@ -97,6 +97,9 @@ class Product
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: CancelBook::class)]
     private Collection $cancelBooks;
 
+    #[ORM\OneToMany(mappedBy: 'product', targetEntity: Assessment::class)]
+    private Collection $assessments;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
@@ -107,6 +110,7 @@ class Product
         $this->conversations = new ArrayCollection();
         $this->notifications = new ArrayCollection();
         $this->cancelBooks = new ArrayCollection();
+        $this->assessments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -570,6 +574,36 @@ class Product
             // set the owning side to null (unless already changed)
             if ($cancelBook->getProduct() === $this) {
                 $cancelBook->setProduct(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Assessment>
+     */
+    public function getAssessments(): Collection
+    {
+        return $this->assessments;
+    }
+
+    public function addAssessment(Assessment $assessment): static
+    {
+        if (!$this->assessments->contains($assessment)) {
+            $this->assessments->add($assessment);
+            $assessment->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAssessment(Assessment $assessment): static
+    {
+        if ($this->assessments->removeElement($assessment)) {
+            // set the owning side to null (unless already changed)
+            if ($assessment->getProduct() === $this) {
+                $assessment->setProduct(null);
             }
         }
 
