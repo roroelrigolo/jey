@@ -6,14 +6,14 @@ use App\Entity\Brand;
 use App\Entity\CancelBook;
 use App\Entity\Conversation;
 use App\Entity\Image;
+use App\Entity\Alert;
 use App\Entity\League;
-use App\Entity\MessageStep;
 use App\Entity\Player;
 use App\Entity\Product;
 use App\Entity\Sport;
 use App\Entity\Team;
-use App\Entity\User;
 use App\Form\Front\ProductFormType;
+use App\Repository\AlertRepository;
 use App\Repository\BrandRepository;
 use App\Repository\CancelBookRepository;
 use App\Repository\ConversationRepository;
@@ -26,6 +26,7 @@ use App\Repository\ProductViewRepository;
 use App\Repository\SportRepository;
 use App\Repository\TeamRepository;
 use App\Repository\UserRepository;
+use App\Service\AlertService;
 use App\Service\MessageStepService;
 use App\Service\ViewService;
 use Ramsey\Uuid\Uuid;
@@ -341,6 +342,15 @@ class ProductController extends AbstractController
                 }
             }
         }
+    }
+
+    #[Route('/{uuid}/report', name: 'app_front_product_report', methods: ['GET', 'POST'])]
+    public function report($uuid, ProductRepository $productRepository, AlertService $alertService): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+        $product = $productRepository->findOneBy(['uuid'=>$uuid]);
+        $user = $this->getUser();
+        $alertService->addAlert($user, 'Annonce', $product);
     }
 
 }

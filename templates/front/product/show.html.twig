@@ -38,12 +38,20 @@
             </div>
         </div>
         <div class="col-span-6 flex flex-col gap-y-2">
-            <div class="bg-fullwhite p-4 flex gap-x-4 items-center">
-                <div class="rounded-full bg-primary w-[50px] h-[50px]"></div>
+            <div class="bg-fullwhite flex justify-between p-4">
+                <div class="flex gap-x-4 items-center">
+                    <div class="rounded-full bg-primary w-[50px] h-[50px]"></div>
+                    <div>
+                        <div class="flex gap-x-2">
+                            {{ component('Global:LinkUser', { pseudo: product.user.pseudo }) }}
+                            {{ component('Global:GraduateUser', { id: product.user.id }) }}
+                        </div>
+                        <p><i class="fa-light fa-location-dot"></i> {{ product.user.location.title }}</p>
+                        {# <p><i class="fa-light fa-clock"></i></i> Conneté il y a 27 minutes</p> #}
+                    </div>
+                </div>
                 <div>
-                    <p>{{ component('Global:LinkUser', { pseudo: product.user.pseudo }) }} - 421⭐</p>
-                    <p><i class="fa-light fa-location-dot"></i> {{ product.user.location.title }}</p>
-                    {# <p><i class="fa-light fa-clock"></i></i> Conneté il y a 27 minutes</p> #}
+                    {{ component('Front:Action:Alert',{ uuid: product.uuid }) }}
                 </div>
             </div>
             <div class="bg-fullwhite flex flex-col gap-y-4 p-4">
