@@ -11,7 +11,13 @@
                 {{ component('Global:GraduateUser', { id: user.id }) }}
             </div>
             <div class="bg-fullwhite w-3/4 p-8">
-                <p class="text-xl text-primary font-bold mb-4">Profil</p>
+                <div class="flex justify-between">
+                    <p class="text-xl text-primary font-bold mb-4">Profil</p>
+                    {% if app.user.id == user.id %}
+                        {{ component('Global:Button', { tag: 'a', text: 'Modifier mon profil', route: 'app_front_user_account_profile', class: 'primary' }) }}
+                    {% endif %}
+                </div>
+
                 <div class="grid gap-y-4">
                     <p class="text-base">{{ user.description }}</p>
                     <div class="grid gap-y-1">
@@ -29,9 +35,21 @@
                 <p id="nav-assessments" onclick="switchAssessmentProduct('assessments','products')" class="hover:underline hover:decoration-secondary hover:decoration-2 hover:underline-offset-8">Avis</p>
             </div>
             <div id="products" class="grid gap-y-4">
+                {% set empty = true %}
+                {% for product in user.products %}
+                    {% if product.statement == "Disponible" %}
+                        {% set empty = false %}
+                    {% endif %}
+                {% endfor %}
+                {% if empty == true %}
+                    <p>Pour le moment, {{ component('Global:LinkUser', { pseudo: user.pseudo }) }} n'a aucun maillot disponible en vente</p>
+                {% endif %}
                 {{ component('Front:Product:ProductListing', { listing : 'userProducts', user_id : user.id, cols: 4 }) }}
             </div>
             <div id="assessments" class="grid gap-y-4 hidden">
+                {% if user.assessmentsRecipient|length == 0 %}
+                    <p>Pour le moment, {{ component('Global:LinkUser', { pseudo: user.pseudo }) }} n'a reçu aucune évaluation</p>
+                {% endif %}
                 {% for assessment in user.assessmentsRecipient|sort((a, b) => b.updatedAt <=> a.updatedAt) %}
                     {{ component('Front:Assessment:AssessmentComponent', { assessment_id: assessment.id, type: "recipient" }) }}
                 {% endfor %}

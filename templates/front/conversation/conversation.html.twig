@@ -66,9 +66,9 @@
                                     <div class="flex gap-x-4 w-fit max-w-[90%] bg-secondarylight px-4 py-2 mx-4 rounded">
                                         <div class="rounded-full bg-primary w-[50px] h-[50px]"></div>
                                         <div>
-                                            <p>@{{ user.pseudo }}</p>
-                                            <p>⭐⭐⭐⭐⭐ - 55 évalutations</p>
-                                            <p><i class="fa-light fa-location-dot"></i> {{ user.location.title }}</p>
+                                            <p>{{ component('Global:LinkUser', { pseudo: user.pseudo }) }}</p>
+                                            {{ component('Global:GraduateUser', { id: user.id }) }}
+                                            {{ component('Global:LocationUser', { location: user.location.title }) }}
                                             <p>Denière connexion : Il y a 3h</p>
                                         </div>
                                     </div>

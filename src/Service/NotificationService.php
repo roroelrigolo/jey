@@ -26,4 +26,15 @@ class NotificationService
 
         $this->notificationRepository->add($notifcation);
     }
+
+    public function addNotificationSendAlert($user) {
+        $notifcation = new Notification();
+        $notifcation->setType($this->notificationTypeRepository->find(6));
+        $notifcation->setUser($user);
+        $notifcation->setView(0);
+        $notifcation->setCreatedAt(new \DateTimeImmutable());
+        $notifcation->setUpdatedAt(new \DateTimeImmutable());
+
+        $this->notificationRepository->add($notifcation);
+    }
 }

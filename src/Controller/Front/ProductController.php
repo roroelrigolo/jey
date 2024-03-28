@@ -6,20 +6,17 @@ use App\Entity\Brand;
 use App\Entity\CancelBook;
 use App\Entity\Conversation;
 use App\Entity\Image;
-use App\Entity\Alert;
 use App\Entity\League;
 use App\Entity\Player;
 use App\Entity\Product;
 use App\Entity\Sport;
 use App\Entity\Team;
 use App\Form\Front\ProductFormType;
-use App\Repository\AlertRepository;
 use App\Repository\BrandRepository;
 use App\Repository\CancelBookRepository;
 use App\Repository\ConversationRepository;
 use App\Repository\ImageRepository;
 use App\Repository\LeagueRepository;
-use App\Repository\MessageStepRepository;
 use App\Repository\PlayerRepository;
 use App\Repository\ProductRepository;
 use App\Repository\ProductViewRepository;
@@ -28,6 +25,7 @@ use App\Repository\TeamRepository;
 use App\Repository\UserRepository;
 use App\Service\AlertService;
 use App\Service\MessageStepService;
+use App\Service\NotificationService;
 use App\Service\ViewService;
 use Ramsey\Uuid\Uuid;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -345,12 +343,15 @@ class ProductController extends AbstractController
     }
 
     #[Route('/{uuid}/report', name: 'app_front_product_report', methods: ['GET', 'POST'])]
-    public function report($uuid, ProductRepository $productRepository, AlertService $alertService): Response
+    public function report($uuid, ProductRepository $productRepository, AlertService $alertService, NotificationService $notificationService): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
         $product = $productRepository->findOneBy(['uuid'=>$uuid]);
         $user = $this->getUser();
         $alertService->addAlert($user, 'Annonce', $product);
+        $notificationService->addNotificationSendAlert($user);
+
+        return $this->redirectToRoute('app_front_product_show', ['uuid'=>$product->getUuid()], Response::HTTP_SEE_OTHER);
     }
 
 }

@@ -77,6 +77,14 @@ class UserController extends AbstractController
         ]);
     }
 
+    #[Route('/myaccount/alert', name: 'app_front_user_account_alert')]
+    public function account_alert(): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+        return $this->render('front/user/account/account_alert.html.twig', [
+        ]);
+    }
+
     #[Route('/myaccount/password', name: 'app_front_user_account_password', methods: ['GET', 'POST'])]
     public function account_password(Request $request, UserRepository $userRepository, UserPasswordHasherInterface $userPasswordHasher): Response
     {

@@ -39,6 +39,14 @@
                     <p>{{ notification.message.content|slice(0, 50) }}{% if notification.message.content|length > 50 %}...{% endif %}</p>
                     <p class="text-xs text-graydark">{{ notification.updatedAt|custom_time }}</p>
                 </div>
+            {% elseif notification.type.category == "Signalements" %}
+                <div class="rounded-full bg-primary min-w-[30px] h-[30px]"></div>
+                <div class="text-sm">
+                    <p>
+                        {{ notification.type.title }}
+                    </p>
+                    <p class="text-xs text-graydark">{{ notification.updatedAt|custom_time }}</p>
+                </div>
             {% endif %}
         </div>
     {% endfor %}

@@ -59,7 +59,8 @@ class Enum  {
     public static $notification_categorys = [
         'Messages',
         'Abonnements',
-        'Annonces'
+        'Annonces',
+        'Signalements'
     ];
 
     public static $message_step_type = [
