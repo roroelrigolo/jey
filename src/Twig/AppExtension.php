@@ -20,12 +20,12 @@ class AppExtension extends AbstractExtension
     {
         $now = new DateTime();
         $difference = $date->diff($now);
-        $time = "Il y a ";
+        $time = "il y a ";
         if ($difference->y > 0) {
-            $time .= $difference->y . "an";
+            $time .= $difference->y . " an";
         } else {
             if ($difference->m > 0) {
-                $time .= $difference->m . "moi";
+                $time .= $difference->m . " mois";
             } else {
                 if ($difference->d > 0) {
                     $time .= ($difference->h > 12) ? ($difference->d + 1) : $difference->d;

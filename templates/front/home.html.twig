@@ -23,7 +23,9 @@
         <p>De la NBA en passant par la Ligue 1, le Top 14 ou la NFL, trouvez votre prochain <span class="bg-primary font-bold text-secondary px-4 py-1">trésor sportif</span> sur Jey - où chaque maillot a une histoire à raconter.</p>
     </div>
 
-    {{ component('Front:Product:ProductListing', { title: "Maillots populaires", listing : 'bestProducts' }) }}
+    <div class="container px-20 mx-auto py-2 mb-20">
+        {{ component('Front:Product:ProductListing', { title: "Maillots populaires", listing : 'bestProducts', cols: 5 }) }}
 
-    {{ component('Front:Product:ProductListing', { title: "Derniers maillots ajoutés", listing : 'lastProducts' }) }}
+        {{ component('Front:Product:ProductListing', { title: "Derniers maillots ajoutés", listing : 'lastProducts', cols: 5 }) }}
+    </div>
 {% endblock %}

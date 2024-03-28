@@ -14,6 +14,7 @@ class ProductListing
     public string $listing;
     public int $user_id;
     public int $sport_id;
+    public int $cols;
 
     public function __construct(
         private ProductRepository $productRepository,

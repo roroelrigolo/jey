@@ -3,7 +3,63 @@
 {% block title %}Jey{% endblock %}
 
 {% block body %}
-    <div class="container mx-auto w-1/2 text-center mb-20">
-        compte user {{ user.pseudo }}
+    <div class="container mx-auto w-3/4 mb-20 py-20">
+        <div class="flex gap-x-6 mb-4">
+            <div class="bg-fullwhite w-1/4 p-8 flex flex-col items-center">
+                <div class="rounded-full bg-primary w-[100px] h-[100px]"></div>
+                <p class="text-2xl">{{ component('Global:LinkUser', { pseudo: user.pseudo }) }}</p>
+                {{ component('Global:GraduateUser', { id: user.id }) }}
+            </div>
+            <div class="bg-fullwhite w-3/4 p-8">
+                <p class="text-xl text-primary font-bold mb-4">Profil</p>
+                <div class="grid gap-y-4">
+                    <p class="text-base">{{ user.description }}</p>
+                    <div class="grid gap-y-1">
+                        {{ component('Global:LocationUser', { location: user.location.title }) }}
+                        <p><i class="fa-regular fa-clock"></i> Membre depuis le {{ user.createdAt|date('d/m/Y')}} </p>
+                        <p><i class="fa-regular fa-clock"></i> Connecté {{ user.createdAt|custom_time }} </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bg-fullwhite w-full p-8">
+            <p class="text-xl text-primary font-bold mb-4">Annonces & Avis</p>
+            <div class="flex gap-x-4 mb-4">
+                <p id="nav-products" onclick="switchAssessmentProduct('products','assessments')" class="underline decoration-secondary decoration-2 underline-offset-8 hover:underline hover:decoration-secondary hover:decoration-2 hover:underline-offset-8">Maillots en vente</p>
+                <p id="nav-assessments" onclick="switchAssessmentProduct('assessments','products')" class="hover:underline hover:decoration-secondary hover:decoration-2 hover:underline-offset-8">Avis</p>
+            </div>
+            <div id="products" class="grid gap-y-4">
+                {{ component('Front:Product:ProductListing', { listing : 'userProducts', user_id : user.id, cols: 4 }) }}
+            </div>
+            <div id="assessments" class="grid gap-y-4 hidden">
+                {% for assessment in user.assessmentsRecipient|sort((a, b) => b.updatedAt <=> a.updatedAt) %}
+                    {{ component('Front:Assessment:AssessmentComponent', { assessment_id: assessment.id, type: "recipient" }) }}
+                {% endfor %}
+            </div>
+
+        </div>
     </div>
+
+    <script>
+        function switchAssessmentProduct(idDisplay, idHidden){
+            assessmentsDisplay = document.querySelector('#'+idDisplay);
+            assessmentsHidden = document.querySelector('#'+idHidden);
+
+            assessmentsDisplay.classList.remove('hidden');
+            assessmentsHidden.classList.add('hidden');
+
+            navDisplay = document.querySelector('#nav-'+idDisplay);
+            navHidden = document.querySelector('#nav-'+idHidden);
+
+            navDisplay.classList.add('underline');
+            navDisplay.classList.add('decoration-secondary');
+            navDisplay.classList.add('decoration-2');
+            navDisplay.classList.add('underline-offset-8');
+
+            navHidden.classList.remove('underline');
+            navHidden.classList.remove('decoration-secondary');
+            navHidden.classList.remove('decoration-2');
+            navHidden.classList.remove('underline-offset-8');
+        }
+    </script>
 {% endblock %}

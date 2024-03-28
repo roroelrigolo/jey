@@ -12,39 +12,13 @@
                 <p id="nav-depositors" onclick="switchAssessment('depositors','recipients')" class="hover:underline hover:decoration-secondary hover:decoration-2 hover:underline-offset-8">Laissés</p>
             </div>
             <div id="recipients" class="grid gap-y-4">
-                {% for assessment in app.user.assessmentsRecipient %}
-                    <div class="flex gap-x-4 p-4">
-                        <div class="rounded-full bg-primary min-w-[50px] h-[50px]"></div>
-                        <div class="grid gap-y-4">
-                            <div>
-                                <p class="text-primary">@{{ assessment.depositor.pseudo }}</p>
-                                <p>{{ assessment.value }}⭐</p>
-                                <p>{{ assessment.content }}</p>
-                                <p class="text-sm text-gray">{{ assessment.createdAt|custom_time }}</p>
-                            </div>
-                            <div>
-                                {% if assessment.reply is not null %}
-                                    <p>{{ assessment.reply.content }}</p>
-                                    <p class="text-sm text-gray">{{ assessment.reply.createdAt|custom_time }}</p>
-                                {% else %}
-                                    Répondre :
-                                {% endif %}
-                            </div>
-                        </div>
-                    </div>
+                {% for assessment in app.user.assessmentsRecipient|sort((a, b) => b.updatedAt <=> a.updatedAt) %}
+                    {{ component('Front:Assessment:AssessmentComponent', { assessment_id: assessment.id, type: "recipient" }) }}
                 {% endfor %}
             </div>
             <div id="depositors" class="grid gap-y-4 hidden">
-                {% for assessment in app.user.assessmentsDepositor %}
-                    <div class="flex gap-x-4 p-4">
-                        <div class="rounded-full bg-primary min-w-[50px] h-[50px]"></div>
-                        <div>
-                            <p class="text-primary">@{{ assessment.recipient.pseudo }}</p>
-                            <p>{{ assessment.value }}⭐</p>
-                            <p>{{ assessment.content }}</p>
-                            <p class="text-sm text-gray">{{ assessment.createdAt|custom_time }}</p>
-                        </div>
-                    </div>
+                {% for assessment in app.user.assessmentsDepositor|sort((a, b) => b.updatedAt <=> a.updatedAt) %}
+                    {{ component('Front:Assessment:AssessmentComponent', { assessment_id: assessment.id, type: "depositor" }) }}
                 {% endfor %}
             </div>
         </div>

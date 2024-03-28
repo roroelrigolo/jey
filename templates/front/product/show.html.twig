@@ -46,7 +46,7 @@
                             {{ component('Global:LinkUser', { pseudo: product.user.pseudo }) }}
                             {{ component('Global:GraduateUser', { id: product.user.id }) }}
                         </div>
-                        <p><i class="fa-light fa-location-dot"></i> {{ product.user.location.title }}</p>
+                        {{ component('Global:LocationUser', { location: product.user.location.title }) }}
                         {# <p><i class="fa-light fa-clock"></i></i> Conneté il y a 27 minutes</p> #}
                     </div>
                 </div>
@@ -142,8 +142,11 @@
         </div>
     </div>
 
-    {% set title = product.user.products|length~' autres annonces de <i class="text-primary">@'~product.user.pseudo~'</i>' %}
-    {{ component('Front:Product:ProductListing', { title: title, listing : 'userProducts', user_id : product.user.id }) }}
+
+    <div class="container px-20 mx-auto py-2 mb-20">
+        {% set title = product.user.products|length~' autres annonces de <i class="text-primary">@'~product.user.pseudo~'</i>' %}
+        {{ component('Front:Product:ProductListing', { title: title, listing : 'userProducts', user_id : product.user.id, cols: 5 }) }}
+    </div>
 
     <script>
         let toggleSliderExecuted = false;

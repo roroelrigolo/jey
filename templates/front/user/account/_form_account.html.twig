@@ -23,6 +23,14 @@
     <div class="flex gap-x-4">
         <div class="flex flex-col w-full">
             <div class="flex flex-col w-full">
+                {{ form_label(form.description) }}
+                {{ form_widget(form.description, {'attr': {'class': 'bg-white rounded'}}) }}
+            </div>
+        </div>
+    </div>
+    <div class="flex gap-x-4">
+        <div class="flex flex-col w-full">
+            <div class="flex flex-col w-full">
                 <label>Email</label>
                 <input type="email" disabled="disabled" class="bg-white rounded" value="{{ app.user.email }}">
                 <i class="text-sm text-graydark">*Vous ne pouvez pas modifier votre adresse mail</i>

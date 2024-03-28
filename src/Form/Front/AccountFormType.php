@@ -10,6 +10,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
@@ -41,6 +42,12 @@ class AccountFormType extends AbstractType
                         ->orderBy('d.title', 'ASC');
                 }
             ))
+            ->add('description', TextareaType::class, [
+                'label' => "Description",
+                'attr' => [
+                    'rows' => '5'
+                ]
+            ])
         ;
     }
 
