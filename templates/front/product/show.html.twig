@@ -2,11 +2,31 @@
 
 {% block title %}Jey{% endblock %}
 
-{% block javascripts %}
-
-{% endblock %}
-
 {% block body %}
+    {# Fil d'ariane #}
+    <div class="container mx-auto px-10 my-4">
+        <p>
+            <a class="text-primary underline" href="{{ path('app_front_home') }}">Accueil</a>
+            {% if product.sport %}
+                >
+                <a class="text-primary underline" href="{{ path('app_front_sport_show', {'slug': product.sport.id|trans~'-'~product.sport.title }) }}">{{ product.sport.title }}</a>
+            {% endif %}
+            {% if product.league %}
+                >
+                <a class="text-primary underline" href="{{ path('app_front_sport_show', {'slug': product.sport.id|trans~'-'~product.sport.title }) }}?league[]={{ product.league.id }}">{{ product.league.title }}</a>
+            {% endif %}
+            {% if product.team %}
+                >
+                <a class="text-primary underline" href="{{ path('app_front_sport_show', {'slug': product.sport.id|trans~'-'~product.sport.title }) }}?league[]={{ product.league.id }}&team[]={{ product.team.id }}">{{ product.team.title }}</a>
+            {% endif %}
+            {% if product.player %}
+                >
+                <a class="text-primary underline" href="{{ path('app_front_sport_show', {'slug': product.sport.id|trans~'-'~product.sport.title }) }}?league[]={{ product.league.id }}&team[]={{ product.team.id }}&player[]={{ product.player.id }}">{{ product.player.firstName }} {{ product.player.lastName }}</a>
+            {% endif %}
+        </p>
+    </div>
+
+
     <div class="container grid grid-cols-12 gap-x-4 mx-auto px-40 my-10">
         <div class="col-span-6 flex px-1">
             <div class="w-1/4 pe-2">

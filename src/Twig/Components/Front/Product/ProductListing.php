@@ -64,7 +64,7 @@ class ProductListing
                 $departments = $_GET["departments"];
                 unset($_GET["departments"]);
             }
-            array_push($_GET, ['statement'=> 'Disponible']);
+            $_GET['statement'] = 'Disponible';
             $products = $this->productRepository->findBy($_GET,['created_at'=>'DESC']);
             //On flitre avec les couleurs si définies
             if ($colors != []) {
