@@ -45,6 +45,19 @@ class LeagueRepository extends ServiceEntityRepository
         }
     }
 
+    public function findBySport($id_sport): ? array
+   {
+       return $this->createQueryBuilder('l')
+           ->join('l.sports', 's')
+           ->where('s.id = :id_sport')
+           ->setParameter('id_sport', $id_sport)
+           ->orderBy('l.title', 'ASC')
+           ->getQuery()
+           ->getResult();
+        ;
+    }
+
+
 //    /**
 //     * @return League[] Returns an array of League objects
 //     */

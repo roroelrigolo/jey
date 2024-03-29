@@ -59,7 +59,7 @@ class Select
             return $this->teamRepository->findBy([],['title'=>'ASC']);
         }
         elseif ($this->options_name == 'leagues'){
-            return $this->leagueRepository->findBy([],['title'=>'ASC']);
+            return $this->leagueRepository->findBySport($this->sport->getId());
         }
         elseif ($this->options_name == 'colors'){
             return $this->colorRepository->findBy([],['title'=>'ASC']);

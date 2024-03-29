@@ -2,6 +2,7 @@
 
 namespace App\Controller\Front;
 
+use App\Repository\LeagueRepository;
 use App\Repository\ProductRepository;
 use App\Repository\SportRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -13,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class SportController extends AbstractController
 {
     #[Route('/{slug}', name: 'app_front_sport_show')]
-    public function show($slug, SportRepository $sportRepository, ProductRepository $productRepository): Response
+    public function show($slug, SportRepository $sportRepository, ProductRepository $productRepository, LeagueRepository $leagueRepository): Response
     {
         //On récupère l'id et le nom du sport dans le slug
         $id = stristr($slug, '-', true);

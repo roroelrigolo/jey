@@ -21,7 +21,7 @@
             {% endif %}
             {% if product.player %}
                 >
-                <a class="text-primary underline" href="{{ path('app_front_sport_show', {'slug': product.sport.id|trans~'-'~product.sport.title }) }}?league[]={{ product.league.id }}&team[]={{ product.team.id }}&player[]={{ product.player.id }}">{{ product.player.firstName }} {{ product.player.lastName }}</a>
+                <a class="text-primary underline" href="{{ path('app_front_sport_show', {'slug': product.sport.id|trans~'-'~product.sport.title }) }}?league[]={{ product.league.id }}&team[]={{ product.team.id }}&player[]={{ product.player.id }}">{{ product.player.lastName }} {{ product.player.firstName }}</a>
             {% endif %}
         </p>
     </div>
