@@ -1,6 +1,6 @@
 {% if app.user.id == this.product.user.id %}
     <div class="bg-primarylight p-4 mt-2 mb-6">
-        <p class="font-bold">Félicitation, {{ component('Global:LinkUser', { pseudo: this.product.buyer.pseudo }) }} à réservé votre maillot</p>
+        <p class="font-bold">Félicitation, {{ component('Global:User:LinkUser', { pseudo: this.product.buyer.pseudo }) }} à réservé votre maillot</p>
         <p>Veuillez échanger avec lui afin de pouvoir vendre le maillot. Une fois l'échange effectué, veuillez attendre la confirmation de la part de l'acheteur</p>
         <div class="flex gap-x-4 my-4">
             {% if this.product.statement == "Réservé" %}
@@ -11,7 +11,7 @@
     </div>
 {% else %}
     <div class="bg-primarylight p-4 mt-2 mb-6">
-        <p class="font-bold">Félicitation, vous avez réservé ce maillot à {{ component('Global:LinkUser', { pseudo: this.product.user.pseudo }) }}</p>
+        <p class="font-bold">Félicitation, vous avez réservé ce maillot à {{ component('Global:User:LinkUser', { pseudo: this.product.user.pseudo }) }}</p>
         <p>Veuillez échanger avec lui afin de pouvoir récuperer le maillot</p>
         <div class="flex gap-x-4 my-4">
             {% if this.product.statement == "Réservé" %}

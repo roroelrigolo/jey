@@ -3,7 +3,7 @@
         <div class="rounded-full bg-primary w-[75px] h-[75px]"></div>
         <div class="text-center">
             <p>{{ app.user.name }} {{ app.user.firstName }}</p>
-            <p>{{ component('Global:LinkUser', { pseudo: app.user.pseudo }) }}</p>
+            <p>{{ component('Global:User:LinkUser', { pseudo: app.user.pseudo }) }}</p>
         </div>
     </div>
     {% set items = [

@@ -17,7 +17,7 @@ security:
             form_login:
                 login_path: app_login
                 check_path: app_login
-                default_target_path: app_admin_dashboard
+                default_target_path: app_login_success
             logout:
                 path: app_logout
             lazy: true

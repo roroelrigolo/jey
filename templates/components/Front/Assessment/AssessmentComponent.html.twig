@@ -2,9 +2,9 @@
     <div class="rounded-full bg-primary min-w-[50px] h-[50px]"></div>
     <div>
         {% if type == "recipient" %}
-            <p class="text-primary">{{ component('Global:LinkUser', { pseudo: this.assessment.depositor.pseudo }) }}</p>
+            <p class="text-primary">{{ component('Global:User:LinkUser', { pseudo: this.assessment.depositor.pseudo }) }}</p>
         {% else %}
-            <p class="text-primary">{{ component('Global:LinkUser', { pseudo: this.assessment.recipient.pseudo }) }}</p>
+            <p class="text-primary">{{ component('Global:User:LinkUser', { pseudo: this.assessment.recipient.pseudo }) }}</p>
         {% endif %}
         <p>{{ this.assessment.value }}⭐</p>
         <p>{{ this.assessment.content }}</p>

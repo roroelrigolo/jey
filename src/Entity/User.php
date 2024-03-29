@@ -90,6 +90,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $lastConnexion = null;
+
     public function __construct()
     {
         $this->products = new ArrayCollection();
@@ -638,6 +641,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setDescription(?string $description): static
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getLastConnexion(): ?\DateTimeInterface
+    {
+        return $this->lastConnexion;
+    }
+
+    public function setLastConnexion(\DateTimeInterface $lastConnexion): static
+    {
+        $this->lastConnexion = $lastConnexion;
 
         return $this;
     }

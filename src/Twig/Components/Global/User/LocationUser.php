@@ -1,5 +1,5 @@
 <?php
-namespace App\Twig\Components\Global;
+namespace App\Twig\Components\Global\User;
 
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 

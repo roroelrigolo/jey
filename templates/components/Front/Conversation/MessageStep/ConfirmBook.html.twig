@@ -1,7 +1,7 @@
 {% if app.user.id == this.product.user.id %}
     <div class="bg-primarylight p-4 mt-2 mb-6">
-        <p class="font-bold">Félicitation, {{ component('Global:LinkUser', { pseudo: this.product.buyer.pseudo }) }} à confimé avoir reçu votre maillot</p>
-        <p>Merci d'avoir utilisé notre plateforme ! N'hésitez pas à donner votre avis sur les échanges avec {{ component('Global:LinkUser', { pseudo: this.product.user.pseudo }) }}</p>
+        <p class="font-bold">Félicitation, {{ component('Global:User:LinkUser', { pseudo: this.product.buyer.pseudo }) }} à confimé avoir reçu votre maillot</p>
+        <p>Merci d'avoir utilisé notre plateforme ! N'hésitez pas à donner votre avis sur les échanges avec {{ component('Global:User:LinkUser', { pseudo: this.product.user.pseudo }) }}</p>
         <div class="flex gap-x-4 my-4">
             {% if this.assessment == false %}
                 {{ component('Front:Action:Assessment',{ uuid_product: this.product.uuid, uuid_conversation: this.conversation.uuid, class: 'primary' }) }}
@@ -12,7 +12,7 @@
 {% else %}
     <div class="bg-primarylight p-4 mt-2 mb-6">
         <p class="font-bold">Félicitation, vous avez confimé avoir reçu ce maillot</p>
-        <p>Merci d'avoir utilisé notre plateforme ! N'hésitez pas à donner votre avis sur les échanges avec {{ component('Global:LinkUser', { pseudo: this.product.user.pseudo }) }}</p>
+        <p>Merci d'avoir utilisé notre plateforme ! N'hésitez pas à donner votre avis sur les échanges avec {{ component('Global:User:LinkUser', { pseudo: this.product.user.pseudo }) }}</p>
         <div class="flex gap-x-4 my-4">
             {% if this.assessment == false %}
                 {{ component('Front:Action:Assessment',{ uuid_product: this.product.uuid, uuid_conversation: this.conversation.uuid, class: 'primary' }) }}

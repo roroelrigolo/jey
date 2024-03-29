@@ -7,8 +7,8 @@
         <div class="flex gap-x-6 mb-4">
             <div class="bg-fullwhite w-1/4 p-8 flex flex-col items-center">
                 <div class="rounded-full bg-primary w-[100px] h-[100px]"></div>
-                <p class="text-2xl">{{ component('Global:LinkUser', { pseudo: user.pseudo }) }}</p>
-                {{ component('Global:GraduateUser', { id: user.id }) }}
+                <p class="text-2xl">{{ component('Global:User:LinkUser', { pseudo: user.pseudo }) }}</p>
+                {{ component('Global:User:GraduateUser', { id: user.id }) }}
             </div>
             <div class="bg-fullwhite w-3/4 p-8">
                 <div class="flex justify-between">
@@ -21,9 +21,9 @@
                 <div class="grid gap-y-4">
                     <p class="text-base">{{ user.description }}</p>
                     <div class="grid gap-y-1">
-                        {{ component('Global:LocationUser', { location: user.location.title }) }}
+                        {{ component('Global:User:LocationUser', { location: user.location.title }) }}
                         <p><i class="fa-regular fa-clock"></i> Membre depuis le {{ user.createdAt|date('d/m/Y')}} </p>
-                        <p><i class="fa-regular fa-clock"></i> Connecté {{ user.createdAt|custom_time }} </p>
+                        {{ component('Global:User:LastConnexionUser', { last_connexion: user.lastConnexion }) }}
                     </div>
                 </div>
             </div>
@@ -42,13 +42,13 @@
                     {% endif %}
                 {% endfor %}
                 {% if empty == true %}
-                    <p>Pour le moment, {{ component('Global:LinkUser', { pseudo: user.pseudo }) }} n'a aucun maillot disponible en vente</p>
+                    <p>Pour le moment, {{ component('Global:User:LinkUser', { pseudo: user.pseudo }) }} n'a aucun maillot disponible en vente</p>
                 {% endif %}
                 {{ component('Front:Product:ProductListing', { listing : 'userProducts', user_id : user.id, cols: 4 }) }}
             </div>
             <div id="assessments" class="grid gap-y-4 hidden">
                 {% if user.assessmentsRecipient|length == 0 %}
-                    <p>Pour le moment, {{ component('Global:LinkUser', { pseudo: user.pseudo }) }} n'a reçu aucune évaluation</p>
+                    <p>Pour le moment, {{ component('Global:User:LinkUser', { pseudo: user.pseudo }) }} n'a reçu aucune évaluation</p>
                 {% endif %}
                 {% for assessment in user.assessmentsRecipient|sort((a, b) => b.updatedAt <=> a.updatedAt) %}
                     {{ component('Front:Assessment:AssessmentComponent', { assessment_id: assessment.id, type: "recipient" }) }}

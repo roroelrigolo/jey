@@ -9,7 +9,7 @@
                 {% endfor %}
                 <div class="text-sm">
                     <p>
-                        {{ component('Global:LinkUser', { pseudo: notification.product.user.pseudo }) }}
+                        {{ component('Global:User:LinkUser', { pseudo: notification.product.user.pseudo }) }}
                         {{ notification.type.title }}
                         <a class="text-primary font-bold hover:text-primaryhover" href="{{ path('app_front_product_show', {'uuid': notification.product.uuid}) }}">{{ notification.product.title }}</a>
 
@@ -33,7 +33,7 @@
                 <div class="rounded-full bg-primary min-w-[30px] h-[30px]"></div>
                 <div class="text-sm">
                     <p>
-                        {{ component('Global:LinkUser', { pseudo: notification.message.author.pseudo }) }}
+                        {{ component('Global:User:LinkUser', { pseudo: notification.message.author.pseudo }) }}
                         {{ notification.type.title }}
                     </p>
                     <p>{{ notification.message.content|slice(0, 50) }}{% if notification.message.content|length > 50 %}...{% endif %}</p>
