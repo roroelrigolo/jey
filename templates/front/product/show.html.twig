@@ -50,9 +50,11 @@
                         {# <p><i class="fa-light fa-clock"></i></i> Conneté il y a 27 minutes</p> #}
                     </div>
                 </div>
-                <div>
-                    {{ component('Front:Action:Alert',{ uuid: product.uuid }) }}
-                </div>
+                {% if app.user %}
+                    <div>
+                        {{ component('Front:Action:Alert',{ uuid: product.uuid }) }}
+                    </div>
+                {% endif %}
             </div>
             <div class="bg-fullwhite flex flex-col gap-y-4 p-4">
                 <div>
@@ -91,7 +93,7 @@
                     {% set display_btn = true %}
                 {% endif %}
 
-                {% if display_btn == true %}
+                {% if display_btn == true and app.user %}
                     <div class="flex flex-col justify-center gap-y-4 w-1/2 mx-auto">
                         {{ component('Front:Action:Book',{ uuid: product.uuid, class: 'secondary', custom_class: 'w-full' }) }}
                         {{ component('Front:Action:Contact',{ uuid: product.uuid, class: 'primary', custom_class: 'w-full' }) }}

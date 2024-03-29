@@ -13,7 +13,7 @@
             <div class="bg-fullwhite w-3/4 p-8">
                 <div class="flex justify-between">
                     <p class="text-xl text-primary font-bold mb-4">Profil</p>
-                    {% if app.user.id == user.id %}
+                    {% if app.user and app.user.id == user.id %}
                         {{ component('Global:Button', { tag: 'a', text: 'Modifier mon profil', route: 'app_front_user_account_profile', class: 'primary' }) }}
                     {% endif %}
                 </div>
