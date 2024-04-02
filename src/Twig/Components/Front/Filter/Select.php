@@ -53,10 +53,29 @@ class Select
             return $this->brandRepository->findBy([],['title'=>'ASC']);
         }
         elseif ($this->options_name == 'players'){
-            return $this->playerRepository->findBy([],['lastName'=>'ASC']);
+            if (isset($_GET['team'])){
+                $id_teams = [];
+                foreach ($_GET['team'] as $team){
+                    array_push($id_teams, $team);
+                }
+                return $this->playerRepository->findByTeams($id_teams);
+            }
+            else {
+                return $this->playerRepository->findBySport($this->sport->getId());
+            }
         }
         elseif ($this->options_name == 'teams'){
-            return $this->teamRepository->findBy([],['title'=>'ASC']);
+            if (isset($_GET['league'])){
+                $id_leagues = [];
+                foreach ($_GET['league'] as $league){
+                   array_push($id_leagues, $league);
+                }
+                return $this->teamRepository->findByLeagues($id_leagues);
+            }
+            else {
+                return $this->teamRepository->findBySport($this->sport->getId());
+            }
+
         }
         elseif ($this->options_name == 'leagues'){
             return $this->leagueRepository->findBySport($this->sport->getId());

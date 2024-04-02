@@ -1,5 +1,5 @@
 <div class="container px-20 mx-auto py-2">
-    <form class="flex flex-wrap gap-2" method="GET" accept-charset="UTF-8" enctype="multipart/form-data">
+    <form class="flex flex-wrap gap-2" id="filterForm" method="GET" accept-charset="UTF-8" enctype="multipart/form-data">
         {{ component('Global:Button', { tag: 'a', text: 'Réinitialiser les filtres', route: 'app_front_sport_show', route_parameter: [ { name: 'slug', value: sport.id|trans~'-'~sport.title } ], class: 'secondary', size: 'text-base' }) }}
         <select class="rounded" disabled name="sport" onchange="this.form.submit()">
             <option value="{{ sport.id }}" selected disabled>{{ sport.title }}</option>
@@ -16,9 +16,13 @@
         {{ component('Front:Filter:Select', { text: 'Localisation', variable: 'departments', options_name: 'departments', object: true, search: true }) }}
     </form>
 
-    {% for filter in app.request.query.all() %}
-        {{ filter[0] }}
-    {% endfor %}
+    <div class="flex gap-x-2 mt-4">
+        {% for filter in this.filters %}
+            <div onclick="deleteFilter('{{ filter[0] }}',{{ filter[1] }});" class="px-4 py-2 rounded border-graydark border w-fit cursor-pointer hover:bg-gray">
+                <i class="fa-regular fa-xmark"></i> {{ filter[2] }}
+            </div>
+        {% endfor %}
+    </div>
 </div>
 
 <script>
@@ -49,5 +53,16 @@
                 select.classList.remove('bg-secondary');
             }
         }
+    }
+
+    function deleteFilter(filter,id){
+        const form = document.querySelector('#filterForm');
+        const checkboxs = document.querySelectorAll('input[name="'+filter+'[]"]');
+        checkboxs.forEach(checkbox => {
+            if(checkbox.value == id){
+                checkbox.checked = false
+            }
+        })
+        form.submit();
     }
 </script>

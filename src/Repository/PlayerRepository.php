@@ -66,11 +66,22 @@ class PlayerRepository extends ServiceEntityRepository
     public function findBySport($id_sport): array {
         return $this->createQueryBuilder('p')
             ->leftJoin('p.teams', 't')
-            ->leftJoin('t.league', 'l')
-            ->leftJoin('l.sport', 's')
+            ->leftJoin('t.leagues', 'l')
+            ->leftJoin('l.sports', 's')
             ->where('s.id = :id_sport')
             ->orderBy('p.lastName', 'ASC')
             ->setParameter('id_sport', $id_sport)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    public function findByTeams(array $id_teams): array {
+        return $this->createQueryBuilder('p')
+            ->leftJoin('p.teams', 't')
+            ->where('t.id IN (:id_teams)')
+            ->orderBy('p.lastName', 'ASC')
+            ->setParameter('id_teams', $id_teams)
             ->getQuery()
             ->getResult()
             ;
