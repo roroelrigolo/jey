@@ -12,6 +12,9 @@
         {% if app.user is null %}
             {{ component('Global:Button', { tag: 'a', text: 'Se connecter', route: 'app_login', class: 'secondary' }) }}
             {{ component('Global:Button', { tag: 'a', text: 'Créer un compte', route: 'app_register', class: 'primary' }) }}
+            <a class="p-2 rounded hover:bg-secondarylight" href="{{ path('app_front_search') }}">
+                <i class="fa-light fa-magnifying-glass text-xl"></i>
+            </a>
         {% else %}
             {{ component('Global:Button', { tag: 'a', text: 'Vendre un maillot', route: 'app_front_product_new', class: 'primary' }) }}
             <a class="p-2 rounded hover:bg-secondarylight" href="{{ path('app_front_search') }}">
