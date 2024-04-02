@@ -54,7 +54,6 @@ class ProductListing
     {
         if($_GET != null){
             unset($_GET["query"]);
-            unset($_GET["text"]);
             $colors = [];
             if (isset($_GET["colors"])) {
                 $colors = $_GET["colors"];
@@ -66,8 +65,24 @@ class ProductListing
                 unset($_GET["departments"]);
             }
             $_GET['statement'] = 'Disponible';
+
+            if(isset($_GET["text"])){
+                $search_text = $_GET["text"];
+            }
+            unset($_GET["text"]);
             $products = $this->productRepository->findBy($_GET,['created_at'=>'DESC']);
-            //On flitre avec les couleurs si définies
+            //On filtre avec la chaine de caractère
+            if(isset($search_text)){
+                $array = [];
+                foreach ($products as $product){
+                    if (strpos(strtolower($product->getTitle()),strtolower($search_text)) !== false) {
+                        array_push($array, $product);
+                    }
+                }
+                $products = $array;
+            }
+
+            //On filtre avec les couleurs si définies
             if ($colors != []) {
                 $filteredProducts = [];
                 foreach ($products as $product) {
@@ -102,7 +117,6 @@ class ProductListing
     {
         if($_GET != null){
             unset($_GET["query"]);
-            unset($_GET["text"]);
             $colors = [];
             if (isset($_GET["colors"])) {
                 $colors = $_GET["colors"];
@@ -114,7 +128,23 @@ class ProductListing
                 unset($_GET["departments"]);
             }
             $_GET['statement'] = 'Disponible';
+
+            if(isset($_GET["text"])){
+                $search_text = $_GET["text"];
+            }
+            unset($_GET["text"]);
             $products = $this->productRepository->findBy($_GET,['created_at'=>'DESC']);
+            //On filtre avec la chaine de caractère
+            if(isset($search_text)){
+                $array = [];
+                foreach ($products as $product){
+                    if (strpos(strtolower($product->getTitle()),strtolower($search_text)) !== false) {
+                        array_push($array, $product);
+                    }
+                }
+                $products = $array;
+            }
+
             //On flitre avec les couleurs si définies
             if ($colors != []) {
                 $filteredProducts = [];

@@ -1,7 +1,10 @@
 <div class="container px-20 mx-auto py-2">
     <form class="grid" id="filterForm" method="GET" accept-charset="UTF-8" enctype="multipart/form-data" {% if sport is not defined %}action="{{ path('app_front_search') }}"{% endif %}>
         <div class="flex gap-x-4 mb-4">
-            <input type="text" name="text" class="w-full rounded border" placeholder="Exemple : Maillot Lebon James...">
+            {% if app.request.query.get('text') %}
+                {% set textFilter = app.request.query.get('text') %}
+            {% endif %}
+            <input type="text" name="text" class="w-full rounded border" placeholder="Exemple : Maillot Lebon James..." {% if textFilter is defined %}value="{{ textFilter }}"{% endif %}>
             {{ component('Global:Button',{ tag: 'button', text: 'Rechercher', class: 'primary', custom_class: 'h-full' }) }}
         </div>
         <div class="flex flex-wrap gap-2 {% if custom_class is defined %}{{ custom_class }}{% endif %}">
@@ -34,7 +37,7 @@
 
     <div class="flex gap-x-2 mt-4">
         {% for filter in this.filters %}
-            <div onclick="deleteFilter('{{ filter[0] }}',{{ filter[1] }});" class="px-4 py-2 rounded border-graydark border w-fit cursor-pointer hover:bg-gray">
+            <div onclick="deleteFilter('{{ filter[0] }}','{{ filter[1] }}');" class="px-4 py-2 rounded border-graydark border w-fit cursor-pointer hover:bg-gray">
                 <i class="fa-regular fa-xmark"></i> {{ filter[2] }}
             </div>
         {% endfor %}
@@ -73,12 +76,18 @@
 
     function deleteFilter(filter,id){
         const form = document.querySelector('#filterForm');
-        const checkboxs = document.querySelectorAll('input[name="'+filter+'[]"]');
-        checkboxs.forEach(checkbox => {
-            if(checkbox.value == id){
-                checkbox.checked = false
-            }
-        })
+        if(filter === "text"){
+            const input = document.querySelectorAll('input[name="'+filter+'"]')[0];
+            input.value = null;
+        }
+        else {
+            const checkboxs = document.querySelectorAll('input[name="'+filter+'[]"]');
+            checkboxs.forEach(checkbox => {
+                if(checkbox.value == id){
+                    checkbox.checked = false
+                }
+            })
+        }
         form.submit();
     }
 </script>

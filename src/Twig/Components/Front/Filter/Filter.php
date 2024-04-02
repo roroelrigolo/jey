@@ -84,7 +84,9 @@ class Filter
                     }
                 }
                 elseif ($key == "text"){
-                    array_push($filters, [$key,$items,$items]);
+                    if($items != ""){
+                        array_push($filters, [$key,$items,$items]);
+                    }
                 }
                 else {
                     foreach ($items as $item){
