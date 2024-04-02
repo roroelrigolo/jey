@@ -60,8 +60,11 @@ class Select
                 }
                 return $this->playerRepository->findByTeams($id_teams);
             }
-            else {
+            elseif (isset($this->sport)){
                 return $this->playerRepository->findBySport($this->sport->getId());
+            }
+            else {
+                return $this->playerRepository->findBy([],['lastName'=>'ASC']);
             }
         }
         elseif ($this->options_name == 'teams'){
@@ -72,19 +75,36 @@ class Select
                 }
                 return $this->teamRepository->findByLeagues($id_leagues);
             }
-            else {
+            elseif (isset($this->sport)){
                 return $this->teamRepository->findBySport($this->sport->getId());
             }
-
+            else {
+                return $this->teamRepository->findBy([],['title'=>'ASC']);
+            }
         }
         elseif ($this->options_name == 'leagues'){
-            return $this->leagueRepository->findBySport($this->sport->getId());
+            if (isset($_GET['sport'])){
+                $id_sports = [];
+                foreach ($_GET['sport'] as $sport){
+                    array_push($id_sports, $sport);
+                }
+                return $this->teamRepository->findBySport($id_sports);
+            }
+            elseif (isset($this->sport)){
+                return $this->leagueRepository->findBySport($this->sport->getId());
+            }
+            else {
+                return $this->leagueRepository->findBy([],['title'=>'ASC']);
+            }
         }
         elseif ($this->options_name == 'colors'){
             return $this->colorRepository->findBy([],['title'=>'ASC']);
         }
         elseif ($this->options_name == 'departments'){
             return $this->departmentRepository->findBy([],['title'=>'ASC']);
+        }
+        elseif ($this->options_name == 'sports'){
+            return $this->sportRepository->findBy([],['title'=>'ASC']);
         }
         return [];
     }

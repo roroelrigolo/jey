@@ -1,19 +1,35 @@
 <div class="container px-20 mx-auto py-2">
-    <form class="flex flex-wrap gap-2" id="filterForm" method="GET" accept-charset="UTF-8" enctype="multipart/form-data">
-        {{ component('Global:Button', { tag: 'a', text: 'Réinitialiser les filtres', route: 'app_front_sport_show', route_parameter: [ { name: 'slug', value: sport.id|trans~'-'~sport.title } ], class: 'secondary', size: 'text-base' }) }}
-        <select class="rounded" disabled name="sport" onchange="this.form.submit()">
-            <option value="{{ sport.id }}" selected disabled>{{ sport.title }}</option>
-        </select>
-        {{ component('Front:Filter:Select', { sport: sport, text: 'Ligue', variable: 'league', options_name: 'leagues', object: true, search: true }) }}
-        {{ component('Front:Filter:Select', { sport: sport, text: 'Equipe', variable: 'team', options_name: 'teams', object: true, search: true }) }}
-        {{ component('Front:Filter:Select', { sport: sport, text: 'Joueur', variable: 'player', options_name: 'players', object: true, search: true }) }}
-        {{ component('Front:Filter:Select', { text: 'Numéro', variable: 'number', options_name: 'numbers'}) }}
-        {{ component('Front:Filter:Select', { text: 'Marque', variable: 'brand', options_name: 'brands', object: true, search: true }) }}
-        {{ component('Front:Filter:Select', { text: 'Genre', variable: 'type', options_name: 'types' }) }}
-        {{ component('Front:Filter:Select', { text: 'Taille', variable: 'size', options_name: 'sizes' }) }}
-        {{ component('Front:Filter:Select', { text: 'État', variable: 'conditionnement', options_name: 'conditionnements' }) }}
-        {{ component('Front:Filter:Select', { text: 'Couleurs', variable: 'colors', options_name: 'colors', object: true }) }}
-        {{ component('Front:Filter:Select', { text: 'Localisation', variable: 'departments', options_name: 'departments', object: true, search: true }) }}
+    <form class="grid" id="filterForm" method="GET" accept-charset="UTF-8" enctype="multipart/form-data" {% if sport is not defined %}action="{{ path('app_front_search') }}"{% endif %}>
+        <div class="flex gap-x-4 mb-4">
+            <input type="text" name="text" class="w-full rounded border" placeholder="Exemple : Maillot Lebon James...">
+            {{ component('Global:Button',{ tag: 'button', text: 'Rechercher', class: 'primary', custom_class: 'h-full' }) }}
+        </div>
+        <div class="flex flex-wrap gap-2 {% if custom_class is defined %}{{ custom_class }}{% endif %}">
+            {% if sport is defined %}
+                {{ component('Global:Button', { tag: 'a', text: 'Réinitialiser les filtres', route: 'app_front_sport_show', route_parameter: [ { name: 'slug', value: sport.id|trans~'-'~sport.title } ], class: 'secondary', size: 'text-base' }) }}
+                <select class="rounded" disabled name="sport" onchange="this.form.submit()">
+                    <option value="{{ sport.id }}" selected disabled>{{ sport.title }}</option>
+                </select>
+                {{ component('Front:Filter:Select', { sport: sport, text: 'Ligue', variable: 'league', options_name: 'leagues', object: true, search: true }) }}
+                {{ component('Front:Filter:Select', { sport: sport, text: 'Equipe', variable: 'team', options_name: 'teams', object: true, search: true }) }}
+                {{ component('Front:Filter:Select', { sport: sport, text: 'Joueur', variable: 'player', options_name: 'players', object: true, search: true }) }}
+            {% else %}
+                {% if app.request.get('_route') != 'app_front_home' %}
+                    {{ component('Global:Button', { tag: 'a', text: 'Réinitialiser les filtres', route: 'app_front_search', class: 'secondary', size: 'text-base' }) }}
+                {% endif %}
+                {{ component('Front:Filter:Select', { text: 'Sport', variable: 'sport', options_name: 'sports', object: true, search: true }) }}
+                {{ component('Front:Filter:Select', { text: 'Ligue', variable: 'league', options_name: 'leagues', object: true, search: true }) }}
+                {{ component('Front:Filter:Select', { text: 'Equipe', variable: 'team', options_name: 'teams', object: true, search: true }) }}
+                {{ component('Front:Filter:Select', { text: 'Joueur', variable: 'player', options_name: 'players', object: true, search: true }) }}
+            {% endif %}
+            {{ component('Front:Filter:Select', { text: 'Numéro', variable: 'number', options_name: 'numbers'}) }}
+            {{ component('Front:Filter:Select', { text: 'Marque', variable: 'brand', options_name: 'brands', object: true, search: true }) }}
+            {{ component('Front:Filter:Select', { text: 'Genre', variable: 'type', options_name: 'types' }) }}
+            {{ component('Front:Filter:Select', { text: 'Taille', variable: 'size', options_name: 'sizes' }) }}
+            {{ component('Front:Filter:Select', { text: 'État', variable: 'conditionnement', options_name: 'conditionnements' }) }}
+            {{ component('Front:Filter:Select', { text: 'Couleurs', variable: 'colors', options_name: 'colors', object: true }) }}
+            {{ component('Front:Filter:Select', { text: 'Localisation', variable: 'departments', options_name: 'departments', object: true, search: true }) }}
+        </div>
     </form>
 
     <div class="flex gap-x-2 mt-4">

@@ -19,7 +19,7 @@ class HomeController extends AbstractController
         ]);
     }
 
-    #[Route('/search', name: 'app_search')]
+    #[Route('/search', name: 'app_front_search')]
     public function search(): Response
     {
         return $this->render('front/search.html.twig', [

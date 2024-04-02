@@ -5,23 +5,24 @@
             <a class="text-primary">Voir tout</a>
         </div>
     {% endif %}
-    <div class="flex gap-x-4 grid grid-cols-{{ cols }}">
-        {% if listing == "bestProducts" %}
-            {% set productList = this.bestProducts %}
-        {% elseif listing == "lastProducts" %}
-            {% set productList = this.lastProducts %}
-        {% elseif listing == "userProducts" %}
-            {% set productList = this.userProducts %}
-        {% elseif listing == "sportProducts" %}
-            {% set productList = this.sportProducts %}
-        {% endif %}
 
-        {% for product in productList %}
-            {{ component('Front:Product:ProductComponent', { id: product.id }) }}
-        {% endfor %}
-        {% for product in productList %}
-            {{ component('Front:Product:ProductComponent', { id: product.id }) }}
-        {% endfor %}
+    {% if listing == "bestProducts" %}
+        {% set productList = this.bestProducts %}
+    {% elseif listing == "lastProducts" %}
+        {% set productList = this.lastProducts %}
+    {% elseif listing == "userProducts" %}
+        {% set productList = this.userProducts %}
+    {% elseif listing == "sportProducts" %}
+        {% set productList = this.sportProducts %}
+    {% elseif listing == "searchProducts" %}
+        {% set productList = this.searchProducts %}
+    {% endif %}
+
+    {% if listing == "sportProducts" or listing == "searchProducts" %}
+        <p class="text-graydark text-base mb-2"> {{ productList|length }} résultats</p>
+    {% endif %}
+
+    <div class="flex gap-x-4 grid grid-cols-{{ cols }}">
         {% for product in productList %}
             {{ component('Front:Product:ProductComponent', { id: product.id }) }}
         {% endfor %}

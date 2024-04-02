@@ -18,6 +18,7 @@ class Filter
 {
 
     public Sport $sport;
+    public string $custom_class;
 
     public function __construct(
         private SportRepository $sportRepository,
@@ -40,7 +41,13 @@ class Filter
         $filters = [];
         if ($_GET != []){
             foreach ($_GET as $key=>$items){
-                if($key == "league"){
+                if ($key == "sport"){
+                    foreach ($items as $item){
+                        $filter = $this->sportRepository->find($item);
+                        array_push($filters, [$key,$filter->getId(),$filter->getTitle()]);
+                    }
+                }
+                elseif ($key == "league"){
                     foreach ($items as $item){
                         $filter = $this->leagueRepository->find($item);
                         array_push($filters, [$key,$filter->getId(),$filter->getTitle()]);
@@ -75,6 +82,9 @@ class Filter
                         $filter = $this->departmentRepository->find($item);
                         array_push($filters, [$key,$filter->getId(),$filter->getTitle()]);
                     }
+                }
+                elseif ($key == "text"){
+                    array_push($filters, [$key,$items,$items]);
                 }
                 else {
                     foreach ($items as $item){

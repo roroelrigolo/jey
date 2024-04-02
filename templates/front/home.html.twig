@@ -25,7 +25,14 @@
 
     <div class="container px-20 mx-auto py-2 mb-20">
         {{ component('Front:Product:ProductListing', { title: "Maillots populaires", listing : 'bestProducts', cols: 5 }) }}
+    </div>
 
+    <div class="container mx-auto w-1/2 text-center mb-20">
+        <h2 class="text-3xl font-bold mb-8">Je recherche ...</h2>
+        {{ component('Front:Filter:Filter', {custom_class: 'justify-center'}) }}
+    </div>
+
+    <div class="container px-20 mx-auto py-2 mb-20">
         {{ component('Front:Product:ProductListing', { title: "Derniers maillots ajoutés", listing : 'lastProducts', cols: 5 }) }}
     </div>
 {% endblock %}
