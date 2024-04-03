@@ -1,0 +1,98 @@
+<div class="text-lg w-full p-4 relative overflow-y-auto h-[90%]">
+    <ul class="grid gap-y-4">
+        {% for sport in this.sports %}
+            <li>
+                <div class="flex justify-between">
+                    <p id="sport-mobile-{{ sport.id }}" class="sport-mobile">
+                        <a href="{{ path('app_front_sport_show', {'slug': sport.id|trans~'-'~sport.title}) }}">{{ sport.title }}</a>
+                    </p>
+                    <i onclick="displaySubMenuMobile({{ sport.id }})" class="fa-regular fa-chevron-right"></i>
+                </div>
+                <div id="sub-menu-mobile-sport-{{ sport.id }}" class="sub-menu-mobile-sport absolute p-4 w-full h-full top-0 start-0 slide-right bg-fullwhite hidden z-50">
+                    <ul class="grid gap-y-4">
+                        {% for league in sport.leagues|sort((a, b) => a.title <=> b.title)  %}
+                            <li>
+                                <div class="flex justify-between">
+                                    <p id="sport-mobile-{{ sport.id }}-league-{{ league.id }}" class="league-mobile">
+                                        <a href="{{ path('app_front_sport_show', {'slug': sport.id|trans~'-'~sport.title}) }}?league[]={{ league.id }}">{{ league.title }}</a>
+                                    </p>
+                                    <i onclick="displaySubTeamMobile({{ sport.id }},{{ league.id }})" class="fa-regular fa-chevron-right"></i>
+                                </div>
+                                <div id="sub-menu-mobile-sport-{{ sport.id }}-league-{{ league.id }}" class="sub-menu-mobile-league absolute p-4 w-full h-[90%] top-0 start-0 slide-right bg-fullwhite hidden z-50">
+                                    <ul class="grid gap-y-4">
+                                        {% if league.teams|length == 0 %}
+                                            <li>
+                                                <p>Désolé, aucune équipe n'est disponible pour cette ligue</p>
+                                            </li>
+                                        {% else %}
+                                            {% for team in league.teams|sort((a, b) => a.title <=> b.title) %}
+                                                <li>
+                                                    <p>
+                                                        <a href="{{ path('app_front_sport_show', {'slug': sport.id|trans~'-'~sport.title}) }}?league[]={{ league.id }}&team[]={{ team.id }}">{{ team.title }}</a>
+                                                    </p>
+                                                </li>
+                                            {% endfor %}
+                                        {% endif %}
+                                        <li>
+                                            <p onclick="displaySubTeamMobile({{ sport.id }},{{ league.id }})" class="">Retour</p>
+                                        </li>
+                                    </ul>
+
+                                </div>
+                            </li>
+                        {% endfor %}
+                        <li>
+                            <p onclick="displaySubMenuMobile({{ sport.id }})" class="">Retour</p>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+
+
+<script>
+    function displaySubMenuMobile(id){
+        subMenu = document.querySelector('#sub-menu-mobile-sport-'+id);
+        allSubSports = document.querySelectorAll('.sub-menu-mobile-sport');
+        allSports = document.querySelectorAll('.sport-mobile');
+        sport = document.querySelector('#sport-mobile-'+id);
+
+        allSubSports.forEach((subMenu)=>{
+            if(!subMenu.classList.contains('hidden') && subMenu.id !== 'sub-menu-mobile-sport-'+id){
+                subMenu.classList.add('hidden');
+            }
+        })
+        allSports.forEach((sport)=>{
+            if(sport.classList.contains('underline')){
+                classSport('remove',sport);
+            }
+        })
+        if(subMenu.classList.contains('hidden')){
+            subMenu.classList.remove('hidden');
+            classSport('add',sport);
+        }
+        else {
+            subMenu.classList.add('hidden');
+            classSport('remove',sport);
+        }
+    }
+
+    function displaySubTeamMobile(sportId, leagueId){
+        subMenu = document.querySelector('#sub-menu-mobile-sport-'+sportId+'-league-'+leagueId);
+        allSubLeagues = document.querySelectorAll('.sub-menu-mobile-league');
+
+        allSubLeagues.forEach((subMenu)=>{
+            if(!subMenu.classList.contains('hidden') && subMenu.id !== 'sub-menu-mobile-sport-'+sportId+'-league-'+leagueId){
+                subMenu.classList.add('hidden');
+            }
+        })
+        if(subMenu.classList.contains('hidden')){
+            subMenu.classList.remove('hidden');
+        }
+        else {
+            subMenu.classList.add('hidden');
+        }
+    }
+</script>

@@ -1,14 +1,14 @@
 {% set currentPage = app.request.pathinfo|split('/') %}
-<nav class="py-8 sticky top-0 w-full bg-fullwhite border-b border-gray px-12 flex gap-x-8 z-50">
-    <div class="w-1/12">
+<nav class="py-8 sticky top-0 w-full bg-fullwhite border-b border-gray px-12 flex gap-x-8 z-49">
+    <div class="w-1/3 2xl:w-1/12">
         <a href="{{ path('app_front_home') }}"><img width="100px" src="/img/logo.png"></a>
     </div>
-    <div class="flex w-8/12">
+    <div class="hidden 2xl:flex 2xl:w-8/12">
         <div class="w-full flex items-center">
             {{ component('Front:Nav:Nav') }}
         </div>
     </div>
-    <div class="w-3/12 flex justify-end items-center">
+    <div class="w-2/3 flex justify-end items-center 2xl:w-3/12">
         {% if app.user is null %}
             {{ component('Global:Button', { tag: 'a', text: 'Se connecter', route: 'app_login', class: 'secondary' }) }}
             {{ component('Global:Button', { tag: 'a', text: 'Créer un compte', route: 'app_register', class: 'primary' }) }}
@@ -38,11 +38,26 @@
                 </a>
             {% endif %}
         {% endif %}
+        <p class="p-2 rounded hover:bg-secondarylight 2xl:hidden" onclick="toggleMenuMobile()">
+            <i class="fa-light fa-bars text-xl"></i>
+        </p>
     </div>
 </nav>
 
 {% if app.user %}
     {{ component('Front:Notification:Notification', { user_id: app.user.id }) }}
 {% endif %}
+
+<div id="menu-mobile" class="hidden fixed top-0 w-full h-full p-4 bg-fullwhite slide-right z-50">
+    <p onclick="toggleMenuMobile()" class="mb-4"><i class="fa-light fa-xmark text-xl"></i></p>
+    {{ component('Front:Nav:NavMobile') }}
+</div>
+
+<script>
+    function toggleMenuMobile() {
+        const menuMobile = document.querySelector('#menu-mobile');
+        menuMobile.classList.toggle('hidden');
+    }
+</script>
 
 
