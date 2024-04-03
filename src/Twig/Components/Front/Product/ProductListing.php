@@ -59,6 +59,11 @@ class ProductListing
                 $colors = $_GET["colors"];
                 unset($_GET["colors"]);
             }
+            $textils = [];
+            if (isset($_GET["textils"])) {
+                $textils = $_GET["textils"];
+                unset($_GET["textils"]);
+            }
             $departments = [];
             if (isset($_GET["departments"])) {
                 $departments = $_GET["departments"];
@@ -95,6 +100,19 @@ class ProductListing
                 }
                 $products = $filteredProducts;
             }
+            //On flitre avec les matières si définies
+            if ($textils != []) {
+                $filteredProducts = [];
+                foreach ($products as $product) {
+                    $textils_product = $product->getTextils();
+                    foreach ($textils_product as $textil_product) {
+                        if (in_array($textil_product->getId(), $textils)) {
+                            $filteredProducts[] = $product;
+                        }
+                    }
+                }
+                $products = $filteredProducts;
+            }
             //On flitre avec les départements si définis
             if ($departments != []) {
                 $filteredProducts = [];
@@ -121,6 +139,11 @@ class ProductListing
             if (isset($_GET["colors"])) {
                 $colors = $_GET["colors"];
                 unset($_GET["colors"]);
+            }
+            $textils = [];
+            if (isset($_GET["textils"])) {
+                $textils = $_GET["textils"];
+                unset($_GET["textils"]);
             }
             $departments = [];
             if (isset($_GET["departments"])) {
@@ -152,6 +175,19 @@ class ProductListing
                     $colors_product = $product->getColors();
                     foreach ($colors_product as $color_product) {
                         if (in_array($color_product->getId(), $colors)) {
+                            $filteredProducts[] = $product;
+                        }
+                    }
+                }
+                $products = $filteredProducts;
+            }
+            //On flitre avec les matières si définies
+            if ($textils != []) {
+                $filteredProducts = [];
+                foreach ($products as $product) {
+                    $textils_product = $product->getTextils();
+                    foreach ($textils_product as $textil_product) {
+                        if (in_array($textil_product->getId(), $textils)) {
                             $filteredProducts[] = $product;
                         }
                     }

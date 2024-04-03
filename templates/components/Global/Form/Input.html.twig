@@ -64,6 +64,22 @@
         </div>
     {% endif %}
 
+    {# Textil input #}
+    {% if type == "textil" %}
+        <div class="mb-3" id="group-{{ input_name }}">
+            <label class="w-full required">Matières</label>
+            <div class="grid grid-cols-12">
+                {% for textil in this.textils %}
+                    <div class="w-full flex items-center gap-x-2 col-span-4">
+                        <input type="checkbox" id="textils[]" name="textils[]" value="{{ textil.id }}">
+                        <div class="rounded-full border w-[16px] h-[16px]"></div>
+                        {{ textil.title }}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+
     {# Team input #}
     {% if type == "team" %}
         <div class="mb-3">

@@ -10,6 +10,7 @@ use App\Repository\LeagueRepository;
 use App\Repository\PlayerRepository;
 use App\Repository\SportRepository;
 use App\Repository\TeamRepository;
+use App\Repository\TextilRepository;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent]
@@ -31,6 +32,7 @@ class Select
         private LeagueRepository $leagueRepository,
         private ColorRepository $colorRepository,
         private DepartmentRepository $departmentRepository,
+        private TextilRepository $textilRepository,
         private Enum $enum
     ) {
     }
@@ -99,6 +101,9 @@ class Select
         }
         elseif ($this->options_name == 'colors'){
             return $this->colorRepository->findBy([],['title'=>'ASC']);
+        }
+        elseif ($this->options_name == 'textils'){
+            return $this->textilRepository->findBy([],['title'=>'ASC']);
         }
         elseif ($this->options_name == 'departments'){
             return $this->departmentRepository->findBy([],['title'=>'ASC']);

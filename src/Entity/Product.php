@@ -100,6 +100,9 @@ class Product
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: Assessment::class)]
     private Collection $assessments;
 
+    #[ORM\ManyToMany(targetEntity: Textil::class, inversedBy: 'products')]
+    private Collection $textils;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
@@ -111,6 +114,7 @@ class Product
         $this->notifications = new ArrayCollection();
         $this->cancelBooks = new ArrayCollection();
         $this->assessments = new ArrayCollection();
+        $this->textils = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -606,6 +610,30 @@ class Product
                 $assessment->setProduct(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Textil>
+     */
+    public function getTextils(): Collection
+    {
+        return $this->textils;
+    }
+
+    public function addTextil(Textil $textil): static
+    {
+        if (!$this->textils->contains($textil)) {
+            $this->textils->add($textil);
+        }
+
+        return $this;
+    }
+
+    public function removeTextil(Textil $textil): static
+    {
+        $this->textils->removeElement($textil);
 
         return $this;
     }

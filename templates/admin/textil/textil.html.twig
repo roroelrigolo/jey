@@ -1,0 +1,22 @@
+{% extends '/admin/base.html.twig' %}
+
+{% block title %}Jey{% endblock %}
+
+{% block body %}
+    {{ component('Admin:TitlePage', { title: 'Matières' }) }}
+
+    {{ component('Admin:Table:Header', {buttons:[
+        { tag: 'a', text: 'Ajouter une matière', route: 'app_admin_textil_new', class: 'secondaryadmin' },
+        { tag: 'a', text: 'Filtrer', class: 'secondaryadmin' }],
+        sort_filters:[
+            { value: 'id', text: 'ID' },
+            { value: 'title', text: 'Nom' }]
+    }) }}
+    {{ component('Admin:Table:Table', {
+        titles: ['Id','Nom',''],
+        cols: ['col-span-1','col-span-10','col-span-1'],
+        datas: datas,
+        features: ['','','flex justify-end'],
+        url: 'app_admin_textil_edit'
+    }) }}
+{% endblock %}

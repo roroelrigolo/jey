@@ -4,8 +4,10 @@ namespace App\Form\Front;
 
 use App\Entity\Color;
 use App\Entity\Product;
+use App\Entity\Textil;
 use App\Enum;
 use App\Repository\ColorRepository;
+use App\Repository\TextilRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -78,6 +80,18 @@ class ProductFormType extends AbstractType
                 'query_builder' => function (ColorRepository $er) {
                     return $er->createQueryBuilder('c')
                         ->orderBy('c.title', 'ASC');
+                }
+            ))
+            ->add('textils', EntityType::class, array(
+                'expanded' => true,
+                'class' => Textil::class,
+                'required' => true,
+                'multiple' => true,
+                'choice_label' => 'title',
+                'label' => 'Matières',
+                'query_builder' => function (TextilRepository $er) {
+                    return $er->createQueryBuilder('t')
+                        ->orderBy('t.title', 'ASC');
                 }
             ))
         ;

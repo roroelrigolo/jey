@@ -1,0 +1,9 @@
+{% extends '/admin/base.html.twig' %}
+
+{% block title %}Jey{% endblock %}
+
+{% block body %}
+    {{ component('Admin:TitlePage', { title: 'Matières' }) }}
+    {{ component('Global:Form:Header', { title: 'Éditer', id_entity: textil.id, type: 'textil' }) }}
+    {{ component('Global:Form:FormAdmin', { form_link: '/admin/textil/_form.html.twig', form: form }) }}
+{% endblock %}

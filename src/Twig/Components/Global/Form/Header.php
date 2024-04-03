@@ -15,6 +15,7 @@ use App\Entity\Product;
 use App\Entity\Reply;
 use App\Entity\Sport;
 use App\Entity\Team;
+use App\Entity\Textil;
 use App\Entity\User;
 use App\Repository\AlertRepository;
 use App\Repository\AssessmentRepository;
@@ -30,6 +31,7 @@ use App\Repository\ProductRepository;
 use App\Repository\ReplyRepository;
 use App\Repository\SportRepository;
 use App\Repository\TeamRepository;
+use App\Repository\TextilRepository;
 use App\Repository\UserRepository;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
@@ -55,7 +57,8 @@ class Header
         private ReplyRepository $replyRepository,
         private ConversationRepository $conversationRepository,
         private NotificationRepository $notificationRepository,
-        private NotificationTypeRepository $notificationTypeRepository
+        private NotificationTypeRepository $notificationTypeRepository,
+        private TextilRepository $textilRepository
     ){
     }
 
@@ -179,4 +182,11 @@ class Header
         return $this->notificationTypeRepository->find($this->id_entity);
     }
 
+    /**
+     * @return Textil
+     */
+    public function getTextil(): Textil
+    {
+        return $this->textilRepository->find($this->id_entity);
+    }
 }

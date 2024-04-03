@@ -11,6 +11,7 @@ use App\Repository\LeagueRepository;
 use App\Repository\PlayerRepository;
 use App\Repository\SportRepository;
 use App\Repository\TeamRepository;
+use App\Repository\TextilRepository;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent]
@@ -27,6 +28,7 @@ class Filter
         private PlayerRepository $playerRepository,
         private BrandRepository $brandRepository,
         private ColorRepository $colorRepository,
+        private TextilRepository $textilRepository,
         private DepartmentRepository $departmentRepository
     ) {
     }
@@ -74,6 +76,12 @@ class Filter
                 elseif ($key == "colors"){
                     foreach ($items as $item){
                         $filter = $this->colorRepository->find($item);
+                        array_push($filters, [$key,$filter->getId(),$filter->getTitle()]);
+                    }
+                }
+                elseif ($key == "textils"){
+                    foreach ($items as $item){
+                        $filter = $this->textilRepository->find($item);
                         array_push($filters, [$key,$filter->getId(),$filter->getTitle()]);
                     }
                 }

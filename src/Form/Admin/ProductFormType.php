@@ -9,6 +9,7 @@ use App\Entity\Player;
 use App\Entity\Product;
 use App\Entity\Sport;
 use App\Entity\Team;
+use App\Entity\Textil;
 use App\Entity\User;
 use App\Enum;
 use App\Repository\BrandRepository;
@@ -17,6 +18,7 @@ use App\Repository\LeagueRepository;
 use App\Repository\PlayerRepository;
 use App\Repository\SportRepository;
 use App\Repository\TeamRepository;
+use App\Repository\TextilRepository;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -155,6 +157,18 @@ class ProductFormType extends AbstractType
                 'query_builder' => function (ColorRepository $er) {
                     return $er->createQueryBuilder('c')
                         ->orderBy('c.title', 'ASC');
+                }
+            ))
+            ->add('textils', EntityType::class, array(
+                'expanded' => true,
+                'class' => Textil::class,
+                'required' => true,
+                'multiple' => true,
+                'choice_label' => 'title',
+                'label' => 'Matières',
+                'query_builder' => function (TextilRepository $er) {
+                    return $er->createQueryBuilder('t')
+                        ->orderBy('t.title', 'ASC');
                 }
             ))
             ->add('user', EntityType::class, array(
