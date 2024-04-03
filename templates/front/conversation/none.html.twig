@@ -1,0 +1,12 @@
+{% extends '/front/base.html.twig' %}
+
+{% block title %}Jey{% endblock %}
+
+{% block body %}
+    <div class="container mx-auto w-1/2 text-center mb-20 py-20">
+        <p class="text-7xl font-bold mb-8">Oups...😲</p>
+        <p class="text-xl mb-8">Pour le moment, vous n'avez pas encore de conversations</p>
+        <p class="text-xl mb-8">Veuillez parcourir les annonces afin de commencer une conversation avec un autre utilisateur</p>
+        {{ component('Global:Button', { tag: 'a', text: "Parcourir les annonces", route: 'app_front_search', class: 'primary', size: 'text-xl' }) }}
+    </div>
+{% endblock %}

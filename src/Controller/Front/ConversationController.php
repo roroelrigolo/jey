@@ -20,11 +20,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class ConversationController extends AbstractController
 {
     #[Route('/', name: 'app_front_conversation')]
-    public function home(ConversationRepository $conversationRepository, UserRepository $userRepository): Response
+    public function home(): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
         $user = $this->getUser();
-        if (!empty($user->getConversations())) {
+        if (count($user->getConversations()) != 0) {
             $latestConversation = null;
             foreach ($user->getConversations() as $conversation) {
                 if (is_null($latestConversation) || $conversation->getUpdatedAt() > $latestConversation->getUpdatedAt()) {
@@ -33,9 +33,9 @@ class ConversationController extends AbstractController
             }
             return $this->redirectToRoute('app_front_conversation_show', ['uuid'=>$latestConversation->getUuid()], Response::HTTP_SEE_OTHER);
         }
-        return $this->render('front/conversation/conversation.html.twig', [
-            'conversations' => $user->getConversations()
-        ]);
+        else {
+            return $this->redirectToRoute('app_front_conversation_none', [], Response::HTTP_SEE_OTHER);
+        }
     }
 
     #[Route('/exit', name: 'app_front_conversation_exit')]
@@ -50,6 +50,18 @@ class ConversationController extends AbstractController
                }
             }
         }
+    }
+
+    #[Route('/none', name: 'app_front_conversation_none')]
+    public function none(): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+        $user = $this->getUser();
+        if (count($user->getConversations()) != 0) {
+            return $this->redirectToRoute('app_front_conversation', [], Response::HTTP_SEE_OTHER);
+        }
+        return $this->render('front/conversation/none.html.twig', [
+        ]);
     }
 
     #[Route('/{uuid}', name: 'app_front_conversation_show')]
