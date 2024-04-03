@@ -32,6 +32,11 @@
             <a class="p-2 rounded hover:bg-secondarylight" href="{{ path('app_front_user_account_profile') }}">
                 <i class="fa-light fa-user text-xl"></i>
             </a>
+            {% if is_granted('ROLE_ADMIN') %}
+                <a class="p-2 rounded hover:bg-secondarylight" href="{{ path('app_admin_dashboard') }}">
+                    <i class="fa-light fa-lock text-xl"></i>
+                </a>
+            {% endif %}
         {% endif %}
     </div>
 </nav>
