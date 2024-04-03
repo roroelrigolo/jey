@@ -3,13 +3,13 @@
 {% block title %}Jey{% endblock %}
 
 {% block body %}
-    <div class="bg-secondary flex py-10 px-40 mb-20">
-        <div class="w-1/2 py-40">
-            <h1 class="text-5xl font-bold mb-8">Rejoint la communauté <span class="text-primary">Jey.</span> dès maintenant !</h1>
-            <p class="mb-8 w-10/12">Le premier marché en ligne 100% spécialisée dans la revente ou l'échange de <span class="font-bold text-primary">maillots de sports</span> d'occasion & de collection. 🤝</p>
-            <div class="flex items-center">
-                {{ component('Global:Button', { tag: 'a', text: 'Vendre un maillot', route: 'app_front_product_new', class: 'primary', size: 'text-lg' }) }}
-                <p class="text-lg font-bold text-primary">En savoir plus</p>
+    <div class="bg-secondary flex flex-col-reverse items-center p-6 gap-y-8 mb-10 lg:flex-row lg:py-10 lg:px-20 2xl:px-40 2xl:mb-20">
+        <div class="text-center mb-4 lg:text-left lg:w-1/2 lg:py-20 lg:mb-0 2xl:py-40">
+            <h1 class="text-3xl mb-4 font-bold lg:text-5xl lg:mb-8">Rejoint la communauté <span class="text-primary">Jey.</span> dès maintenant !</h1>
+            <p class="mb-8 lg:w-10/12">Le premier marché en ligne 100% spécialisée dans la revente ou l'échange de <span class="font-bold text-primary">maillots de sports</span> d'occasion & de collection. 🤝</p>
+            <div class="flex items-center justify-center lg:justify-start">
+                {{ component('Global:Button', { tag: 'a', text: 'Vendre un maillot', route: 'app_front_product_new', class: 'primary', size: 'lg:text-lg' }) }}
+                <p class="font-bold text-primary lg:text-lg">En savoir plus</p>
             </div>
         </div>
         <div class="w-1/2 flex justify-center">
@@ -18,21 +18,21 @@
         </div>
     </div>
 
-    <div class="container mx-auto w-1/2 text-center mb-20">
-        <h2 class="text-3xl font-bold mb-8"><span class="bg-primary text-secondary px-4 py-1">Jey,</span> la toute nouvelle plateforme qui redéfinit la façon dont vous achetez & vendez des maillots de sport de vos équipes favorites !</h2>
+    <div class="container mx-auto px-2 text-center mb-8 lg:mb-20 2xl:w-1/2">
+        <h2 class="text-xl font-bold mb-8 lg:text-3xl"><span class="bg-primary text-secondary px-4 py-1">Jey,</span> la toute nouvelle plateforme qui redéfinit la façon dont vous achetez & vendez des maillots de sport de vos équipes favorites !</h2>
         <p>De la NBA en passant par la Ligue 1, le Top 14 ou la NFL, trouvez votre prochain <span class="bg-primary font-bold text-secondary px-4 py-1">trésor sportif</span> sur Jey - où chaque maillot a une histoire à raconter.</p>
     </div>
 
-    <div class="container px-20 mx-auto py-2 mb-20">
+    <div class="container mx-auto px-2 py-2 mb-8 lg:mb-20 2xl:px-20">
         {{ component('Front:Product:ProductListing', { title: "Maillots populaires", listing : 'bestProducts', cols: 5 }) }}
     </div>
 
-    <div class="container mx-auto w-1/2 text-center mb-20">
+    <div class="container mx-auto px-2 text-center mb-8 lg:mb-20 2xl:w-1/2">
         <h2 class="text-3xl font-bold mb-8">Je recherche ...</h2>
         {{ component('Front:Filter:Filter', {custom_class: 'justify-center'}) }}
     </div>
 
-    <div class="container px-20 mx-auto py-2 mb-20">
+    <div class="container mx-auto px-2 py-2 mb-8 lg:mb-20 2xl:px-20">
         {{ component('Front:Product:ProductListing', { title: "Derniers maillots ajoutés", listing : 'lastProducts', cols: 5 }) }}
     </div>
 {% endblock %}

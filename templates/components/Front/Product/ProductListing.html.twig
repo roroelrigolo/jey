@@ -1,7 +1,7 @@
 
     {% if title is defined %}
         <div class="flex justify-between">
-            <h3 class="text-3xl font-bold mb-2">{{ title|raw }}</h3>
+            <h3 class="text-lg font-bold mb-2 lg:text-3xl">{{ title|raw }}</h3>
             <a class="text-primary">Voir tout</a>
         </div>
     {% endif %}
@@ -22,7 +22,7 @@
         <p class="text-graydark text-base mb-2"> {{ productList|length }} résultats</p>
     {% endif %}
 
-    <div class="flex gap-x-4 grid grid-cols-{{ cols }}">
+    <div class="flex gap-x-4 overflow-x-scroll scroll-hidden lg:grid-cols-{{ (cols/2)|round }} 2xl:grid-cols-{{ cols }}">
         {% for product in productList %}
             {{ component('Front:Product:ProductComponent', { id: product.id }) }}
         {% endfor %}
