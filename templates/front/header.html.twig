@@ -1,42 +1,39 @@
 {% set currentPage = app.request.pathinfo|split('/') %}
-<nav class="py-8 px-4 sticky top-0 w-full bg-fullwhite border-b border-gray lg:px-12 flex gap-x-8 z-50">
-    <div class="w-1/3 2xl:w-1/12">
-        <a href="{{ path('app_front_home') }}"><img width="100px" src="/img/logo.png"></a>
+<nav class="py-4 px-4 sticky top-0 w-full bg-fullwhite border-b border-gray flex justify-between z-50 md:py-8 md:gap-x-8 lg:px-12">
+    <div class="flex items-center hidden md:block 2xl:w-1/12">
+        <a href="{{ path('app_front_home') }}"><img class="max-w-[100px]" src="/img/logo.png"></a>
+    </div>
+    <div class="bg-fullwhite w-full p-2 md:hidden">
+        <form class="grid" id="filterForm" method="GET" accept-charset="UTF-8" enctype="multipart/form-data" action="{{ path('app_front_search') }}">
+            <input type="text" name="text" class="w-full rounded border" placeholder="Je recherche un maillot..." {% if textFilter is defined %}value="{{ textFilter }}"{% endif %}>
+        </form>
     </div>
     <div class="hidden 2xl:flex 2xl:w-8/12">
         <div class="w-full flex items-center">
             {{ component('Front:Nav:Nav') }}
         </div>
     </div>
-    <div class="w-2/3 flex justify-end items-center 2xl:w-3/12">
+    <div class="flex justify-end items-center 2xl:w-3/12">
         {% if app.user is null %}
             {{ component('Global:Button', { tag: 'a', text: 'Se connecter', route: 'app_login', class: 'secondary', custom_class: 'hidden lg:block' }) }}
             {{ component('Global:Button', { tag: 'a', text: 'Créer un compte', route: 'app_register', class: 'primary', custom_class: 'hidden lg:block' }) }}
-            <a class="p-2 rounded hover:bg-secondarylight" href="{{ path('app_front_search') }}">
+            <a class="p-2 rounded hover:bg-secondarylight hidden md:block" href="{{ path('app_front_search') }}">
                 <i class="fa-light fa-magnifying-glass text-xl"></i>
             </a>
         {% else %}
             {{ component('Global:Button', { tag: 'a', text: 'Vendre un maillot', route: 'app_front_product_new', class: 'primary', custom_class: 'hidden lg:block' }) }}
-            <a class="p-2 rounded hover:bg-secondarylight" href="{{ path('app_front_search') }}">
+            <a class="p-2 rounded hover:bg-secondarylight hidden md:block" href="{{ path('app_front_search') }}">
                 <i class="fa-light fa-magnifying-glass text-xl"></i>
             </a>
-            <a class="p-2 rounded hover:bg-secondarylight" href="{{ path('app_front_favorite') }}">
-                <i class="fa-light fa-heart text-xl"></i>
-            </a>
-            <a class="p-2 rounded hover:bg-secondarylight" href="{{ path('app_front_conversation') }}">
+            <a class="p-2 rounded hover:bg-secondarylight hidden md:block" href="{{ path('app_front_conversation') }}">
                 <i class="fa-light fa-messages text-xl"></i>
             </a>
-            <p class="p-2 rounded hover:bg-secondarylight">
-                <i class="fa-light fa-bell text-xl" onclick="toggleNotifications()"></i>
+            <p class="p-2 rounded hover:bg-secondarylight hidden md:block" onclick="toggleNotifications()">
+                <i class="fa-light fa-bell text-xl"></i>
             </p>
-            <a class="p-2 rounded hover:bg-secondarylight" href="{{ path('app_front_user_account_profile') }}">
+            <p class="p-2 rounded hover:bg-secondarylight hidden md:block" onclick="toggleMenuProfil()">
                 <i class="fa-light fa-user text-xl"></i>
-            </a>
-            {% if is_granted('ROLE_ADMIN') %}
-                <a class="p-2 rounded hover:bg-secondarylight" href="{{ path('app_admin_dashboard') }}">
-                    <i class="fa-light fa-lock text-xl"></i>
-                </a>
-            {% endif %}
+            </p>
         {% endif %}
         <p class="p-2 rounded hover:bg-secondarylight 2xl:hidden" onclick="toggleMenuMobile()">
             <i class="fa-light fa-bars text-xl"></i>
@@ -47,15 +44,53 @@
 {% if app.user %}
     {{ component('Front:Notification:Notification', { user_id: app.user.id }) }}
 {% endif %}
+<div id="menu-profile" class="hidden fixed shadow-md right-[30px] bg-fullwhite grid gap-y-4 max-h-[500px] overflow-auto py-2 px-4 z-50">
+    {% if app.user %}
+        <p><a class="hover:underline hover:decoration-secondary hover:decoration-2 hover:underline-offset-8" href="{{ path('app_front_user_show', {'pseudo': app.user.pseudo}) }}">Mon profil</a></p>
+        <p><a class="hover:underline hover:decoration-secondary hover:decoration-2 hover:underline-offset-8" href="{{ path('app_front_user_account_profile') }}">Mes paramètres</a></p>
+        <p><a class="hover:underline hover:decoration-secondary hover:decoration-2 hover:underline-offset-8" href="{{ path('app_front_favorite') }}">Mes favoris</a></p>
+        {% if is_granted('ROLE_ADMIN') %}
+            <p><a class="hover:underline hover:decoration-secondary hover:decoration-2 hover:underline-offset-8" href="{{ path('app_admin_dashboard') }}">Administration</a></p>
+        {% endif %}
+    {% endif %}
+
+</div>
 
 <div id="menu-mobile" class="hidden fixed top-0 w-full h-full p-4 bg-fullwhite slide-right z-50">
     <p onclick="toggleMenuMobile()" class="mb-4"><i class="fa-light fa-xmark text-xl"></i></p>
     {{ component('Front:Nav:NavMobile') }}
 </div>
 
+<div id="nav-mobile" class="flex justify-center text-center fixed bottom-0 py-1 px-4 w-full bg-fullwhite z-50 md:hidden text-xs">
+    <a class="grid gap-y-1 p-2 rounded hover:bg-secondarylight" href="{{ path('app_front_search') }}">
+        <i class="fa-light fa-magnifying-glass text-xl"></i>
+        Chercher
+    </a>
+    <a class="grid gap-y-1 p-2 rounded hover:bg-secondarylight" href="{{ path('app_front_conversation') }}">
+        <i class="fa-light fa-messages text-xl"></i>
+        Messages
+    </a>
+    <a class="grid gap-y-1 p-2 rounded hover:bg-secondarylight" href="{{ path('app_front_home') }}">
+        <i class="fa-light fa-house text-xl"></i>
+        Accueil
+    </a>
+    <p class="grid gap-y-1 p-2 rounded hover:bg-secondarylight" onclick="toggleNotifications()">
+        <i class="fa-light fa-bell text-xl"></i>
+        Notifications
+    </p>
+    <a class="grid gap-y-1 p-2 rounded hover:bg-secondarylight" href="{{ path('app_front_user_account') }}">
+        <i class="fa-light fa-user text-xl"></i>
+        Profil
+    </a>
+</div>
+
 <script>
     function toggleMenuMobile() {
         const menuMobile = document.querySelector('#menu-mobile');
+        menuMobile.classList.toggle('hidden');
+    }
+    function toggleMenuProfil() {
+        const menuMobile = document.querySelector('#menu-profile');
         menuMobile.classList.toggle('hidden');
     }
 </script>

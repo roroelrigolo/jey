@@ -1,4 +1,12 @@
 <div class="text-lg w-full p-4 relative overflow-y-auto h-[90%]">
+    <div class="mb-8 grid gap-y-4">
+        {% if app.user is null %}
+            {{ component('Global:Button', { tag: 'a', text: 'Se connecter', route: 'app_login', class: 'secondary' }) }}
+            {{ component('Global:Button', { tag: 'a', text: 'Créer un compte', route: 'app_register', class: 'primary' }) }}
+        {% else %}
+            {{ component('Global:Button', { tag: 'a', text: 'Vendre un maillot', route: 'app_front_product_new', class: 'primary' }) }}
+        {% endif %}
+    </div>
     <ul class="grid gap-y-4">
         {% for sport in this.sports %}
             <li>
@@ -49,14 +57,6 @@
             </li>
         {% endfor %}
     </ul>
-    <div class="mt-8 grid gap-y-4">
-        {% if app.user is null %}
-            {{ component('Global:Button', { tag: 'a', text: 'Se connecter', route: 'app_login', class: 'secondary' }) }}
-            {{ component('Global:Button', { tag: 'a', text: 'Créer un compte', route: 'app_register', class: 'primary' }) }}
-        {% else %}
-            {{ component('Global:Button', { tag: 'a', text: 'Vendre un maillot', route: 'app_front_product_new', class: 'primary' }) }}
-        {% endif %}
-    </div>
 </div>
 
 

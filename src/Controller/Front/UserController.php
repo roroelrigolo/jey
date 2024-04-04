@@ -16,6 +16,16 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/user')]
 class UserController extends AbstractController
 {
+
+    #[Route('/myaccount', name: 'app_front_user_account', methods: ['GET', 'POST'])]
+    public function account(): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
+        return $this->render('front/user/account/account.html.twig', [
+        ]);
+    }
+
     #[Route('/myaccount/profile', name: 'app_front_user_account_profile', methods: ['GET', 'POST'])]
     public function account_profile(Request $request, UserRepository $userRepository, NotificationTypeRepository $notificationTypeRepository): Response
     {
