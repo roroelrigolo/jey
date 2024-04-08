@@ -9,6 +9,7 @@ use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 class ProductComponent
 {
     public int $id;
+    public bool $scroll;
 
     public function __construct(
         private ProductRepository $productRepository

@@ -15,6 +15,7 @@ class ProductListing
     public int $user_id;
     public int $sport_id;
     public int $cols;
+    public bool $scroll;
 
     public function __construct(
         private ProductRepository $productRepository,
@@ -80,7 +81,29 @@ class ProductListing
             if(isset($search_text)){
                 $array = [];
                 foreach ($products as $product){
-                    if (strpos(strtolower($product->getTitle()),strtolower($search_text)) !== false) {
+                    $words = explode(" ", strtolower($search_text));
+                    $push = false;
+                    foreach ($words as $word){
+                        if (strpos(strtolower($product->getTitle()),$word) !== false ||
+                            ($product->getSport() && strpos(strtolower($product->getSport()->getTitle()),$word) !== false) ||
+                            ($product->getLeague() && strpos(strtolower($product->getLeague()->getTitle()),$word) !== false) ||
+                            ($product->getTeam() && strpos(strtolower($product->getTeam()->getTitle()),$word) !== false) ||
+                            ($product->getPlayer() && strpos(strtolower($product->getPlayer()->getFirstName()),$word) !== false) ||
+                            ($product->getPlayer() && strpos(strtolower($product->getPlayer()->getLastName()),$word) !== false) ||
+                            strpos(strtolower($product->getNumber()),$word) !== false ||
+                            ($product->getBrand() && strpos(strtolower($product->getBrand()->getTitle()),$word) !== false) ||
+                            strpos(strtolower($product->getSize()),$word) !== false ||
+                            strpos(strtolower($product->getStatement()),$word) !== false ||
+                            ($product->getUser() && $product->getUser()->getLocation() && strpos(strtolower($product->getUser()->getLocation()->getTitle()),$word) !== false)
+                        ){
+                            $push = true;
+                        }
+                        else {
+                            $push = false;
+                            break;
+                        }
+                    }
+                    if($push == true){
                         array_push($array, $product);
                     }
                 }
@@ -161,9 +184,31 @@ class ProductListing
             if(isset($search_text)){
                 $array = [];
                 foreach ($products as $product){
-                    if (strpos(strtolower($product->getTitle()),strtolower($search_text)) !== false) {
-                        array_push($array, $product);
+                    $words = explode(" ", strtolower($search_text));
+                    $push = false;
+                    foreach ($words as $word){
+                        if (strpos(strtolower($product->getTitle()),$word) !== false ||
+                            ($product->getSport() && strpos(strtolower($product->getSport()->getTitle()),$word) !== false) ||
+                            ($product->getLeague() && strpos(strtolower($product->getLeague()->getTitle()),$word) !== false) ||
+                            ($product->getTeam() && strpos(strtolower($product->getTeam()->getTitle()),$word) !== false) ||
+                            ($product->getPlayer() && strpos(strtolower($product->getPlayer()->getFirstName()),$word) !== false) ||
+                            ($product->getPlayer() && strpos(strtolower($product->getPlayer()->getLastName()),$word) !== false) ||
+                            strpos(strtolower($product->getNumber()),$word) !== false ||
+                            ($product->getBrand() && strpos(strtolower($product->getBrand()->getTitle()),$word) !== false) ||
+                            strpos(strtolower($product->getSize()),$word) !== false ||
+                            strpos(strtolower($product->getStatement()),$word) !== false ||
+                            ($product->getUser() && $product->getUser()->getLocation() && strpos(strtolower($product->getUser()->getLocation()->getTitle()),$word) !== false)
+                        ){
+                            $push = true;
+                        }
+                        else {
+                            $push = false;
+                            break;
+                        }
                     }
+                if($push == true){
+                    array_push($array, $product);
+                }
                 }
                 $products = $array;
             }

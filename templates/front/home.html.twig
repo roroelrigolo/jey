@@ -24,15 +24,15 @@
     </div>
 
     <div class="container mx-auto px-2 py-2 mb-8 lg:mb-20 2xl:px-20">
-        {{ component('Front:Product:ProductListing', { title: "Maillots populaires", listing : 'bestProducts', cols: 5 }) }}
+        {{ component('Front:Product:ProductListing', { title: "Maillots populaires", listing : 'bestProducts', cols: 5, scroll: true }) }}
     </div>
 
     <div class="container mx-auto px-2 text-center mb-8 lg:mb-20 2xl:w-1/2">
         <h2 class="text-3xl font-bold mb-8">Je recherche ...</h2>
-        {{ component('Front:Filter:Filter', {custom_class: 'justify-center'}) }}
+        {{ component('Front:Filter:Filter', {custom_class: 'lg:justify-center'}) }}
     </div>
 
     <div class="container mx-auto px-2 py-2 mb-8 lg:mb-20 2xl:px-20">
-        {{ component('Front:Product:ProductListing', { title: "Derniers maillots ajoutés", listing : 'lastProducts', cols: 5 }) }}
+        {{ component('Front:Product:ProductListing', { title: "Derniers maillots ajoutés", listing : 'lastProducts', cols: 5, scroll: true }) }}
     </div>
 {% endblock %}

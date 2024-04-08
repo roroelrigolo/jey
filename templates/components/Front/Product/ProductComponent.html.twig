@@ -1,4 +1,4 @@
-<div class="card-product flex flex-col bg-fullwhite rounded-xl p-4 mb-2 min-w-[200px]">
+<div class="col-span-1 card-product flex flex-col bg-fullwhite rounded-xl p-4 mb-2 {% if scroll is defined %}min-w-[200px]{% endif %}">
     <div class="group relative">
         <div class="absolute flex bottom-0 justify-end w-full mb-2 px-2">
             <p class="bg-secondary text-sm text-primary rounded px-2 z-10">{{ this.product.conditionnement }}</p>
@@ -9,7 +9,7 @@
             </a>
         {% endfor %}
     </div>
-    <div class="flex flex-col justify-between h-full py-2 ">
+    <div class="flex flex-col justify-between h-full py-2">
         <div>
             <div class="flex justify-between">
                 {% if this.product.player is not null %}

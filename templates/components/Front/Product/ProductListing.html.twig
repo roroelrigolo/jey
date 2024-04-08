@@ -22,8 +22,12 @@
         <p class="text-graydark text-base mb-2"> {{ productList|length }} résultats</p>
     {% endif %}
 
-    <div class="flex gap-x-4 overflow-x-scroll scroll-hidden lg:grid-cols-{{ (cols/2)|round }} 2xl:grid-cols-{{ cols }}">
+    <div class="{% if scroll is defined %}flex overflow-x-scroll scroll-hidden md:grid md:grid-cols-{{ (cols/2)|round }} {% else %}grid grid-cols-{{ (cols/2)|round }} {% endif %}gap-x-4 lg:grid-cols-{{ (cols-1) }} 2xl:grid-cols-{{ cols }}">
         {% for product in productList %}
-            {{ component('Front:Product:ProductComponent', { id: product.id }) }}
+            {% if scroll is defined %}
+                {{ component('Front:Product:ProductComponent', { id: product.id, scroll: true }) }}
+            {% else %}
+                {{ component('Front:Product:ProductComponent', { id: product.id }) }}
+            {% endif %}
         {% endfor %}
     </div>

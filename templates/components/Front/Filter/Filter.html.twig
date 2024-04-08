@@ -7,7 +7,7 @@
             <input type="text" name="text" class="w-full rounded border" placeholder="Exemple : Maillot Lebon James..." {% if textFilter is defined %}value="{{ textFilter }}"{% endif %}>
             {{ component('Global:Button',{ tag: 'button', text: 'Rechercher', class: 'primary', custom_class: 'h-full' }) }}
         </div>
-        <div class="flex gap-2 overflow-x-scroll scroll-hidden lg:flex-wrap {% if custom_class is defined %}{{ custom_class }}{% endif %}">
+        <div class="flex gap-2 overflow-x-scroll scroll-hidden md:overflow-x-clip lg:flex-wrap {% if custom_class is defined %}{{ custom_class }}{% endif %}">
             {% if sport is defined %}
                 {{ component('Global:Button', { tag: 'a', text: 'Réinitialiser les filtres', route: 'app_front_sport_show', route_parameter: [ { name: 'slug', value: sport.id|trans~'-'~sport.title } ], class: 'secondary', size: 'text-base' }) }}
                 <select class="rounded" disabled name="sport" onchange="this.form.submit()">
