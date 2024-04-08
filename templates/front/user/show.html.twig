@@ -3,14 +3,14 @@
 {% block title %}Jey{% endblock %}
 
 {% block body %}
-    <div class="container mx-auto w-3/4 mb-20 py-20">
-        <div class="flex gap-x-6 mb-4">
-            <div class="bg-fullwhite w-1/4 p-8 flex flex-col items-center">
-                <div class="rounded-full bg-primary w-[100px] h-[100px]"></div>
-                <p class="text-2xl">{{ component('Global:User:LinkUser', { pseudo: user.pseudo }) }}</p>
+    <div class="container mx-auto px-2 py-6 mb-20 lg:py-20 lg:w-3/4">
+        <div class="mb-4 grid gap-y-4 md:flex md:gap-x-6 md:gap-y-0">
+            <div class="bg-fullwhite flex items-center p-4 md:w-1/4 md:p-8 md:flex-col">
+                <div class="rounded-full bg-primary w-[50px] h-[50px] me-4 md:w-[100px] md:h-[100px] md:me-0"></div>
+                <p class="text-lg lg:text-2xl">{{ component('Global:User:LinkUser', { pseudo: user.pseudo }) }}</p>
                 {{ component('Global:User:GraduateUser', { id: user.id }) }}
             </div>
-            <div class="bg-fullwhite w-3/4 p-8">
+            <div class="bg-fullwhite p-4 md:w-3/4 md:p-8">
                 <div class="flex justify-between">
                     <p class="text-xl text-primary font-bold mb-4">Profil</p>
                     {% if app.user and app.user.id == user.id %}
@@ -28,7 +28,7 @@
                 </div>
             </div>
         </div>
-        <div class="bg-fullwhite w-full p-8">
+        <div class="bg-fullwhite w-full p-4 md:p-8">
             <p class="text-xl text-primary font-bold mb-4">Annonces & Avis</p>
             <div class="flex gap-x-4 mb-4">
                 <p id="nav-products" onclick="switchAssessmentProduct('products','assessments')" class="underline decoration-secondary decoration-2 underline-offset-8 hover:underline hover:decoration-secondary hover:decoration-2 hover:underline-offset-8">Maillots en vente</p>
