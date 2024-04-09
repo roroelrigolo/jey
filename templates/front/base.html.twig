@@ -20,7 +20,7 @@
     <body class="bg-white h-full w-full">
     {% if justMobile is defined %}
         <div class="bg-secondary h-full w-full items-center flex-col justify-center hidden {% if justMobile is defined %}md:flex{% endif %}">
-            <p class="text-2xl font-bold mb-6">Cette page n'est disponible que sur un écran inférieur a 768px</p>
+            <p class="text-2xl font-bold mb-6">Cette page n'est disponible que sur un écran inférieur à 768px</p>
             {{ component('Global:Button', { tag: 'a', text: "Page d'accueil", route: 'app_front_home', class: 'primary', size: 'text-xl' }) }}
         </div>
     {% endif %}

@@ -1,56 +1,56 @@
-<div id="notifications" class="hidden fixed shadow-md right-[70px] bg-fullwhite grid gap-y-4 w-[400px] max-h-[500px] overflow-auto p-2 z-50">
-    {% for notification in this.notifications %}
-        <div class="flex gap-x-4 p-4 {% if notification.view == 0 %}bg-primarylight{% endif %} hover:bg-primarylight">
-            {% if notification.type.category == "Abonnements" %}
-                {% for image in notification.product.images|slice(0,1) %}
-                    <a class="" href="{{ path('app_front_product_show', {'uuid': notification.product.uuid}) }}">
-                        <img class="min-w-[50px] h-[50px] rounded-lg object-cover" src="/upload/product/img/{{ image.url }}">
-                    </a>
-                {% endfor %}
-                <div class="text-sm">
-                    <p>
-                        {{ component('Global:User:LinkUser', { pseudo: notification.product.user.pseudo }) }}
-                        {{ notification.type.title }}
-                        <a class="text-primary font-bold hover:text-primaryhover" href="{{ path('app_front_product_show', {'uuid': notification.product.uuid}) }}">{{ notification.product.title }}</a>
+{% for notification in this.notifications %}
+    <div class="flex gap-x-4 p-4 {% if notification.view == 0 %}bg-primarylight{% endif %} hover:bg-primarylight">
+        {% if notification.type.category == "Abonnements" %}
+            {% for image in notification.product.images|slice(0,1) %}
+                <a class="" href="{{ path('app_front_product_show', {'uuid': notification.product.uuid}) }}">
+                    <img class="min-w-[50px] h-[50px] rounded-lg object-cover" src="/upload/product/img/{{ image.url }}">
+                </a>
+            {% endfor %}
+            <div class="text-sm">
+                <p>
+                    {{ component('Global:User:LinkUser', { pseudo: notification.product.user.pseudo }) }}
+                    {{ notification.type.title }}
+                    <a class="text-primary font-bold hover:text-primaryhover" href="{{ path('app_front_product_show', {'uuid': notification.product.uuid}) }}">{{ notification.product.title }}</a>
 
-                    </p>
-                    <p class="text-xs text-graydark">{{ notification.updatedAt|custom_time }}</p>
-                </div>
-            {% elseif notification.type.category == "Annonces" %}
-                {% for image in notification.product.images|slice(0,1) %}
-                    <a class="" href="{{ path('app_front_product_show', {'uuid': notification.product.uuid}) }}">
-                        <img class="min-w-[50px] h-[50px] rounded-lg object-cover" src="/upload/product/img/{{ image.url }}">
-                    </a>
-                {% endfor %}
-                <div class="text-sm">
-                    <p>
-                        <a class="text-primary font-bold hover:text-primaryhover" href="{{ path('app_front_product_show', {'uuid': notification.product.uuid}) }}">{{ notification.product.title }}</a>
-                        {{ notification.type.title }}
-                    </p>
-                    <p class="text-xs text-graydark">{{ notification.updatedAt|custom_time }}</p>
-                </div>
-            {% elseif notification.type.category == "Messages" %}
-                <div class="rounded-full bg-primary min-w-[30px] h-[30px]"></div>
-                <div class="text-sm">
-                    <p>
-                        {{ component('Global:User:LinkUser', { pseudo: notification.message.author.pseudo }) }}
-                        {{ notification.type.title }}
-                    </p>
-                    <p>{{ notification.message.content|slice(0, 50) }}{% if notification.message.content|length > 50 %}...{% endif %}</p>
-                    <p class="text-xs text-graydark">{{ notification.updatedAt|custom_time }}</p>
-                </div>
-            {% elseif notification.type.category == "Signalements" %}
-                <div class="rounded-full bg-primary min-w-[30px] h-[30px]"></div>
-                <div class="text-sm">
-                    <p>
-                        {{ notification.type.title }}
-                    </p>
-                    <p class="text-xs text-graydark">{{ notification.updatedAt|custom_time }}</p>
-                </div>
-            {% endif %}
-        </div>
-    {% endfor %}
-</div>
+                </p>
+                <p class="text-xs text-graydark">{{ notification.updatedAt|custom_time }}</p>
+            </div>
+        {% elseif notification.type.category == "Annonces" %}
+            {% for image in notification.product.images|slice(0,1) %}
+                <a class="" href="{{ path('app_front_product_show', {'uuid': notification.product.uuid}) }}">
+                    <img class="min-w-[50px] h-[50px] rounded-lg object-cover" src="/upload/product/img/{{ image.url }}">
+                </a>
+            {% endfor %}
+            <div class="text-sm">
+                <p>
+                    <a class="text-primary font-bold hover:text-primaryhover" href="{{ path('app_front_product_show', {'uuid': notification.product.uuid}) }}">{{ notification.product.title }}</a>
+                    {{ notification.type.title }}
+                </p>
+                <p class="text-xs text-graydark">{{ notification.updatedAt|custom_time }}</p>
+            </div>
+        {% elseif notification.type.category == "Messages" %}
+            <div class="rounded-full bg-primary min-w-[30px] h-[30px]"></div>
+            <div class="text-sm">
+                <p>
+                    {{ component('Global:User:LinkUser', { pseudo: notification.message.author.pseudo }) }}
+                    {{ notification.type.title }}
+                </p>
+                <p>{{ notification.message.content|slice(0, 50) }}{% if notification.message.content|length > 50 %}...{% endif %}</p>
+                <p class="text-xs text-graydark">{{ notification.updatedAt|custom_time }}</p>
+            </div>
+        {% elseif notification.type.category == "Signalements" %}
+            <div class="rounded-full bg-primary min-w-[30px] h-[30px]"></div>
+            <div class="text-sm">
+                <p>
+                    {{ notification.type.title }}
+                </p>
+                <p class="text-xs text-graydark">{{ notification.updatedAt|custom_time }}</p>
+            </div>
+        {% endif %}
+    </div>
+{% endfor %}
+
+
 
 <script>
     function toggleNotifications() {

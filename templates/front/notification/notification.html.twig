@@ -1,0 +1,10 @@
+{% extends '/front/base.html.twig' %}
+
+{% block title %}Jey{% endblock %}
+
+{% block body %}
+    <div class="container mx-auto grid pb-20 gap-y-4 mb-4 p-4">
+        {{ component('Front:Notification:Notification', { user_id: app.user.id }) }}
+    </div>
+{% endblock %}
+
