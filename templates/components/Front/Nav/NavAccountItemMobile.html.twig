@@ -1,0 +1,12 @@
+<a class="bg-fullwhite w-full p-4 rounded flex justify-between items-center"
+        {% if item[2] is defined %}
+            href="{{ path(item[1], item[2]) }}"
+        {% else %}
+            href="{{ path(item[1]) }}"
+        {% endif %}
+>
+    <p class="hover:underline hover:decoration-secondary hover:decoration-2 hover:underline-offset-8">
+        {{ item[0] }}
+    </p>
+    <i class="fa-regular fa-chevron-right"></i>
+</a>

@@ -3,9 +3,9 @@
 {% block title %}Jey{% endblock %}
 
 {% block body %}
-    <div class="container mx-auto w-3/4 flex gap-x-6 mb-20 py-20">
+    <div class="container mx-auto px-2 py-6 pb-20 flex gap-x-6 lg:py-20 lg:w-3/4">
         {{ component('Front:Nav:NavAccount',{}) }}
-        <div class="w-3/4 bg-fullwhite p-8">
+        <div class="bg-fullwhite w-full p-4 md:w-3/4 md:p-8">
             <p class="text-xl text-primary font-bold mb-4">Avis</p>
             <div class="flex gap-x-4 mb-4">
                 <p id="nav-recipients" onclick="switchAssessment('recipients','depositors')" class="underline decoration-secondary decoration-2 underline-offset-8 hover:underline hover:decoration-secondary hover:decoration-2 hover:underline-offset-8">Reçus</p>

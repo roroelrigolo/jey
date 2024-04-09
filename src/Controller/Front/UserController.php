@@ -23,6 +23,7 @@ class UserController extends AbstractController
         $this->denyAccessUnlessGranted('ROLE_USER');
 
         return $this->render('front/user/account/account.html.twig', [
+            'justMobile' => true
         ]);
     }
 
@@ -133,6 +134,16 @@ class UserController extends AbstractController
 
         return $this->render('front/user/account/account_password.html.twig', [
             'form' => $form->createView(),
+        ]);
+    }
+
+    #[Route('/myaccount/parameters', name: 'app_front_user_account_parameters', methods: ['GET', 'POST'])]
+    public function account_parameters(): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
+        return $this->render('front/user/account/account_parameters.html.twig', [
+            'justMobile' => true
         ]);
     }
 

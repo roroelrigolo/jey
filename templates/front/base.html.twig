@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html class="h-full w-full">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,11 +16,20 @@
             {{ encore_entry_script_tags('app') }}
         {% endblock %}
     </head>
-    <body class="bg-white">
-    {{ include('front/header.html.twig') }}
-    {% block body %}{% endblock %}
 
-    {{ include('front/footer.html.twig') }}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+    <body class="bg-white h-full w-full">
+    {% if justMobile is defined %}
+        <div class="bg-secondary h-full w-full items-center flex-col justify-center hidden {% if justMobile is defined %}md:flex{% endif %}">
+            <p class="text-2xl font-bold mb-6">Cette page n'est disponible que sur un écran inférieur a 768px</p>
+            {{ component('Global:Button', { tag: 'a', text: "Page d'accueil", route: 'app_front_home', class: 'primary', size: 'text-xl' }) }}
+        </div>
+    {% endif %}
+    <div class="{% if justMobile is defined %}md:hidden{% endif %}">
+        {{ include('front/header.html.twig') }}
+        {% block body %}{% endblock %}
+
+        {{ include('front/footer.html.twig') }}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+    </div>
     </body>
 </html>

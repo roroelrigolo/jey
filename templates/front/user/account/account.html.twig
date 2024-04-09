@@ -3,21 +3,25 @@
 {% block title %}Jey{% endblock %}
 
 {% block body %}
-    <div class="container mx-auto grid text-center gap-y-6 text-xl mb-4 p-4">
-        <div class="bg-fullwhite rounded grid justify-center p-4">
-            <div class="flex justify-center">
-                <div class="rounded-full bg-primary w-[50px] h-[50px]"></div>
-            </div>
-            {{ component('Global:User:LinkUser', { pseudo: app.user.pseudo }) }}
-            <p>{{ app.user.name }} {{ app.user.firstName }}</p>
-        </div>
-        <p><a class="hover:underline hover:decoration-secondary hover:decoration-2 hover:underline-offset-8" href="{{ path('app_front_user_show', {'pseudo': app.user.pseudo}) }}">Mon profil</a></p>
-        <p><a class="hover:underline hover:decoration-secondary hover:decoration-2 hover:underline-offset-8" href="{{ path('app_front_user_account_profile') }}">Mes paramètres</a></p>
-        <p><a class="hover:underline hover:decoration-secondary hover:decoration-2 hover:underline-offset-8" href="{{ path('app_front_favorite') }}">Mes favoris</a></p>
+    <div class="container mx-auto grid text-center gap-y-4 mb-4 p-4">
+        {% set items = [
+            ['Mon profil','app_front_user_show', {'pseudo': app.user.pseudo}],
+            ['Mes paramètres','app_front_user_account_parameters'],
+            ['Mes favoris','app_front_favorite'],
+        ] %}
+        {% for item in items %}
+            {{ component('Front:Nav:NavAccountItemMobile',{
+                item: item
+            }) }}
+        {% endfor %}
         {% if is_granted('ROLE_ADMIN') %}
-            <p><a class="hover:underline hover:decoration-secondary hover:decoration-2 hover:underline-offset-8" href="{{ path('app_admin_dashboard') }}">Administration</a></p>
+            {{ component('Front:Nav:NavAccountItemMobile',{
+                item: ['Administration','app_admin_dashboard']
+            }) }}
         {% endif %}
-        <p class="mt-8"><a class="hover:underline hover:decoration-secondary hover:decoration-2 hover:underline-offset-8" href="{{ path('app_logout') }}">Déconnexion</a></p>
+        <div class="mt-8">
+            {{ component('Global:Button', { tag: 'a', text: "Déconnexion", route: 'app_logout', class: 'primary' }) }}
+        </div>
     </div>
 {% endblock %}
 

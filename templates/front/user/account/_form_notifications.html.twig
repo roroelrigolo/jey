@@ -1,0 +1,29 @@
+<form name="notifications_user_form" method="post" enctype="multipart/form-data" class="grid gap-y-2 md:grid-cols-2 ">
+    {% for category in notificationCategorys %}
+        <div class="grid-rows-1">
+            <p class="text-lg text-primary font-bold">{{ category }}</p>
+            {% for notificationType in notificationsType %}
+                {% if notificationType.category == category %}
+                    {% set active = false %}
+                    {% for userNotification in app.user.notificationsType %}
+                        {% if userNotification.id == notificationType.id %}
+                            {% set active = true %}
+                        {% endif %}
+                    {% endfor %}
+                    <div>
+                        <input type="hidden" name="notification_type-{{ notificationType.id }}" value="0" />
+                        <input type="checkbox" name="notification_type-{{ notificationType.id }}" id="notification_type-{{ notificationType.id }}" {% if active == true %}checked="checked"{% endif %} value="1">
+                        {{ notificationType.type }}
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endfor %}
+    <div class="flex justify-end mt-4">
+        {{ component('Global:Button',{
+            tag: 'button',
+            text: 'Enregistrer',
+            class: 'primary'
+        }) }}
+    </div>
+</form>
