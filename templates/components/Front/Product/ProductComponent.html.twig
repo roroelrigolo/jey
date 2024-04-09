@@ -1,8 +1,10 @@
-<div class="col-span-1 card-product flex flex-col bg-fullwhite rounded-xl p-4 mb-2 {% if scroll is defined %}min-w-[200px]{% endif %}">
+<div class="col-span-1 card-product flex flex-col bg-fullwhite rounded-xl p-2 mb-2 {% if scroll is defined %}min-w-[200px]{% endif %} md:p-4">
     <div class="group relative">
-        <div class="absolute flex bottom-0 justify-end w-full mb-2 px-2">
-            <p class="bg-secondary text-sm text-primary rounded px-2 z-10">{{ this.product.conditionnement }}</p>
-        </div>
+        {% if this.product.statement == "Vendu" or this.product.statement == "Réservé"  %}
+            <div class="absolute flex top-0 w-full">
+                <p class="bg-secondary w-full text-primary font-bold text-center rounded p-2 z-10">{{ this.product.statement }}</p>
+            </div>
+        {% endif %}
         {% for image in this.product.images|slice(0,2) %}
             <a class="transition-opacity ease-in duration-300 {% if loop.index == 1 %}opacity-100{% else %}opacity-0 absolute top-0{% endif %} {% if loop.index == 1 %}group-hover:opacity-0{% else %}group-hover:opacity-100{% endif %}" href="{{ path('app_front_product_show', {'uuid': this.product.uuid}) }}">
                 <img class="w-full rounded-lg" src="/upload/product/img/{{ image.url }}">
@@ -21,7 +23,8 @@
                     {{ component('Front:Product:ProductLikeComponent', { product_id : this.product.id, user_id: app.user.id }) }}
                 {% endif %}
             </div>
-            <p class="mb-4">{{ this.product.size }}, {{ this.product.brand.title }}</p>
+            <p>{{ this.product.size }}, {{ this.product.brand.title }}</p>
+            <p class="mb-4">{{ this.product.conditionnement }}</p>
         </div>
         <div class="flex justify-between">
             <p class="text-xl text-primary font-bold">{{ this.product.price }}€</p>

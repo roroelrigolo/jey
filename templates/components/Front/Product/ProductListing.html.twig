@@ -12,6 +12,8 @@
         {% set productList = this.lastProducts %}
     {% elseif listing == "userProducts" %}
         {% set productList = this.userProducts %}
+    {% elseif listing == "favoriteProducts" %}
+        {% set productList = this.favoriteProducts %}
     {% elseif listing == "sportProducts" %}
         {% set productList = this.sportProducts %}
     {% elseif listing == "searchProducts" %}
@@ -22,7 +24,7 @@
         <p class="text-graydark text-base mb-2"> {{ productList|length }} résultats</p>
     {% endif %}
 
-    <div class="{% if scroll is defined %}flex overflow-x-scroll scroll-hidden md:grid md:grid-cols-{{ (cols/2)|round }} {% else %}grid grid-cols-{{ (cols/2)|round }} {% endif %}gap-x-4 lg:grid-cols-{{ (cols) }}">
+    <div class="{% if scroll is defined %}flex overflow-x-scroll scroll-hidden md:grid md:grid-cols-2 {% else %}grid grid-cols-2 {% endif %}gap-x-4 lg:grid-cols-{{ (cols) }}">
         {% for product in productList %}
             {% if scroll is defined %}
                 {{ component('Front:Product:ProductComponent', { id: product.id, scroll: true }) }}

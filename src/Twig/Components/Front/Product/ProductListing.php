@@ -2,8 +2,10 @@
 namespace App\Twig\Components\Front\Product;
 
 use App\Entity\Product;
+use App\Entity\User;
 use App\Repository\ProductRepository;
 use App\Repository\ProductViewRepository;
+use App\Repository\UserRepository;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent]
@@ -19,6 +21,7 @@ class ProductListing
 
     public function __construct(
         private ProductRepository $productRepository,
+        private UserRepository $userRepository,
     ) {
     }
 
@@ -49,6 +52,17 @@ class ProductListing
     public function getUserProducts(): array
     {
         return $this->productRepository->findBy(['user'=>$this->user_id, 'statement'=> 'Disponible'],['created_at'=>'DESC']);
+    }
+
+    public function getFavoriteProducts(): array
+    {
+        $user = $this->userRepository->find($this->user_id);
+        $array = [];
+        $products = $user->getProductLikes();
+        foreach ($products as $product){
+            array_push($array, $product->getProduct());
+        }
+        return $array;
     }
 
     public function getSportProducts(): array

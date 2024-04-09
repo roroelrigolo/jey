@@ -28,6 +28,18 @@
 
 
     <div class="container grid grid-cols-12 gap-x-4 mx-auto px-40 my-10">
+        {% if product.statement == "Vendu" or product.statement == "Réservé" %}
+            <div class="col-span-12 flex px-1">
+                <div class="w-full bg-secondary text-center p-4 rounded mb-4 font-bold">
+                    {% if product.statement == "Vendu" %}
+                        Ce maillot n'est plus disponible car il a été vendu à un autre utilisateur
+                    {% elseif product.statement == "Réservé" %}
+                        Pour le moment, ce maillot n'est plus disponible car il a été réservé par un autre utilisateur
+                    {% endif %}
+                </div>
+            </div>
+        {% endif %}
+
         <div class="col-span-6 flex px-1">
             <div class="w-1/4 pe-2">
                 {% if product.images|length < 4 %}
@@ -105,12 +117,14 @@
                 </div>
 
                 {% set display_btn = false %}
-                {% if app.user %}
-                    {% if app.user.id != product.user.id %}
+                {% if product.statement == "Disponible" %}
+                    {% if app.user %}
+                        {% if app.user.id != product.user.id %}
+                            {% set display_btn = true %}
+                        {% endif %}
+                    {% else  %}
                         {% set display_btn = true %}
                     {% endif %}
-                {% else %}
-                    {% set display_btn = true %}
                 {% endif %}
 
                 {% if display_btn == true and app.user %}
