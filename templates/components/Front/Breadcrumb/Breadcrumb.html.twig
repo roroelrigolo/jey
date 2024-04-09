@@ -1,0 +1,10 @@
+{# Fil d'ariane #}
+<div class="container mx-auto px-2 my-4 lg:px-10">
+    <p>
+        <a class="text-primary underline" href="{{ path('app_front_home') }}">Accueil</a>
+        {% for item in items %}
+            >
+            <a class="text-primary underline" href="{% if item[2] is defined %}{{ path(item[1], item[2]) }}{% else %}{{ path(item[1]) }}{% endif %}{% if item[3] is defined %}{{ item[3] }}{% endif %}">{{ item[0] }}</a>
+        {% endfor %}
+    </p>
+</div>

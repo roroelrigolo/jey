@@ -3,6 +3,12 @@
 {% block title %}Jey{% endblock %}
 
 {% block body %}
+    {% set items = [
+        [app.user.pseudo, 'app_front_user_show', {pseudo: app.user.pseudo}],
+        ['Mon compte', 'app_front_user_account']
+    ] %}
+    {{ component('Front:Breadcrumb:Breadcrumb', { items: items }) }}
+
     <div class="container mx-auto grid text-center gap-y-4 mb-4 p-4">
         {% set items = [
             ['Mon profil','app_front_user_show', {'pseudo': app.user.pseudo}],

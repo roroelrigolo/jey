@@ -3,9 +3,12 @@
 {% block title %}Jey{% endblock %}
 
 {% block body %}
-    <div class="bg-secondary flex p-4 lg:py-10 lg:px-20 lg:mb-10 2xl:py-20 2xl:px-40 2xl:mb-20">
-        <h1 class="text-3xl font-bold lg:text-5xl lg:mb-8">{{ sport.title }}</h1>
-    </div>
+    {{ component('Front:Banner', { title: sport.title }) }}
+
+    {% set items = [
+        [sport.title, 'app_front_sport_show', {'slug': sport.id|trans~'-'~sport.title}]
+    ] %}
+    {{ component('Front:Breadcrumb:Breadcrumb', { items: items }) }}
 
     {{ component('Front:Filter:Filter', { sport : sport }) }}
 

@@ -3,9 +3,12 @@
 {% block title %}Jey{% endblock %}
 
 {% block body %}
-    <div class="bg-secondary flex p-4 lg:py-10 lg:px-20 lg:mb-10 2xl:py-20 2xl:px-40 2xl:mb-20">
-        <h1 class="text-3xl font-bold lg:text-5xl lg:mb-8">Mes favoris</h1>
-    </div>
+    {{ component('Front:Banner', { title: 'Mes favoris' }) }}
+
+    {% set items = [
+        ['Favoris', 'app_front_favorite']
+    ] %}
+    {{ component('Front:Breadcrumb:Breadcrumb', { items: items }) }}
 
     <div class="container mx-auto px-2 py-2 mb-8 lg:mb-20 2xl:px-20">
         {{ component('Front:Product:ProductListing', { user_id: app.user.id, listing : 'favoriteProducts', cols: 5 }) }}

@@ -3,7 +3,13 @@
 {% block title %}Jey{% endblock %}
 
 {% block body %}
-    <div class="container mx-auto px-2 py-6 pb-20 flex gap-x-6 lg:py-20 lg:w-3/4">
+    {% set items = [
+        [app.user.pseudo, 'app_front_user_show', {pseudo: app.user.pseudo}],
+        ['Profil & notifications', 'app_front_user_account_profile']
+    ] %}
+    {{ component('Front:Breadcrumb:Breadcrumb', { items: items }) }}
+
+    <div class="container mx-auto px-2 py-6 pb-20 flex gap-x-6 lg:w-3/4">
         {{ component('Front:Nav:NavAccount',{}) }}
         <div class="w-full md:w-3/4">
             <div class="bg-fullwhite p-4 mb-4 md:p-8">

@@ -4,28 +4,24 @@
 
 {% block body %}
     {# Fil d'ariane #}
-    <div class="container mx-auto px-10 my-4">
-        <p>
-            <a class="text-primary underline" href="{{ path('app_front_home') }}">Accueil</a>
-            {% if product.sport %}
-                >
-                <a class="text-primary underline" href="{{ path('app_front_sport_show', {'slug': product.sport.id|trans~'-'~product.sport.title }) }}">{{ product.sport.title }}</a>
-            {% endif %}
-            {% if product.league %}
-                >
-                <a class="text-primary underline" href="{{ path('app_front_sport_show', {'slug': product.sport.id|trans~'-'~product.sport.title }) }}?league[]={{ product.league.id }}">{{ product.league.title }}</a>
-            {% endif %}
-            {% if product.team %}
-                >
-                <a class="text-primary underline" href="{{ path('app_front_sport_show', {'slug': product.sport.id|trans~'-'~product.sport.title }) }}?league[]={{ product.league.id }}&team[]={{ product.team.id }}">{{ product.team.title }}</a>
-            {% endif %}
-            {% if product.player %}
-                >
-                <a class="text-primary underline" href="{{ path('app_front_sport_show', {'slug': product.sport.id|trans~'-'~product.sport.title }) }}?league[]={{ product.league.id }}&team[]={{ product.team.id }}&player[]={{ product.player.id }}">{{ product.player.lastName }} {{ product.player.firstName }}</a>
-            {% endif %}
-        </p>
-    </div>
 
+    {% set items = [] %}
+    {% if product.sport %}
+        {% set items = items|merge([[product.sport.title,'app_front_sport_show',{'slug': product.sport.id|trans~'-'~product.sport.title }]]) %}
+    {% endif %}
+    {% if product.league %}
+        {% set filters = '?league[]='~product.league.id %}
+        {% set items = items|merge([[product.league.title,'app_front_sport_show',{'slug': product.sport.id|trans~'-'~product.sport.title },filters]]) %}
+    {% endif %}
+    {% if product.team %}
+        {% set filters = '?league[]='~product.league.id~'&team[]='~product.team.id %}
+        {% set items = items|merge([[product.team.title,'app_front_sport_show',{'slug': product.sport.id|trans~'-'~product.sport.title },filters]]) %}
+    {% endif %}
+    {% if product.player %}
+        {% set filters = '?league[]='~product.league.id~'&team[]='~product.team.id~'&player[]='~product.player.id %}
+        {% set items = items|merge([[product.player.lastName~' '~product.player.firstName,'app_front_sport_show',{'slug': product.sport.id|trans~'-'~product.sport.title },filters]]) %}
+    {% endif %}
+    {{ component('Front:Breadcrumb:Breadcrumb', { items: items }) }}
 
     <div class="container grid grid-cols-12 gap-x-4 mx-auto px-40 my-10">
         {% if product.statement == "Vendu" or product.statement == "Réservé" %}

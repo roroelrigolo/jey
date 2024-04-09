@@ -3,7 +3,12 @@
 {% block title %}Jey{% endblock %}
 
 {% block body %}
-    <div class="container mx-auto px-2 py-6 mb-20 lg:py-20 lg:w-3/4">
+    {% set items = [
+        [user.pseudo, 'app_front_user_show', {pseudo: user.pseudo}]
+    ] %}
+    {{ component('Front:Breadcrumb:Breadcrumb', { items: items }) }}
+
+    <div class="container mx-auto px-2 py-6 mb-20 lg:w-3/4">
         <div class="mb-4 grid gap-y-4 md:flex md:gap-x-6 md:gap-y-0">
             <div class="bg-fullwhite flex items-center p-4 md:w-1/4 md:p-8 md:flex-col">
                 <div class="rounded-full bg-primary w-[50px] h-[50px] me-4 md:w-[100px] md:h-[100px] md:me-0"></div>
