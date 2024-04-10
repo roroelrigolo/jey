@@ -1,7 +1,7 @@
 
     {% if title is defined %}
         <div class="flex justify-between">
-            <h3 class="text-lg font-bold mb-2 lg:text-3xl">{{ title|raw }}</h3>
+            <h3 class="text-lg font-bold mb-2 lg:text-2xl">{{ title|raw }}</h3>
             <a class="text-primary">Voir tout</a>
         </div>
     {% endif %}
@@ -24,12 +24,24 @@
         <p class="text-graydark text-base mb-2"> {{ productList|length }} résultats</p>
     {% endif %}
 
-    <div class="{% if scroll is defined %}flex overflow-x-scroll scroll-hidden md:grid md:grid-cols-2 {% else %}grid grid-cols-2 {% endif %}gap-x-4 lg:grid-cols-{{ (cols) }}">
-        {% for product in productList %}
-            {% if scroll is defined %}
-                {{ component('Front:Product:ProductComponent', { id: product.id, scroll: true }) }}
+    {% if productList|length == 0 %}
+        <p class="text-graydark text-base mb-2">
+            {% if listing == "userProducts" %}
+                Pour le moment, cet utilisateur ne vend pas d'autres maillots
+            {% elseif listing == "sportProducts" or listing == "searchProducts" %}
+                Pour le moment, aucun maillot ne correspond aux critères de vos recherches
             {% else %}
-                {{ component('Front:Product:ProductComponent', { id: product.id }) }}
+                Aucun résultat
             {% endif %}
-        {% endfor %}
-    </div>
+        </p>
+    {% else %}
+        <div class="{% if scroll is defined %}flex overflow-x-scroll scroll-hidden md:grid md:grid-cols-2 {% else %}grid grid-cols-2 {% endif %}gap-x-4 lg:grid-cols-{{ (cols) }}">
+            {% for product in productList %}
+                {% if scroll is defined %}
+                    {{ component('Front:Product:ProductComponent', { id: product.id, scroll: true }) }}
+                {% else %}
+                    {{ component('Front:Product:ProductComponent', { id: product.id }) }}
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endif %}

@@ -174,9 +174,8 @@
         </div>
     </div>
 
-
     <div class="container px-20 mx-auto py-2 mb-20">
-        {% set title = product.user.products|length~' autres annonces de <i class="text-primary">@'~product.user.pseudo~'</i>' %}
+        {% set title = 'Autres annonces de <i class="text-primary">'~component('Global:User:LinkUser', { pseudo: product.user.pseudo })~'</i>' %}
         {{ component('Front:Product:ProductListing', { title: title, listing : 'userProducts', user_id : product.user.id, cols: 5 }) }}
     </div>
 

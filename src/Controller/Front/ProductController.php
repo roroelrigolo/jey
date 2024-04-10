@@ -193,14 +193,12 @@ class ProductController extends AbstractController
     public function show($uuid, ProductRepository $productRepository, ProductViewRepository $productViewRepository): Response
     {
         $product = $productRepository->findOneBy(['uuid'=>$uuid]);
-        $sport = $product->getSport();
 
         $view = new ViewService();
         $view->setViewProduct($this->getUser(),$product,$productViewRepository);
 
         return $this->render('front/product/show.html.twig', [
             'product' => $product,
-            'productSimilary' => $productRepository->findBy(['sport'=>$sport],['created_at'=>'DESC']),
         ]);
     }
 
