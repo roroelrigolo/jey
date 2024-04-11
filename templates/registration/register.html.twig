@@ -3,24 +3,43 @@
 {% block title %}Créer un compte{% endblock %}
 
 {% block body %}
-
-<div class="container">
-    <div class="row">
-        <div class="offset-lg-4 col-lg-4">
-
-            <h1 class="mb-5">Créer un compte</h1>
-
-            {{ form_start(registrationForm) }}
-            {{ form_row(registrationForm.email) }}
-            {{ form_row(registrationForm.password) }}
-
-            <button type="submit" class="btn btn-primary">Créer mon compte</button>
-
-            {{ form_end(registrationForm) }}
+    <div class="grid grid-cols-12 h-full">
+        <div class="col-span-6 bg-secondary h-full flex flex-col gap-y-4 items-center justify-center">
 
         </div>
+        <div class="col-span-6 flex flex-col gap-y-8 justify-center items-center h-full">
+            <div class="text-center">
+                <h1 class="text-3xl font-bold">Créer un compte</h1>
+                <p class="text-lg">Bienvenue dans la team !😄</p>
+            </div>
+
+            {{ component('Global:Alert:Alert') }}
+
+            {{ form_start(form) }}
+            <div class="grid gap-y-4">
+                <div class="flex gap-x-4">
+                    {{ form_row(form.name,{ 'attr': {'class':'rounded bg-secondarylight border-0 text-black w-full p-3'} }) }}
+                    {{ form_row(form.firstName,{ 'attr': {'class':'rounded bg-secondarylight border-0 text-black w-full p-3'} }) }}
+                </div>
+                {{ form_row(form.pseudo,{ 'attr': {'class':'rounded bg-secondarylight border-0 text-black w-full p-3'} }) }}
+                {{ form_row(form.location,{ 'attr': {'class':'rounded bg-secondarylight border-0 text-black w-full p-3'} }) }}
+                {{ form_row(form.email,{ 'attr': {'class':'rounded bg-secondarylight border-0 text-black w-full p-3'} }) }}
+
+                <div>
+                    {{ component('Global:PasswordCondition') }}
+                    {{ form_row(form.password,{ 'attr': {'class':'rounded bg-secondarylight border-0 text-black w-full p-3'} }) }}
+                </div>
+
+                {{ component('Global:Button',{ tag: 'input',text: 'Créer mon compte',class: 'secondary'}) }}
+            </div>
+            {{ form_end(form) }}
+
+            <div class="text-center">
+                <p class="text-lg mb-4">Déjà un compte ?</p>
+                {{ component('Global:Button', { tag: 'a', text: 'Se connecter', route: 'app_login', class: 'primary' }) }}
+            </div>
+        </div>
     </div>
-</div>
 
 
 {% endblock %}

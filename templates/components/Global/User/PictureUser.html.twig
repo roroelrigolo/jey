@@ -1,0 +1,5 @@
+{% if user.images|length == 1 %}
+    <img class="rounded-full object-cover {{ size }}" src="/upload/user/img/{{ user.images[0].url }}">
+{% else %}
+    <div class="rounded-full text-2xl flex justify-center items-center text-fullwhite bg-primary uppercase {{ size }}">{{ user.pseudo|slice(0, 1) }}</div>
+{% endif %}

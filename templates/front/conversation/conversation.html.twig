@@ -18,9 +18,11 @@
                 <div class="flex flex-col gap-y-2 h-[595px] overflow-y-scroll">
                     {% for conversation in conversations|sort((a, b) => b.updatedAt <=> a.updatedAt) %}
                         <a href="{{ path('app_front_conversation_show', {'uuid': conversation.uuid}) }}" class="w-full flex gap-x-2 {% if conversation_display.id == conversation.id %}bg-primarylight{% endif %} hover:bg-primarylight p-4">
-                            <div>
-                                <div class="rounded-full bg-primary w-[50px] h-[50px]"></div>
-                            </div>
+                            {% for user in conversation.users %}
+                                {% if user.id != app.user.id %}
+                                    {{ component('Global:User:PictureUser', { user: user, size: 'min-w-[50px] h-[50px]' }) }}
+                                {% endif %}
+                            {% endfor %}
                             <div class="w-full">
                                 <div class="flex justify-between">
                                     <p>
@@ -69,7 +71,7 @@
                             {% for user in conversation_display.users %}
                                 {% if user.id != app.user.id %}
                                     <div class="flex gap-x-4 w-fit max-w-[90%] bg-secondarylight px-4 py-2 mx-4 rounded">
-                                        <div class="rounded-full bg-primary w-[50px] h-[50px]"></div>
+                                        {{ component('Global:User:PictureUser', { user: user, size: 'min-w-[50px] h-[50px]' }) }}
                                         <div>
                                             <p>{{ component('Global:User:LinkUser', { pseudo: user.pseudo }) }}</p>
                                             {{ component('Global:User:GraduateUser', { id: user.id }) }}

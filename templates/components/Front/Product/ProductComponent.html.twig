@@ -16,6 +16,8 @@
             <div class="flex justify-between">
                 {% if this.product.player is not null %}
                     <p class="font-bold">{{ this.product.player.lastname }} {{ this.product.player.firstname }}</p>
+                {% elseif this.product.team is not null %}
+                    <p class="font-bold">{{ this.product.team.title }}</p>
                 {% else %}
                     <p class="font-bold">{{ this.product.title }}</p>
                 {% endif %}

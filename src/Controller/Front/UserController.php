@@ -2,11 +2,15 @@
 
 namespace App\Controller\Front;
 
+use App\Entity\Image;
 use App\Enum;
 use App\Form\Front\AccountFormType;
 use App\Form\Front\PasswordFormType;
+use App\Repository\ImageRepository;
 use App\Repository\NotificationTypeRepository;
 use App\Repository\UserRepository;
+use App\Service\ImageOptimizer;
+use App\Service\PasswordConfirmation;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,7 +32,8 @@ class UserController extends AbstractController
     }
 
     #[Route('/myaccount/profile', name: 'app_front_user_account_profile', methods: ['GET', 'POST'])]
-    public function account_profile(Request $request, UserRepository $userRepository, NotificationTypeRepository $notificationTypeRepository): Response
+    public function account_profile(Request $request, UserRepository $userRepository, NotificationTypeRepository $notificationTypeRepository,
+                                    ImageRepository $imageRepository, ImageOptimizer $imageOptimizer): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
         $user = $this->getUser();
@@ -42,26 +47,74 @@ class UserController extends AbstractController
                 return $this->redirectToRoute('app_front_user_account_profile', [], Response::HTTP_SEE_OTHER);
             }
             else {
-                $user->setUpdatedAt(new \DateTimeImmutable());
-                $this->addFlash('success', 'Compte modifié avec succès');
-                $userRepository->add($user);
+                $tmpFilePath = $_FILES['profil_picture']['tmp_name'];
+                if ($tmpFilePath != ""){
+                    $newFilePath = "./upload/user/img/" . $_FILES['profil_picture']['name'];
+                    if($_FILES['profil_picture']['size'] < 5000000){
+                        if(move_uploaded_file($tmpFilePath, $newFilePath)) {
+                            if($imageRepository->findOneBy(['user'=>$user])){
+                                $oldImage = $imageRepository->findOneBy(['user'=>$user]);
+                                $oldImagePath = "./upload/user/img/" . $oldImage->getUrl();
+                                if (file_exists($oldImagePath)) {
+                                    unlink($oldImagePath);
+                                }
+                                $imageRepository->remove($oldImage);
+                            }
+
+                            $image = new Image();
+                            $image->setTitle($_FILES['profil_picture']['name']);
+                            $image->setUrl($_FILES['profil_picture']['name']);
+                            $image->setType('user');
+                            $image->setUser($user);
+                            $imageRepository->add($image);
+
+                            $extention = '.'.pathinfo($image->getUrl(), PATHINFO_EXTENSION);
+                            $newNameImage = 'image_'.$image->getId().'_user_'.$user->getId().$extention;
+                            rename($newFilePath,'./upload/user/img/'.$newNameImage);
+                            $image->setTitle($newNameImage);
+                            $image->setUrl($newNameImage);
+                            $imageRepository->add($image);
+
+                            $imageOptimizer->resize('user','./upload/user/img/'.$newNameImage);
+
+                            $user->setUpdatedAt(new \DateTimeImmutable());
+                            $this->addFlash('success', 'Compte modifié avec succès');
+                            $userRepository->add($user);
+                        }
+                    }
+                    else {
+                        $this->addFlash('danger', 'Votre photo de profil doit faire moins de 5mo');
+                    }
+                }
+                else {
+                    $user->setUpdatedAt(new \DateTimeImmutable());
+                    $this->addFlash('success', 'Compte modifié avec succès');
+                    $userRepository->add($user);
+                }
+
             }
         }
 
         $notificationsType = $notificationTypeRepository->findAll();
+        $upNotification = false;
         if ($_POST != null){
             foreach ($notificationsType as $notificationType){
-                $checkbox = $_POST['notification_type-'.$notificationType->getId()];
-                if ($checkbox){
-                    $user->addNotificationsType($notificationType);
-                }
-                else {
-                    $user->removeNotificationsType($notificationType);
+                if(isset($_POST['notification_type-'.$notificationType->getId()])) {
+                    $upNotification = true;
+                    $checkbox = $_POST['notification_type-'.$notificationType->getId()];
+                    if ($checkbox){
+                        $user->addNotificationsType($notificationType);
+                    }
+                    else {
+                        $user->removeNotificationsType($notificationType);
+                    }
                 }
             }
-            $user->setUpdatedAt(new \DateTimeImmutable());
-            $this->addFlash('success', 'Compte modifié avec succès');
-            $userRepository->add($user);
+            if($upNotification) {
+                $user->setUpdatedAt(new \DateTimeImmutable());
+                $this->addFlash('success', 'Compte modifié avec succès');
+                $userRepository->add($user);
+            }
         }
 
         return $this->render('front/user/account/account_profile.html.twig', [
@@ -97,27 +150,17 @@ class UserController extends AbstractController
     }
 
     #[Route('/myaccount/password', name: 'app_front_user_account_password', methods: ['GET', 'POST'])]
-    public function account_password(Request $request, UserRepository $userRepository, UserPasswordHasherInterface $userPasswordHasher): Response
+    public function account_password(Request $request, UserRepository $userRepository, UserPasswordHasherInterface $userPasswordHasher, PasswordConfirmation $passwordConfirmation): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
         $user = $this->getUser();
         $form = $this->createForm(PasswordFormType::class, $user);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            if($form->get('password')->getData() != $form->get('confirmPassword')->getData()){
-                $this->addFlash('danger', 'Les mots de passe ne sont pas identiques, veuillez essayer à nouveau');
-            }
-            elseif (strlen($form->get('password')->getData()) <= 6){
-                 $this->addFlash('danger', 'Le mot de passe doit contenir au minimum 6 caractères');
-            }
-            elseif (!preg_match('/[0-9]/', $form->get('password')->getData())){
-                $this->addFlash('danger', 'Le mot de passe doit contenir au minimum 1 chiffre [0-9]');
-            }
-            elseif (!preg_match('/[a-zA-Z]/', $form->get('password')->getData())){
-                $this->addFlash('danger', 'Le mot de passe doit contenir au minimum 1 lettre [a-z] ou [A-Z]');
-            }
-            elseif (!preg_match('/[^a-zA-Z0-9]/', $form->get('password')->getData())){
-                $this->addFlash('danger', 'Le mot de passe doit contenir au minimum 1 caractère spécial');
+            $password = $form->get('password')->getData();
+            $confirmPassword = $form->get('confirmPassword')->getData();
+            if($passwordConfirmation->isValid($password, $confirmPassword) != 'Valid'){
+                $this->addFlash('danger', $passwordConfirmation->isValid($password, $password));
             }
             else {
                 $user->setUpdatedAt(new \DateTimeImmutable());

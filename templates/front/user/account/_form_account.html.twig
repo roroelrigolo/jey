@@ -23,6 +23,14 @@
     <div class="grid gap-y-4 md:flex md:gap-x-4">
         <div class="flex flex-col md:w-full">
             <div class="flex flex-col md:w-full">
+                <label>Photo de profil</label>
+                <input type="file" name="profil_picture" id="profil_picture">
+            </div>
+        </div>
+    </div>
+    <div class="grid gap-y-4 md:flex md:gap-x-4">
+        <div class="flex flex-col md:w-full">
+            <div class="flex flex-col md:w-full">
                 {{ form_label(form.description) }}
                 {{ form_widget(form.description, {'attr': {'class': 'bg-white rounded w-full'}}) }}
             </div>

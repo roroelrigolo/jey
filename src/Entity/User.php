@@ -93,6 +93,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $lastConnexion = null;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Image::class)]
+    private Collection $images;
+
     public function __construct()
     {
         $this->products = new ArrayCollection();
@@ -108,6 +111,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->notifications = new ArrayCollection();
         $this->notifications_type = new ArrayCollection();
         $this->cancelBooks = new ArrayCollection();
+        $this->images = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -653,6 +657,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setLastConnexion(\DateTimeInterface $lastConnexion): static
     {
         $this->lastConnexion = $lastConnexion;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Image>
+     */
+    public function getImages(): Collection
+    {
+        return $this->images;
+    }
+
+    public function addImage(Image $image): static
+    {
+        if (!$this->images->contains($image)) {
+            $this->images->add($image);
+            $image->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImage(Image $image): static
+    {
+        if ($this->images->removeElement($image)) {
+            // set the owning side to null (unless already changed)
+            if ($image->getUser() === $this) {
+                $image->setUser(null);
+            }
+        }
 
         return $this;
     }
