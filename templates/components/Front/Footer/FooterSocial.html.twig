@@ -1,0 +1,5 @@
+<div class="flex gap-x-4 mt-2">
+    {% for item in items %}
+        {{ component('Front:Footer:FooterSocialItem', { item: item }) }}
+    {% endfor %}
+</div>

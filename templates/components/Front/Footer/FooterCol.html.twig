@@ -1,0 +1,14 @@
+<div class="col-span-3">
+    {{ component('Front:Footer:FooterTitle', { title: title }) }}
+    {% for item in items %}
+        {{ component('Front:Footer:FooterItem', { item: item }) }}
+    {% endfor %}
+
+    {% if social is defined %}
+        {{ component('Front:Footer:FooterSocial', { items: [
+            ['fa-brands fa-facebook','#'],
+            ['fa-brands fa-instagram','#'],
+            ['fa-brands fa-square-x-twitter','#'],
+        ]}) }}
+    {% endif %}
+</div>

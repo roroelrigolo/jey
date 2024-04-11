@@ -3,31 +3,37 @@
         <div class="col-span-3">
             <a href="{{ path('app_front_home') }}"><img class="my-3" width="100px" src="/img/logo_bleue.png"></a>
         </div>
-        <div class="col-span-3">
-            <p class="font-bold">Pour vous</p>
-            <p>Comment ça marche ?</p>
-            <p>Nos conseils</p>
-            <p>Questions récurentes</p>
-        </div>
-        <div class="col-span-3">
-            <p class="font-bold">Jey</p>
-            <p>Politique de confidentialité</p>
-            <p>Mentions légales</p>
-        </div>
-        <div class="col-span-3">
-            <p class="font-bold">Informations</p>
-            <p>A propos de nous</p>
-            <p>Contact</p>
-        </div>
+
+        {{ component('Front:Footer:FooterCol', {
+            title: 'Pour vous',
+            items: [
+                ['Comment ça marche ?','app_front_home'],
+                ['Nos conseils','app_front_home'],
+                ['Questions récurentes','app_front_home'],
+            ]
+        }) }}
+
+        {{ component('Front:Footer:FooterCol', {
+            title: 'Jey',
+            items: [
+                ['Politique de confidentialité','app_front_home'],
+                ['Mentions légales','app_front_home'],
+            ]
+        }) }}
+
+        {{ component('Front:Footer:FooterCol', {
+            title: 'Informations',
+            items: [
+                ['A propos de nous','app_front_home'],
+                ['Contact','app_front_home'],
+            ],
+            social: true
+        }) }}
     </div>
-    <div class="flex justify-center gap-x-4 mx-auto py-8 border-t-2 w-3/4">
-        <i class="text-3xl fa-brands fa-facebook"></i>
-        <i class="text-3xl fa-brands fa-instagram"></i>
-        <i class="text-3xl fa-brands fa-square-x-twitter"></i>
-    </div>
+
     <div class="text-center">
         <p>© Copyright 2024 - Jey</p>
-        <p>Réalisé par <a class="underline" href="https://www.linkedin.com/in/romain-vach%C3%A9-75164b199/" target="_blank">VACHÉ Romain</a></p>
+        <p>Réalisé par <a class="font-bold hover:underline" href="https://www.linkedin.com/in/romain-vach%C3%A9-75164b199/" target="_blank">VACHÉ Romain</a></p>
     </div>
 </footer>
 
