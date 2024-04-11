@@ -70,30 +70,6 @@ class ProductFormType extends AbstractType
                 'label' => 'Numéro',
                 'choices' => array_combine(Enum::$numbers, Enum::$numbers),
             ])
-            ->add('colors', EntityType::class, array(
-                'expanded' => true,
-                'class' => Color::class,
-                'required' => true,
-                'multiple' => true,
-                'choice_label' => 'title',
-                'label' => 'Couleurs',
-                'query_builder' => function (ColorRepository $er) {
-                    return $er->createQueryBuilder('c')
-                        ->orderBy('c.title', 'ASC');
-                }
-            ))
-            ->add('textils', EntityType::class, array(
-                'expanded' => true,
-                'class' => Textil::class,
-                'required' => true,
-                'multiple' => true,
-                'choice_label' => 'title',
-                'label' => 'Matières',
-                'query_builder' => function (TextilRepository $er) {
-                    return $er->createQueryBuilder('t')
-                        ->orderBy('t.title', 'ASC');
-                }
-            ))
         ;
     }
 

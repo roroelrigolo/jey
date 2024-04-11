@@ -72,7 +72,6 @@
                 {% for textil in this.textils %}
                     <div class="w-full flex items-center gap-x-2 col-span-4">
                         <input type="checkbox" id="textils[]" name="textils[]" value="{{ textil.id }}">
-                        <div class="rounded-full border w-[16px] h-[16px]"></div>
                         {{ textil.title }}
                     </div>
                 {% endfor %}

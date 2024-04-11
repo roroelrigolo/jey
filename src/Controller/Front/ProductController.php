@@ -14,6 +14,7 @@ use App\Entity\Team;
 use App\Form\Front\ProductFormType;
 use App\Repository\BrandRepository;
 use App\Repository\CancelBookRepository;
+use App\Repository\ColorRepository;
 use App\Repository\ConversationRepository;
 use App\Repository\ImageRepository;
 use App\Repository\LeagueRepository;
@@ -22,8 +23,10 @@ use App\Repository\ProductRepository;
 use App\Repository\ProductViewRepository;
 use App\Repository\SportRepository;
 use App\Repository\TeamRepository;
+use App\Repository\TextilRepository;
 use App\Repository\UserRepository;
 use App\Service\AlertService;
+use App\Service\ImageOptimizer;
 use App\Service\MessageStepService;
 use App\Service\NotificationService;
 use App\Service\ViewService;
@@ -38,7 +41,8 @@ class ProductController extends AbstractController
 {
     #[Route('/new', name: 'app_front_product_new', methods: ['GET', 'POST'])]
     public function new(Request $request, ProductRepository $productRepository, LeagueRepository $leagueRepository, TeamRepository $teamRepository,
-                        PlayerRepository $playerRepository, ImageRepository $imageRepository, SportRepository $sportRepository, BrandRepository $brandRepository): Response
+                        PlayerRepository $playerRepository, ImageRepository $imageRepository, SportRepository $sportRepository, BrandRepository $brandRepository,
+                        ImageOptimizer $imageOptimizer, ColorRepository $colorRepository, TextilRepository $textilRepository): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
         $product = new Product();
@@ -51,7 +55,7 @@ class ProductController extends AbstractController
             $product->setCreatedAt(new \DateTimeImmutable());
             $product->setUpdatedAt(new \DateTimeImmutable());
 
-            $statement = 'Disponible';
+            $statement = 'A valider';
 
             // Traitement du sport
             $sportProduct = $_POST['search-input-sport'] ?? null;
@@ -65,7 +69,6 @@ class ProductController extends AbstractController
                         ->setAvailable(0);
                     $sportRepository->add($newSport);
                     $product->setSport($newSport);
-                    $statement = 'En attente de validation';
                 }
                 else {
                     $product->setSport($sportInBase);
@@ -83,7 +86,6 @@ class ProductController extends AbstractController
                         ->setAvailable(0);
                     $leagueRepository->add($newLeague);
                     $product->setLeague($newLeague);
-                    $statement = 'En attente de validation';
                 }
                 else {
                     $product->setLeague($leagueInBase);
@@ -101,7 +103,6 @@ class ProductController extends AbstractController
                         ->setAvailable(0);
                     $teamRepository->add($newTeam);
                     $product->setTeam($newTeam);
-                    $statement = 'En attente de validation';
                 }
                 else {
                     $product->setTeam($teamInBase);
@@ -126,7 +127,6 @@ class ProductController extends AbstractController
                         ->setAvailable(0);
                     $playerRepository->add($newPlayer);
                     $product->setPlayer($newPlayer);
-                    $statement = 'En attente de validation';
                 }
                 else {
                     $product->setPlayer($playerInBase);
@@ -144,40 +144,49 @@ class ProductController extends AbstractController
                         ->setAvailable(0);
                     $brandRepository->add($newBrand);
                     $product->setBrand($newBrand);
-                    $statement = 'En attente de validation';
                 }
                 else {
                     $product->setBrand($brandInBase);
                 }
             }
 
+            //Traitement des couleurs
+            $colorsProduct = $_POST['colors'] ?? null;
+            if (!empty($colorsProduct)) {
+                foreach ($colorsProduct as $colorProduct){
+                    $product->addColor($colorRepository->find($colorProduct));
+                }
+            }
+
+            //Traitement des textils
+            $textilsProduct = $_POST['textils'] ?? null;
+            if (!empty($textilsProduct)) {
+                foreach ($textilsProduct as $textilProduct){
+                    $product->addTextil($textilRepository->find($textilProduct));
+                }
+            }
+
             $product->setStatement($statement);
             $productRepository->add($product);
 
-            $files = array_filter($_FILES['images']['name']); //Use something similar before processing files.
-            // Count the number of uploaded files in array
+            $files = array_filter($_FILES['images']['name']);
             $total_count = count($_FILES['images']['name']);
-            // Loop through every file
             for( $i=0 ; $i < $total_count ; $i++ ) {
-                //The temp file path is obtained
                 $tmpFilePath = $_FILES['images']['tmp_name'][$i];
-                //A file path needs to be present
                 if ($tmpFilePath != ""){
-                    //Setup our new file path
                     $newFilePath = "./upload/product/img/" . $_FILES['images']['name'][$i];
-                    //File is uploaded to temp dir
                     if(move_uploaded_file($tmpFilePath, $newFilePath)) {
-                        //Other code goes here
+                        $image = new Image();
+                        $image->setTitle($_FILES['images']['name'][$i]);
+                        $image->setUrl($_FILES['images']['name'][$i]);
+                        $image->setType('product');
+                        $image->setProduct($product);
+                        $imageRepository->add($image);
+                        $imageOptimizer->resize('product',$newFilePath);
                     }
                 }
-                $image = new Image();
-                $image->setTitle($_FILES['images']['name'][$i]);
-                $image->setUrl($_FILES['images']['name'][$i]);
-                $image->setType('product');
-                $image->setProduct($product);
-                $imageRepository->add($image);
             }
-            return $this->redirectToRoute('app_front_home', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_front_product_confirm', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('front/product/new.html.twig', [
@@ -186,6 +195,14 @@ class ProductController extends AbstractController
             'teams' => $teamRepository->findAll(),
             'players' => $playerRepository->findAll(),
             'form' => $form->createView(),
+        ]);
+    }
+
+    #[Route('/confirm', name: 'app_front_product_confirm')]
+    public function confirm(): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+        return $this->render('front/product/confirm.html.twig', [
         ]);
     }
 

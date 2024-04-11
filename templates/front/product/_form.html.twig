@@ -34,8 +34,14 @@
         {component:'Global:Form:Input',form:form,input_name:'size'},
         {component:'Global:Form:Input',form:form,input_name:'conditionnement'},
         {component:'Global:Form:Input',form:form,input_name:'colors',type: 'color'},
-        {component:'Global:Form:Input',form:form,input_name:'textils'},
+        {component:'Global:Form:Input',form:form,input_name:'textils',type: 'textil'},
     ],
 }) }}
-<input type="submit" value="Add">
+<div class="flex justify-end mt-4">
+    {{ component('Global:Button',{
+        tag: 'button',
+        text: 'Publier mon annonce',
+        class: 'primary'
+    }) }}
+</div>
 {{ form_end(form) }}

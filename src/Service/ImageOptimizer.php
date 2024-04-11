@@ -23,11 +23,13 @@ class ImageOptimizer
     {
         list($iwidth, $iheight) = getimagesize($filename);
         $ratio = $iwidth / $iheight;
-        if($type = "user"){
+        if($type == "user"){
+            var_dump("user");
             $width = self::MAX_WIDTH_USER;
             $height = self::MAX_HEIGHT_USER;
         }
-        elseif ($type = "product"){
+        elseif ($type == "product"){
+            var_dump("product");
             $width = self::MAX_WIDTH_PRODUCT;
             $height = self::MAX_HEIGHT_PRODUCT;
         }

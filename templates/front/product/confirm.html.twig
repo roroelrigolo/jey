@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html class="h-full w-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Jey{% endblock %}</title>
+    <link rel="icon" type="image/png" href="/img/logo_carre_jaune.png">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
+    {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+        <script src="https://kit.fontawesome.com/7056fd5bbf.js" crossorigin="anonymous"></script>
+    {% endblock %}
+
+    {% block javascripts %}
+        {{ encore_entry_script_tags('app') }}
+    {% endblock %}
+</head>
+
+<body class="fade-in bg-white h-full w-full">
+    <div class="bg-secondary h-full w-full items-center flex-col justify-center flex px-4 text-center">
+        <p class="text-2xl font-bold mb-6">Félicitations, votre annonce sera bientôt en ligne ! 🎉</p>
+        <p class="text-2xl font-bold mb-6">Vous recevrez une notification une fois l'annonce validée & mise en ligne par nos soins</p>
+        {{ component('Global:Button', { tag: 'a', text: "Page d'accueil", route: 'app_front_home', class: 'primary', size: 'text-xl' }) }}
+    </div>
+</body>
+</html>

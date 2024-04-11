@@ -9,6 +9,7 @@ use App\Repository\LeagueRepository;
 use App\Repository\PlayerRepository;
 use App\Repository\SportRepository;
 use App\Repository\TeamRepository;
+use App\Repository\TextilRepository;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent]
@@ -33,6 +34,7 @@ class Input
         private LeagueRepository $leagueRepository,
         private BrandRepository $brandRepository,
         private ColorRepository $colorRepository,
+        private TextilRepository $textilRepository
     ){
     }
 
@@ -97,6 +99,14 @@ class Input
     public function getColors(): array
     {
         return $this->colorRepository->findBy([],['title'=>'ASC']);
+    }
+
+    /**
+     * @return array
+     */
+    public function getTextils(): array
+    {
+        return $this->textilRepository->findBy([],['title'=>'ASC']);
     }
 }
 

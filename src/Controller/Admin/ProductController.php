@@ -5,11 +5,17 @@ namespace App\Controller\Admin;
 use App\Entity\Image;
 use App\Entity\Product;
 use App\Form\Admin\ProductFormType;
+use App\Repository\AlertRepository;
+use App\Repository\AssessmentRepository;
+use App\Repository\ColorRepository;
 use App\Repository\ImageRepository;
 use App\Repository\LeagueRepository;
 use App\Repository\PlayerRepository;
+use App\Repository\ProductLikeRepository;
 use App\Repository\ProductRepository;
+use App\Repository\ProductViewRepository;
 use App\Repository\TeamRepository;
+use App\Repository\TextilRepository;
 use Symfony\Component\Uid\Uuid;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -157,11 +163,32 @@ class ProductController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_admin_product_delete', methods: ['POST'])]
-    public function delete(Request $request, ProductRepository $productRepository, $id): Response
+    public function delete(Request $request, ProductRepository $productRepository, ImageRepository $imageRepository, ProductViewRepository $productViewRepository,
+                           ProductLikeRepository $productLikeRepository, ColorRepository $colorRepository, TextilRepository $textilRepository,
+                           AlertRepository $alertRepository, AssessmentRepository $assessmentRepository, $id): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $product = $productRepository->find($id);
         if ($this->isCsrfTokenValid('delete'.$product->getId(), $request->request->get('_token'))) {
+            foreach ($product->getImages() as $image){
+                $imagePath = "./upload/product/img/" . $image->getUrl();
+                if (file_exists($imagePath)) {
+                    unlink($imagePath);
+                }
+                $imageRepository->remove($image);
+            }
+            foreach ($product->getProductViews() as $view){
+                $productViewRepository->remove($view);
+            }
+            foreach ($product->getProductLikes() as $like){
+                $productLikeRepository->remove($like);
+            }
+            foreach ($product->getAlerts() as $alert){
+                $alertRepository->remove($alert);
+            }
+            foreach ($product->getAssessments() as $assessment){
+                $assessmentRepository->remove($assessment);
+            }
             $productRepository->remove($product);
         }
         return $this->redirectToRoute('app_admin_product', [], Response::HTTP_SEE_OTHER);
