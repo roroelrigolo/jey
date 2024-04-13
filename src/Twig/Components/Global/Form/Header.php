@@ -14,6 +14,7 @@ use App\Entity\Player;
 use App\Entity\Product;
 use App\Entity\Reply;
 use App\Entity\Sport;
+use App\Entity\Subscription;
 use App\Entity\Team;
 use App\Entity\Textil;
 use App\Entity\User;
@@ -30,6 +31,7 @@ use App\Repository\PlayerRepository;
 use App\Repository\ProductRepository;
 use App\Repository\ReplyRepository;
 use App\Repository\SportRepository;
+use App\Repository\SubscriptionRepository;
 use App\Repository\TeamRepository;
 use App\Repository\TextilRepository;
 use App\Repository\UserRepository;
@@ -58,7 +60,8 @@ class Header
         private ConversationRepository $conversationRepository,
         private NotificationRepository $notificationRepository,
         private NotificationTypeRepository $notificationTypeRepository,
-        private TextilRepository $textilRepository
+        private TextilRepository $textilRepository,
+        private SubscriptionRepository $subscriptionRepository,
     ){
     }
 
@@ -188,5 +191,13 @@ class Header
     public function getTextil(): Textil
     {
         return $this->textilRepository->find($this->id_entity);
+    }
+
+    /**
+     * @return Subscription
+     */
+    public function getSubscription(): Subscription
+    {
+        return $this->subscriptionRepository->find($this->id_entity);
     }
 }

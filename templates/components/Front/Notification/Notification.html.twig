@@ -1,5 +1,5 @@
 {% for notification in this.notifications %}
-    <div class="flex gap-x-4 p-4 {% if notification.view == 0 %}bg-primarylight{% endif %} hover:bg-primarylight">
+    <div class="flex gap-x-4 p-4 cursor-pointer {% if notification.view == 0 %}bg-primarylight{% endif %} hover:bg-primarylight" onclick="window.location='{{ path('app_front_notification_show', {id:notification.id }) }}'">
         {% if notification.type.category == "Abonnements" %}
             {% for image in notification.product.images|slice(0,1) %}
                 <a class="" href="{{ path('app_front_product_show', {'uuid': notification.product.uuid}) }}">

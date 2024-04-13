@@ -96,6 +96,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Image::class)]
     private Collection $images;
 
+    #[ORM\OneToMany(mappedBy: 'subscriber', targetEntity: Subscription::class)]
+    private Collection $subscriptions;
+
+    #[ORM\OneToMany(mappedBy: 'account', targetEntity: Subscription::class)]
+    private Collection $followers;
+
     public function __construct()
     {
         $this->products = new ArrayCollection();
@@ -112,6 +118,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->notifications_type = new ArrayCollection();
         $this->cancelBooks = new ArrayCollection();
         $this->images = new ArrayCollection();
+        $this->subscriptions = new ArrayCollection();
+        $this->followers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -685,6 +693,66 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($image->getUser() === $this) {
                 $image->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Subscription>
+     */
+    public function getSubscriptions(): Collection
+    {
+        return $this->subscriptions;
+    }
+
+    public function addSubscription(Subscription $subscription): static
+    {
+        if (!$this->subscriptions->contains($subscription)) {
+            $this->subscriptions->add($subscription);
+            $subscription->setSubscriber($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSubscription(Subscription $subscription): static
+    {
+        if ($this->subscriptions->removeElement($subscription)) {
+            // set the owning side to null (unless already changed)
+            if ($subscription->getSubscriber() === $this) {
+                $subscription->setSubscriber(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Subscription>
+     */
+    public function getFollowers(): Collection
+    {
+        return $this->followers;
+    }
+
+    public function addFollower(Subscription $follower): static
+    {
+        if (!$this->followers->contains($follower)) {
+            $this->followers->add($follower);
+            $follower->setAccount($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFollower(Subscription $follower): static
+    {
+        if ($this->followers->removeElement($follower)) {
+            // set the owning side to null (unless already changed)
+            if ($follower->getAccount() === $this) {
+                $follower->setAccount(null);
             }
         }
 

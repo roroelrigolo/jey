@@ -34,7 +34,8 @@
             {% include 'admin/notification_type/_delete_form.html.twig' with { notification_type:this.notificationType } %}
         {% elseif type == 'textil' %}
             {% include 'admin/textil/_delete_form.html.twig' with { textil:this.textil } %}
+        {% elseif type == 'subscription' %}
+            {% include 'admin/subscription/_delete_form.html.twig' with { subscription:this.subscription } %}
         {% endif %}
     {% endif %}
-
 </div>

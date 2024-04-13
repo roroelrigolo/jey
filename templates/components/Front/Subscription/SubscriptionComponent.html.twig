@@ -1,0 +1,21 @@
+<div {{ attributes }}>
+    <div class="flex gap-x-2">
+        {% if this.isSubscribe == false %}
+            <button
+                    data-action="live#action"
+                    data-action-name="add"
+                    class=""
+            >
+                S'abonner
+            </button>
+        {% else %}
+            <button
+                    data-action="live#action"
+                    data-action-name="delete"
+                    class=""
+            >
+                Se désabonner
+            </button>
+        {% endif %}
+    </div>
+</div>
