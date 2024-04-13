@@ -17,6 +17,9 @@
                 <div class="mt-2 text-center">
                     {{ component('Global:User:FollowersUser', { user: user }) }}
                     {{ component('Global:User:SubscriptionsUser', { user: user }) }}
+                    {% if app.user is not null and app.user.id != user.id %}
+                        {{ component('Front:Subscription:SubscriptionComponent', { user : app.user, account: user }) }}
+                    {% endif %}
                 </div>
             </div>
             <div class="bg-fullwhite p-4 md:w-3/4 md:p-8">
@@ -35,9 +38,6 @@
                         {{ component('Global:User:LastConnexionUser', { last_connexion: user.lastConnexion }) }}
                     </div>
                 </div>
-                {% if app.user is not null and app.user.id != user.id %}
-                    {{ component('Front:Subscription:SubscriptionComponent', { user : app.user, account: user }) }}
-                {% endif %}
             </div>
         </div>
         <div class="bg-fullwhite w-full p-4 md:p-8">

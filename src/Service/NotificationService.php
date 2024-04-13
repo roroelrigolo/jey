@@ -16,25 +16,44 @@ class NotificationService
     }
 
     public function addNotificationMessage($user, $message) {
-        $notifcation = new Notification();
-        $notifcation->setType($this->notificationTypeRepository->find(1));
-        $notifcation->setUser($user);
-        $notifcation->setMessage($message);
-        $notifcation->setView(0);
-        $notifcation->setCreatedAt(new \DateTimeImmutable());
-        $notifcation->setUpdatedAt(new \DateTimeImmutable());
+        $notification = new Notification();
+        $notification->setType($this->notificationTypeRepository->find(1));
+        $notification->setUser($user);
+        $notification->setMessage($message);
+        $notification->setView(0);
+        $notification->setCreatedAt(new \DateTimeImmutable());
+        $notification->setUpdatedAt(new \DateTimeImmutable());
 
-        $this->notificationRepository->add($notifcation);
+        $this->notificationRepository->add($notification);
     }
 
     public function addNotificationSendAlert($user) {
-        $notifcation = new Notification();
-        $notifcation->setType($this->notificationTypeRepository->find(6));
-        $notifcation->setUser($user);
-        $notifcation->setView(0);
-        $notifcation->setCreatedAt(new \DateTimeImmutable());
-        $notifcation->setUpdatedAt(new \DateTimeImmutable());
+        $notification = new Notification();
+        $notification->setType($this->notificationTypeRepository->find(6));
+        $notification->setUser($user);
+        $notification->setView(0);
+        $notification->setCreatedAt(new \DateTimeImmutable());
+        $notification->setUpdatedAt(new \DateTimeImmutable());
 
-        $this->notificationRepository->add($notifcation);
+        $this->notificationRepository->add($notification);
+    }
+
+    public function addNotificationSubscribe($user, $subscriber) {
+        $notification = new Notification();
+        $notification->setType($this->notificationTypeRepository->find(7));
+        $notification->setUser($user);
+        $notification->setSubscriber($subscriber);
+        $notification->setView(0);
+        $notification->setCreatedAt(new \DateTimeImmutable());
+        $notification->setUpdatedAt(new \DateTimeImmutable());
+
+        $this->notificationRepository->add($notification);
+    }
+
+    public function deleteNotificationSubscribe($user, $subscriber) {
+        $notification = $this->notificationRepository->findOneBy(['user'=>$user, 'subscriber'=>$subscriber]);
+        if($notification != null){
+            $this->notificationRepository->remove($notification);
+        }
     }
 }

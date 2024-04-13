@@ -40,6 +40,16 @@ class NotificationController extends AbstractController
             $uuidConversation = $notification->getMessage()->getConversation()->getUuid();
             return $this->redirectToRoute('app_front_conversation_show', ['uuid'=>$uuidConversation], Response::HTTP_SEE_OTHER);
         }
+        elseif ($typeCategory == "Abonnements"){
+            if($notification->getType()->getId() == 7){
+                $pseudo = $notification->getSubscriber()->getPseudo();
+                return $this->redirectToRoute('app_front_user_show', ['pseudo'=>$pseudo], Response::HTTP_SEE_OTHER);
+            }
+            else {
+                $uuidProduct = $notification->getProduct()->getUuid();
+                return $this->redirectToRoute('app_front_product_show', ['uuid'=>$uuidProduct], Response::HTTP_SEE_OTHER);
+            }
+        }
         else {
             return $this->redirectToRoute('app_front_home', [], Response::HTTP_SEE_OTHER);
         }

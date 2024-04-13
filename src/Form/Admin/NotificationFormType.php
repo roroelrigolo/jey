@@ -53,7 +53,7 @@ class NotificationFormType extends AbstractType
                 'choice_label' => 'content',
                 'choice_value' => 'id',
                 'placeholder' => 'Selectionnez un message',
-                'label' => 'Type',
+                'label' => 'Message',
                 'query_builder' => function (MessageRepository $er) {
                     return $er->createQueryBuilder('m')
                         ->orderBy('m.content', 'ASC');
@@ -65,10 +65,22 @@ class NotificationFormType extends AbstractType
                 'choice_label' => 'title',
                 'choice_value' => 'id',
                 'placeholder' => 'Selectionnez un produit',
-                'label' => 'Type',
+                'label' => 'Produit',
                 'query_builder' => function (ProductRepository $er) {
                     return $er->createQueryBuilder('p')
                         ->orderBy('p.title', 'ASC');
+                }
+            ))
+            ->add('subscriber', EntityType::class, array(
+                'class' => User::class,
+                'required' => true,
+                'choice_label' => 'pseudo',
+                'choice_value' => 'id',
+                'placeholder' => 'Selectionnez un abonné',
+                'label' => 'Abonné',
+                'query_builder' => function (UserRepository $er) {
+                    return $er->createQueryBuilder('u')
+                        ->orderBy('u.pseudo', 'ASC');
                 }
             ))
             ->add('view', CheckboxType::class, [

@@ -1,10 +1,10 @@
 <div {{ attributes }}>
-    <div class="flex gap-x-2">
+    <div class="mt-4">
         {% if this.isSubscribe == false %}
             <button
                     data-action="live#action"
                     data-action-name="add"
-                    class=""
+                    class="text-center rounded-lg text-nowrap h-fit px-4 py-2 me-2 bg-secondary border border-secondary text-primary hover:bg-primary hover:bg-primary hover:text-secondary"
             >
                 S'abonner
             </button>
@@ -12,7 +12,7 @@
             <button
                     data-action="live#action"
                     data-action-name="delete"
-                    class=""
+                    class="text-center rounded-lg text-nowrap h-fit px-4 py-2 me-2 bg-secondary border border-secondary text-primary hover:bg-primary hover:bg-primary hover:text-secondary"
             >
                 Se désabonner
             </button>

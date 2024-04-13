@@ -102,6 +102,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'account', targetEntity: Subscription::class)]
     private Collection $followers;
 
+    #[ORM\OneToMany(mappedBy: 'subscriber', targetEntity: Notification::class)]
+    private Collection $notificationsfollow;
+
     public function __construct()
     {
         $this->products = new ArrayCollection();
@@ -120,6 +123,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->images = new ArrayCollection();
         $this->subscriptions = new ArrayCollection();
         $this->followers = new ArrayCollection();
+        $this->notificationsfollow = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -753,6 +757,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($follower->getAccount() === $this) {
                 $follower->setAccount(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Notification>
+     */
+    public function getNotificationsfollow(): Collection
+    {
+        return $this->notificationsfollow;
+    }
+
+    public function addNotificationsfollow(Notification $notificationsfollow): static
+    {
+        if (!$this->notificationsfollow->contains($notificationsfollow)) {
+            $this->notificationsfollow->add($notificationsfollow);
+            $notificationsfollow->setSubscriber($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNotificationsfollow(Notification $notificationsfollow): static
+    {
+        if ($this->notificationsfollow->removeElement($notificationsfollow)) {
+            // set the owning side to null (unless already changed)
+            if ($notificationsfollow->getSubscriber() === $this) {
+                $notificationsfollow->setSubscriber(null);
             }
         }
 

@@ -1,20 +1,31 @@
 {% for notification in this.notifications %}
     <div class="flex gap-x-4 p-4 cursor-pointer {% if notification.view == 0 %}bg-primarylight{% endif %} hover:bg-primarylight" onclick="window.location='{{ path('app_front_notification_show', {id:notification.id }) }}'">
         {% if notification.type.category == "Abonnements" %}
-            {% for image in notification.product.images|slice(0,1) %}
-                <a class="" href="{{ path('app_front_product_show', {'uuid': notification.product.uuid}) }}">
-                    <img class="min-w-[50px] h-[50px] rounded-lg object-cover" src="/upload/product/img/{{ image.url }}">
-                </a>
-            {% endfor %}
-            <div class="text-sm">
-                <p>
-                    {{ component('Global:User:LinkUser', { pseudo: notification.product.user.pseudo }) }}
-                    {{ notification.type.title }}
-                    <a class="text-primary font-bold hover:text-primaryhover" href="{{ path('app_front_product_show', {'uuid': notification.product.uuid}) }}">{{ notification.product.title }}</a>
+            {% if notification.type.id == 7 %}
+                {{ component('Global:User:PictureUser', { user: notification.subscriber, size: 'min-w-[30px] h-[30px]' }) }}
+                <div class="text-sm">
+                    <p>
+                        {{ component('Global:User:LinkUser', { pseudo: notification.subscriber.pseudo }) }}
+                        {{ notification.type.content }}
+                    </p>
+                    <p class="text-xs text-graydark">{{ notification.updatedAt|custom_time }}</p>
+                </div>
+            {% else %}
+                {% for image in notification.product.images|slice(0,1) %}
+                    <a class="" href="{{ path('app_front_product_show', {'uuid': notification.product.uuid}) }}">
+                        <img class="min-w-[50px] h-[50px] rounded-lg object-cover" src="/upload/product/img/{{ image.url }}">
+                    </a>
+                {% endfor %}
+                <div class="text-sm">
+                    <p>
+                        {{ component('Global:User:LinkUser', { pseudo: notification.product.user.pseudo }) }}
+                        {{ notification.type.title }}
+                        <a class="text-primary font-bold hover:text-primaryhover" href="{{ path('app_front_product_show', {'uuid': notification.product.uuid}) }}">{{ notification.product.title }}</a>
 
-                </p>
-                <p class="text-xs text-graydark">{{ notification.updatedAt|custom_time }}</p>
-            </div>
+                    </p>
+                    <p class="text-xs text-graydark">{{ notification.updatedAt|custom_time }}</p>
+                </div>
+            {% endif %}
         {% elseif notification.type.category == "Annonces" %}
             {% for image in notification.product.images|slice(0,1) %}
                 <a class="" href="{{ path('app_front_product_show', {'uuid': notification.product.uuid}) }}">
@@ -29,7 +40,7 @@
                 <p class="text-xs text-graydark">{{ notification.updatedAt|custom_time }}</p>
             </div>
         {% elseif notification.type.category == "Messages" %}
-            <div class="rounded-full bg-primary min-w-[30px] h-[30px]"></div>
+            {{ component('Global:User:PictureUser', { user: notification.message.author, size: 'min-w-[30px] h-[30px]' }) }}
             <div class="text-sm">
                 <p>
                     {{ component('Global:User:LinkUser', { pseudo: notification.message.author.pseudo }) }}
@@ -39,7 +50,7 @@
                 <p class="text-xs text-graydark">{{ notification.updatedAt|custom_time }}</p>
             </div>
         {% elseif notification.type.category == "Signalements" %}
-            <div class="rounded-full bg-primary min-w-[30px] h-[30px]"></div>
+            {{ component('Global:User:PictureUser', { user: notification.user, size: 'min-w-[30px] h-[30px]' }) }}
             <div class="text-sm">
                 <p>
                     {{ notification.type.title }}

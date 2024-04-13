@@ -8,6 +8,7 @@ use App\Repository\ProductLikeRepository;
 use App\Repository\ProductRepository;
 use App\Repository\SubscriptionRepository;
 use App\Repository\UserRepository;
+use App\Service\NotificationService;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
 use Symfony\UX\LiveComponent\Attribute\LiveAction;
@@ -30,7 +31,8 @@ class SubscriptionComponent
         private ProductLikeRepository $productLikeRepository,
         private ProductRepository $productRepository,
         private UserRepository $userRepository,
-        private SubscriptionRepository $subscriptionRepository
+        private SubscriptionRepository $subscriptionRepository,
+        private NotificationService $notificationService
     ) {
     }
 
@@ -60,6 +62,7 @@ class SubscriptionComponent
         $subscribtion->setUpdatedAt(new \DateTimeImmutable());
         $this->subscriptionRepository->add($subscribtion);
         $this->isSubscribe = true;
+        $this->notificationService->addNotificationSubscribe($this->account, $this->user);
     }
 
     #[LiveAction]
@@ -67,6 +70,7 @@ class SubscriptionComponent
     {
         $subscribtion = $this->subscriptionRepository->findOneBy(['subscriber'=>$this->user, 'account'=>$this->account]);
         if($subscribtion != null){
+            $this->notificationService->deleteNotificationSubscribe($this->account, $this->user);
             $this->subscriptionRepository->remove($subscribtion);
         }
         $this->isSubscribe = false;
