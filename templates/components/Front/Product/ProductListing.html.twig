@@ -24,6 +24,18 @@
         <p class="text-graydark text-base mb-2"> {{ productList|length }} résultats</p>
     {% endif %}
 
+    {% if cols == 1 %}
+        {% set cols = "lg:grid-cols-1" %}
+    {% elseif cols == 2 %}
+        {% set cols = "lg:grid-cols-2" %}
+    {% elseif cols == 3 %}
+        {% set cols = "lg:grid-cols-3" %}
+    {% elseif cols == 4 %}
+        {% set cols = "lg:grid-cols-4" %}
+    {% elseif cols == 5 %}
+        {% set cols = "lg:grid-cols-5" %}
+    {% endif %}
+
     {% if productList|length == 0 %}
         <p class="text-graydark text-base mb-2">
             {% if listing == "userProducts" %}
@@ -35,7 +47,7 @@
             {% endif %}
         </p>
     {% else %}
-        <div class="{% if scroll is defined %}flex overflow-x-scroll scroll-hidden md:grid md:grid-cols-2 {% else %}grid grid-cols-2 {% endif %}gap-x-4 lg:grid-cols-{{ (cols) }}">
+        <div class="{% if scroll is defined %}flex overflow-x-scroll scroll-hidden md:grid md:grid-cols-2 {% else %}grid grid-cols-2 {% endif %}gap-x-4 {{ cols }}">
             {% for product in productList %}
                 {% if scroll is defined %}
                     {{ component('Front:Product:ProductComponent', { id: product.id, scroll: true }) }}
