@@ -1,0 +1,13 @@
+<div class="grid grid-cols-3 gap-x-4">
+    {% if type == 'subscription' %}
+        {% for subscription in this.subscriptions %}
+            {{ component('Front:Subscription:SubscriptionItem', { subscription: subscription, type:type }) }}
+        {% endfor %}
+    {% endif %}
+    {% if type == 'follower' %}
+        {% for subscription in this.followers %}
+            {{ component('Front:Subscription:SubscriptionItem', { subscription: subscription, type:type }) }}
+        {% endfor %}
+    {% endif %}
+
+</div>

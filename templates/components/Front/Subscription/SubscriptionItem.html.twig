@@ -1,0 +1,16 @@
+<div class="flex gap-x-2 bg-secondarylight p-4 rounded">
+    {% if type == 'subscription' %}
+        {{ component('Global:User:PictureUser', { user: subscription.account, size: 'w-[50px] h-[50px]' }) }}
+        <div>
+            <p class="text-base">{{ component('Global:User:LinkUser', { pseudo: subscription.account.pseudo }) }}</p>
+            {{ component('Global:User:GraduateUser', { id: subscription.account.id }) }}
+        </div>
+    {% endif %}
+    {% if type == 'follower' %}
+        {{ component('Global:User:PictureUser', { user: subscription.subscriber, size: 'w-[50px] h-[50px]' }) }}
+        <div>
+            <p class="text-base">{{ component('Global:User:LinkUser', { pseudo: subscription.subscriber.pseudo }) }}</p>
+            {{ component('Global:User:GraduateUser', { id: subscription.subscriber.id }) }}
+        </div>
+    {% endif %}
+</div>

@@ -1,0 +1,23 @@
+{% extends '/front/base.html.twig' %}
+
+{% block title %}Jey{% endblock %}
+
+{% block body %}
+    {% set items = [
+        [user.pseudo, 'app_front_user_show', {pseudo: user.pseudo}],
+        ['Abonnements', 'app_front_user_show_subscriptions', {pseudo: user.pseudo}]
+    ] %}
+    {{ component('Front:Breadcrumb:Breadcrumb', { items: items }) }}
+
+    <div class="min-h-full container mx-auto px-2 py-6 mb-20 lg:w-3/4">
+        <div class="bg-fullwhite w-full p-4 md:p-8">
+            <p class="text-xl text-primary font-bold mb-4">Abonnements de {{ component('Global:User:LinkUser', { pseudo: user.pseudo }) }}</p>
+            {% if user.subscriptions|length != 0 %}
+                {{ component('Front:Subscription:SubscriptionList', { user: user, type: 'subscription' }) }}
+            {% else %}
+                <p>Pour le moment, {{ component('Global:User:LinkUser', { pseudo: user.pseudo }) }} ne possède pas d'abonnements</p>
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock %}

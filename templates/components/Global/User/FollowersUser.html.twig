@@ -1,1 +1,1 @@
-<p>{{ user.followers|length }} Abonné(es)</p>
+<p><a class="text-primary underline font-bold" href="{{ path('app_front_user_show_followers', {pseudo: user.pseudo}) }}">{{ user.followers|length }}</a> Abonné(es)</p>

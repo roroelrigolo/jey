@@ -32,7 +32,7 @@ class UserController extends AbstractController
     }
 
     #[Route('/myaccount/profile', name: 'app_front_user_account_profile', methods: ['GET', 'POST'])]
-    public function account_profile(Request $request, UserRepository $userRepository, NotificationTypeRepository $notificationTypeRepository,
+    public function accountProfile(Request $request, UserRepository $userRepository, NotificationTypeRepository $notificationTypeRepository,
                                     ImageRepository $imageRepository, ImageOptimizer $imageOptimizer): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
@@ -126,7 +126,7 @@ class UserController extends AbstractController
 
 
     #[Route('/myaccount/product', name: 'app_front_user_account_product')]
-    public function account_product(): Response
+    public function accountProduct(): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
         return $this->render('front/user/account/account_product.html.twig', [
@@ -134,7 +134,7 @@ class UserController extends AbstractController
     }
 
     #[Route('/myaccount/assessment', name: 'app_front_user_account_assessment')]
-    public function account_assessment(): Response
+    public function accountAssessment(): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
         return $this->render('front/user/account/account_assessment.html.twig', [
@@ -142,7 +142,7 @@ class UserController extends AbstractController
     }
 
     #[Route('/myaccount/alert', name: 'app_front_user_account_alert')]
-    public function account_alert(): Response
+    public function accountAlert(): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
         return $this->render('front/user/account/account_alert.html.twig', [
@@ -150,7 +150,7 @@ class UserController extends AbstractController
     }
 
     #[Route('/myaccount/password', name: 'app_front_user_account_password', methods: ['GET', 'POST'])]
-    public function account_password(Request $request, UserRepository $userRepository, UserPasswordHasherInterface $userPasswordHasher, PasswordConfirmation $passwordConfirmation): Response
+    public function accountPassword(Request $request, UserRepository $userRepository, UserPasswordHasherInterface $userPasswordHasher, PasswordConfirmation $passwordConfirmation): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
         $user = $this->getUser();
@@ -181,7 +181,7 @@ class UserController extends AbstractController
     }
 
     #[Route('/myaccount/parameters', name: 'app_front_user_account_parameters', methods: ['GET', 'POST'])]
-    public function account_parameters(): Response
+    public function accountParameters(): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
 
@@ -201,6 +201,38 @@ class UserController extends AbstractController
         }
         else {
             return $this->render('front/user/show.html.twig', [
+                'user' => $user
+            ]);
+        }
+    }
+
+    #[Route('/{pseudo}/followers', name: 'app_front_user_show_followers')]
+    public function showFollowers($pseudo, UserRepository $userRepository): Response
+    {
+        $user = $userRepository->findOneBy(['pseudo'=>$pseudo]);
+        if(empty($user)){
+            return $this->render('front/user/none.html.twig', [
+                'pseudo' => $pseudo
+            ]);
+        }
+        else {
+            return $this->render('front/user/show_followers.html.twig', [
+                'user' => $user
+            ]);
+        }
+    }
+
+    #[Route('/{pseudo}/subscriptions', name: 'app_front_user_show_subscriptions')]
+    public function showSubscriptions($pseudo, UserRepository $userRepository): Response
+    {
+        $user = $userRepository->findOneBy(['pseudo'=>$pseudo]);
+        if(empty($user)){
+            return $this->render('front/user/none.html.twig', [
+                'pseudo' => $pseudo
+            ]);
+        }
+        else {
+            return $this->render('front/user/show_subscriptions.html.twig', [
                 'user' => $user
             ]);
         }

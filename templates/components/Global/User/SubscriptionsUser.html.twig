@@ -1,1 +1,1 @@
-<p>{{ user.subscriptions|length }} Abonnement(s)</p>
+<p><a class="text-primary underline font-bold" href="{{ path('app_front_user_show_subscriptions', {pseudo: user.pseudo}) }}">{{ user.subscriptions|length }}</a> Abonnement(s)</p>
