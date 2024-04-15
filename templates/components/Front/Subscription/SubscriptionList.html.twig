@@ -1,4 +1,4 @@
-<div class="grid grid-cols-3 gap-x-4">
+<div class="grid gap-y-4 md:gap-x-4 md:grid-cols-2 lg:grid-cols-3 ">
     {% if type == 'subscription' %}
         {% for subscription in this.subscriptions %}
             {{ component('Front:Subscription:SubscriptionItem', { subscription: subscription, type:type }) }}

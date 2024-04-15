@@ -10,11 +10,15 @@
 
     <div class="container mx-auto px-2 py-6 mb-20 lg:w-3/4">
         <div class="mb-4 grid gap-y-4 md:flex md:gap-x-6 md:gap-y-0">
-            <div class="bg-fullwhite flex items-center p-4 md:w-1/4 md:p-8 md:flex-col">
-                {{ component('Global:User:PictureUser', { user: user, size: 'w-[50px] h-[50px] md:w-[100px] md:h-[100px]' }) }}
-                <p class="text-lg lg:text-2xl">{{ component('Global:User:LinkUser', { pseudo: user.pseudo }) }}</p>
-                {{ component('Global:User:GraduateUser', { id: user.id }) }}
-                <div class="mt-2 text-center">
+            <div class="bg-fullwhite flex justify-between p-4 md:w-1/4 md:p-8 md:flex-col">
+                <div class="flex gap-x-2 md:flex-col md:items-center">
+                    {{ component('Global:User:PictureUser', { user: user, size: 'w-[50px] h-[50px] md:w-[100px] md:h-[100px]' }) }}
+                    <div class="md:text-center">
+                        <p class="text-lg lg:text-2xl">{{ component('Global:User:LinkUser', { pseudo: user.pseudo }) }}</p>
+                        {{ component('Global:User:GraduateUser', { id: user.id }) }}
+                    </div>
+                </div>
+                <div class="text-end md:text-center">
                     {{ component('Global:User:FollowersUser', { user: user }) }}
                     {{ component('Global:User:SubscriptionsUser', { user: user }) }}
                     {% if app.user is not null and app.user.id != user.id %}
