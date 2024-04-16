@@ -90,7 +90,7 @@ class Select
                 foreach ($_GET['sport'] as $sport){
                     array_push($id_sports, $sport);
                 }
-                return $this->teamRepository->findBySport($id_sports);
+                return $this->leagueRepository->findBySport($id_sports);
             }
             elseif (isset($this->sport)){
                 return $this->leagueRepository->findBySport($this->sport->getId());

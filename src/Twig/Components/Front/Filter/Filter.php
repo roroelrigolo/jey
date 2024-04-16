@@ -91,7 +91,7 @@ class Filter
                         array_push($filters, [$key,$filter->getId(),$filter->getTitle()]);
                     }
                 }
-                elseif ($key == "text"){
+                elseif ($key == "text" or $key == "min-price" or $key == "max-price"){
                     if($items != ""){
                         array_push($filters, [$key,$items,$items]);
                     }

@@ -85,11 +85,22 @@ class ProductListing
                 unset($_GET["departments"]);
             }
             $_GET['statement'] = 'Disponible';
-
+            $_GET['sport'] = $this->sport_id;
             if(isset($_GET["text"])){
                 $search_text = $_GET["text"];
             }
             unset($_GET["text"]);
+
+            if(isset($_GET["min-price"])){
+                $min_price = $_GET["min-price"];
+            }
+            unset($_GET["min-price"]);
+
+            if(isset($_GET["max-price"])){
+                $max_price = $_GET["max-price"];
+            }
+            unset($_GET["max-price"]);
+
             $products = $this->productRepository->findBy($_GET,['created_at'=>'DESC']);
             //On filtre avec la chaine de caractère
             if(isset($search_text)){
@@ -118,6 +129,28 @@ class ProductListing
                         }
                     }
                     if($push == true){
+                        array_push($array, $product);
+                    }
+                }
+                $products = $array;
+            }
+
+            //On flitre avec le prix min si défini
+            if(isset($min_price) and $min_price != ""){
+                $array = [];
+                foreach ($products as $product){
+                    if($product->getPrice() >= $min_price){
+                        array_push($array, $product);
+                    }
+                }
+                $products = $array;
+            }
+
+            //On flitre avec le prix max si défini
+            if(isset($max_price) and $max_price != ""){
+                $array = [];
+                foreach ($products as $product){
+                    if($product->getPrice() <= $max_price){
                         array_push($array, $product);
                     }
                 }
@@ -193,6 +226,17 @@ class ProductListing
                 $search_text = $_GET["text"];
             }
             unset($_GET["text"]);
+
+            if(isset($_GET["min-price"])){
+                $min_price = $_GET["min-price"];
+            }
+            unset($_GET["min-price"]);
+
+            if(isset($_GET["max-price"])){
+                $max_price = $_GET["max-price"];
+            }
+            unset($_GET["max-price"]);
+
             $products = $this->productRepository->findBy($_GET,['created_at'=>'DESC']);
             //On filtre avec la chaine de caractère
             if(isset($search_text)){
@@ -223,6 +267,28 @@ class ProductListing
                 if($push == true){
                     array_push($array, $product);
                 }
+                }
+                $products = $array;
+            }
+
+            //On flitre avec le prix min si défini
+            if(isset($min_price) and $min_price != ""){
+                $array = [];
+                foreach ($products as $product){
+                    if($product->getPrice() >= $min_price){
+                        array_push($array, $product);
+                    }
+                }
+                $products = $array;
+            }
+
+            //On flitre avec le prix max si défini
+            if(isset($max_price) and $max_price != ""){
+                $array = [];
+                foreach ($products as $product){
+                    if($product->getPrice() <= $max_price){
+                        array_push($array, $product);
+                    }
                 }
                 $products = $array;
             }

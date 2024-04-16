@@ -33,16 +33,17 @@
             {{ component('Front:Filter:Select', { text: 'Couleurs', variable: 'colors', options_name: 'colors', object: true }) }}
             {{ component('Front:Filter:Select', { text: 'Matières', variable: 'textils', options_name: 'textils', object: true }) }}
             {{ component('Front:Filter:Select', { text: 'Localisation', variable: 'departments', options_name: 'departments', object: true, search: true }) }}
+            {{ component('Front:Filter:Select', { text: 'Prix', variable: 'price', options_name: 'price'}) }}
+        </div>
+
+        <div class="flex gap-x-2 mt-4">
+            {% for filter in this.filters %}
+                <div class="px-4 py-2 rounded border-graydark border w-fit cursor-pointer hover:bg-gray">
+                    <label><i class="fa-regular fa-xmark"></i> {{ filter[2] }}<input class="hidden" onclick="deleteFilter('{{ filter[0] }}','{{ filter[1] }}');this.form.submit();"></label>
+                </div>
+            {% endfor %}
         </div>
     </form>
-
-    <div class="flex gap-x-2 mt-4">
-        {% for filter in this.filters %}
-            <div onclick="deleteFilter('{{ filter[0] }}','{{ filter[1] }}');" class="px-4 py-2 rounded border-graydark border w-fit cursor-pointer hover:bg-gray">
-                <i class="fa-regular fa-xmark"></i> {{ filter[2] }}
-            </div>
-        {% endfor %}
-    </div>
 </div>
 
 <script>
@@ -76,7 +77,6 @@
     }
 
     function deleteFilter(filter,id){
-        const form = document.querySelector('#filterForm');
         if(filter === "text"){
             const input = document.querySelectorAll('input[name="'+filter+'"]')[0];
             input.value = null;
@@ -89,6 +89,24 @@
                 }
             })
         }
-        form.submit();
+    }
+    function changeListFilter(variable){
+        inputId = 'search-input-'+variable;
+        classe = 'search-'+variable;
+        checkboxs = document.getElementsByClassName(classe);
+        inputValue = document.getElementById(inputId).value.toUpperCase();
+        for(i=0;i<checkboxs.length;i++){
+            if(!(checkboxs[i].classList.contains('hidden') && checkboxs[i].classList.contains('checked'))){
+                if(checkboxs[i].classList.contains('hidden')){
+                    checkboxs[i].classList.remove('hidden');
+                }
+                if (!checkboxs[i].getElementsByClassName('label')[0].textContent.toUpperCase().includes(inputValue)) {
+                    if(!checkboxs[i].classList.contains('checked')){
+                        checkboxs[i].classList.add('hidden');
+                    }
+                }
+            }
+
+        }
     }
 </script>
