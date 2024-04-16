@@ -1,0 +1,73 @@
+{% extends '/front/base.html.twig' %}
+
+{% block title %}Jey{% endblock %}
+
+{% block body %}
+    {{ component('Front:Banner', { title: 'Nos conseils' }) }}
+
+    {% set items = [
+        ['Nos conseils', 'app_front_page_advice']
+    ] %}
+    {{ component('Front:Breadcrumb:Breadcrumb', { items: items }) }}
+
+    <div class="container px-20 mx-auto py-2 mb-20 grid gap-y-8">
+        <div class="flex gap-x-4">
+            <div class="w-1/2 grid gap-y-4">
+                <h2 class="text-2xl font-bold">Conseils pour les Vendeurs</h2>
+                <div>
+                    <p class="mb-2"><b>1. Prenez de bonnes photos :</b></p>
+                    <p>Assurez-vous que les photos de votre maillot sont claires et bien éclairées.</p>
+                    <p>Capturez différents angles pour montrer l'état de l'article sous tous les angles.</p>
+                </div>
+                <div>
+                    <p class="mb-2"><b>2. Décrivez l'état de votre maillot :</b></p>
+                    <p>Soyez honnête quant à l'état de votre maillot. Décrivez toute usure ou défaut de manière précise.</p>
+                    <p>Indiquez la taille, la marque, et toute autre information pertinente pour les acheteurs potentiels.</p>
+                </div>
+                <div>
+                    <p class="mb-2"><b>3. Fixez un prix raisonnable :</b></p>
+                    <p>Recherchez des maillots similaires sur la plateforme pour avoir une idée du prix du marché.</p>
+                    <p>Tenez compte de l'état de votre maillot et de sa rareté lors de la fixation du prix.</p>
+                </div>
+                <div>
+                    <p class="mb-2"><b>4. Soyez réactif aux messages :</b></p>
+                    <p>Répondez rapidement aux questions des acheteurs potentiels pour maintenir leur intérêt.</p>
+                    <p>Soyez courtois et professionnel dans toutes vos communications.</p>
+                </div>
+                <div>
+                    <p class="mb-2"><b>5. Organisez une rencontre sûre (lors d'une vente) :</b></p>
+                    <p>Choisissez un lieu public et sûr pour rencontrer l'acheteur.</p>
+                    <p>Si possible, amenez un ami ou un proche avec vous lors de la rencontre.</p>
+                </div>
+            </div>
+            <div class="w-1/2 grid gap-y-4">
+                <h2 class="text-2xl font-bold">Conseils pour les Acheteurs</h2>
+                <div>
+                    <p class="mb-2"><b>1. Faites des recherches :</b></p>
+                    <p>Prenez le temps de parcourir les annonces pour trouver le maillot parfait.</p>
+                    <p>Utilisez les filtres de recherche pour affiner vos résultats en fonction de vos critères.</p>
+                </div>
+                <div>
+                    <p class="mb-2"><b>2. Posez des questions :</b></p>
+                    <p>Soyez honnête quant à l'état de votre maillot. Décrivez toute usure ou défaut de manière précise.</p>
+                    <p>Indiquez la taille, la marque, et toute autre information pertinente pour les acheteurs potentiels.</p>
+                </div>
+                <div>
+                    <p class="mb-2"><b>3. Négociez avec respect :</b></p>
+                    <p>Si le prix est négociable, faites une offre raisonnable tout en respectant le travail du vendeur.</p>
+                    <p>Soyez prêt à accepter un compromis qui convient à vous deux.</p>
+                </div>
+                <div>
+                    <p class="mb-2"><b>4. Confirmez la transaction sur la plateforme :</b></p>
+                    <p>Après avoir inspecté l'article et finalisé l'achat en personne, assurez-vous de confirmer la transaction sur la plateforme.</p>
+                    <p>Cela permet de maintenir un historique des transactions et de garantir la sécurité pour les deux parties.</p>
+                </div>
+                <div>
+                    <p class="mb-2"><b>5. Laissez un avis :</b></p>
+                    <p>Une fois la transaction terminée, laissez un avis honnête sur votre expérience avec le vendeur.</p>
+                    <p>Les avis aident à renforcer la confiance au sein de la communauté Jey.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

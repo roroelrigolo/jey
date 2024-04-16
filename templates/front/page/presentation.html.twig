@@ -1,0 +1,56 @@
+{% extends '/front/base.html.twig' %}
+
+{% block title %}Jey{% endblock %}
+
+{% block body %}
+    {{ component('Front:Banner', { title: 'Comment ça marche ?' }) }}
+
+    {% set items = [
+        ['Comment ça marche ?', 'app_front_page_presentation']
+    ] %}
+    {{ component('Front:Breadcrumb:Breadcrumb', { items: items }) }}
+
+    <div class="container px-20 mx-auto py-2 mb-20 grid gap-y-8">
+        <div class="grid gap-y-4">
+            <h2 class="text-2xl font-bold">Bienvenue sur Jey !</h2>
+            <p>Jey est une plateforme dédiée aux passionnés de sport qui souhaitent donner une seconde vie à leurs maillots de sport. Que vous soyez un grand collectionneur, un simple internaute ou bien un grand fan de sport, Jey vous offre la possibilité de vendre et d'acheter des maillots de sport d'occasion en toute simplicité.
+            </p>
+        </div>
+        <div class="grid gap-y-4">
+            <h2 class="text-2xl font-bold">Comment ça marche ?</h2>
+            <ul class="grid gap-y-4">
+                <li>
+                    <b>1. Vendre vos maillots :</b> Vous avez des maillots de sport que vous n'utilisez plus ? Mettez-les en vente sur Jey en quelques clics. Prenez des photos, décrivez l'état de votre article et fixez un prix. Une fois votre annonce publiée et vérifée par nos administrateurs, les acheteurs intéressés pourront vous contacter directement via la plateforme.
+                </li>
+                <li>
+                    <b>2. Trouver votre prochain maillot :</b> Parcourez notre vaste sélection de maillots de sport d'occasion pour trouver celui qui correspond à vos besoins. Utilisez nos filtres avancés pour affiner votre recherche selon la taille, la marque, le sport et bien plus encore. Ajoutez vos articles préférés à votre liste de favoris pour ne rien manquer.
+                </li>
+                <li>
+                    <b>3. Rencontre et confirmation :</b> ⚠️ <b class="text-primary">Attention, pour le moment l'achat sur Jey se fait en personne et non via la plateforme.</b>⚠️ Une fois que vous avez trouvé le maillot parfait, contactez le vendeur pour organiser une rencontre en vrai. Après avoir inspecté l'article et finalisé l'achat, confirmez la transaction sur la plateforme pour clôturer la vente en toute sécurité.
+                </li>
+            </ul>
+            <div class="text-center my-4">
+                {{ component('Global:Button', { tag: 'a', text: 'Vendre un maillot', route: 'app_front_product_new', class: 'primary', size: 'lg:text-lg' }) }}
+                {{ component('Global:Button', { tag: 'a', text: 'Chercher un maillot', route: 'app_front_search', class: 'secondary', size: 'lg:text-lg' }) }}
+            </div>
+        </div>
+
+        <div class="grid gap-y-4">
+            <h2 class="text-2xl font-bold">Pourquoi choisir Jey ?</h2>
+            <ul class="grid gap-y-4">
+                <li>
+                    <b>Économique :</b> Acheter des maillots de sport d'occasion vous permet d'économiser de l'argent tout en donnant une seconde vie à des articles encore en bon état.
+                </li>
+                <li>
+                    <b>Écologique :</b> En favorisant l'achat de produits d'occasion, vous contribuez à réduire votre empreinte écologique en limitant la production de nouveaux articles.
+                </li>
+                <li>
+                    <b>Convivial :</b> Avec des fonctionnalités telles que les messages privés, les favoris et les notifications, Jey offre une expérience conviviale et interactive pour les acheteurs et les vendeurs.
+                </li>
+                <p>Rejoignez la communauté Jey dès aujourd'hui !</p>
+                <p>Que vous soyez à la recherche d'un maillot unique ou que vous souhaitiez donner une nouvelle vie à anciens maillots, Jey est là pour vous accompagner. Inscrivez-vous dès maintenant et rejoignez notre communauté de passionnés de sport !</p>
+            </ul>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends '/front/base.html.twig' %}
+
+{% block title %}Jey{% endblock %}
+
+{% block body %}
+    {{ component('Front:Banner', { title: 'Questions récurentes' }) }}
+
+    {% set items = [
+        ['Questions récurentes', 'app_front_page_faq']
+    ] %}
+    {{ component('Front:Breadcrumb:Breadcrumb', { items: items }) }}
+
+    <div class="container px-20 mx-auto py-2 mb-20">
+        <p>Vous retrouvez ici un ensemble de questions posées, de manière récurrente, par nos utilisateurs :</p>
+
+        <div class="rounded p-4 grid gap-y-4" onclick="toogleFaq('q1')">
+            <h2 id="q1-title" class="text-xl font-bold">1. Comment puis-je publier une annonce ?</h2>
+            <p id="q1-text" class="hidden slide-bottom">Pour publier un maillot à vendre sur Jey, il vous suffit de vous inscrire/connecter sur la plateforme, puis de cliquer sur le bouton {{ component('Global:Button', { tag: 'a', text: 'Vendre un maillot', route: 'app_front_product_new', class: 'primary' }) }} et de suivre les étapes pour créer votre annonce. Vous devrez fournir des détails sur le maillot, ajouter des photos et fixer un prix.</p>
+        </div>
+
+        <div class="rounded p-4 grid gap-y-4" onclick="toogleFaq('q2')">
+            <h2 id="q2-title" class="text-xl font-bold">2. Quels types de maillots puis-je vendre sur Jey ?</h2>
+            <p id="q2-text" class="hidden slide-bottom">Vous pouvez vendre tous types de maillots de sport d'occasion sur Jey, qu'il s'agisse de maillots de football, de basketball, de rugby, de tennis, etc.</p>
+        </div>
+
+        <div class="rounded p-4 grid gap-y-4" onclick="toogleFaq('q3')">
+            <h2 id="q3-title" class="text-xl font-bold">3. Quels sont les frais de vente sur Jey ?</h2>
+            <p id="q3-text" class="hidden slide-bottom">Jey ne facture pas de frais de vente aux vendeurs. Vous pouvez publier vos annonces gratuitement et conserver la totalité du montant de la vente étant donné que la vente ne se passe pas sur la plateforme</p>
+        </div>
+
+        <div class="rounded p-4 grid gap-y-4" onclick="toogleFaq('q4')">
+            <h2 id="q4-title" class="text-xl font-bold">4. Comment puis-je contacter un vendeur ?</h2>
+            <p id="q4-text" class="hidden slide-bottom">Une fois que vous avez trouvé un maillot qui vous intéresse, vous pouvez contacter le vendeur directement via la plateforme en utilisant la fonction de messagerie intégrée. Une fois sur l'annonce, il vous suffit de cliquer "Contacter le vendeur"</p>
+        </div>
+
+        <div class="rounded p-4 grid gap-y-4" onclick="toogleFaq('q5')">
+            <h2 id="q5-title" class="text-xl font-bold">5. Comment puis-je être sûr de la qualité du maillot ?</h2>
+            <p id="q5-text" class="hidden slide-bottom">Nous encourageons les acheteurs et les vendeurs à communiquer ouvertement sur l'état du maillot. Vous pouvez également demander des photos supplémentaires ou organiser une rencontre pour inspecter l'article en personne avant de finaliser l'achat.</p>
+        </div>
+
+    </div>
+
+    <script>
+        function toogleFaq(id){
+            var faqText = document.querySelector('#'+id+'-text');
+            faqText.classList.toggle('hidden');
+        }
+    </script>
+{% endblock %}
