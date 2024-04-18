@@ -71,6 +71,11 @@ class Enum  {
         'End'
     ];
 
+    public static $statuts_contact = [
+        'A traité',
+        'Traité',
+    ];
+
     /**
      * @return string[]
      */
@@ -133,6 +138,14 @@ class Enum  {
     public function getNotificationCategorys(): array
     {
         return self::$notification_categorys;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getStatutsContact(): array
+    {
+        return self::$statuts_contact;
     }
 
 }

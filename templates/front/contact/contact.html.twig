@@ -1,0 +1,21 @@
+{% extends '/front/base.html.twig' %}
+
+{% block title %}Jey{% endblock %}
+
+{% block body %}
+    {{ component('Front:Banner', { title: 'Contact' }) }}
+
+    {% set items = [
+        ['Contact', 'app_front_contact']
+    ] %}
+    {{ component('Front:Breadcrumb:Breadcrumb', { items: items }) }}
+
+    <div class="container w-1/2 px-20 mx-auto py-2 mb-20 grid gap-y-8">
+        <div>
+            <p class="text-xl font-bold">Une demande ? Une question ?</p>
+            <p>Laissez-nous votre message et nous vous répondrons dans les plus brefs délais.</p>
+        </div>
+        {{ component('Global:Alert:Alert',{}) }}
+        {% include '/front/contact/_form.html.twig' %}
+    </div>
+{% endblock %}

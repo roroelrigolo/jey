@@ -26,6 +26,7 @@ class ContactController extends AbstractController
         foreach ($contacts as $contact){
             $array = [
                 $contact->getId(),
+                $contact->getStatut(),
                 $contact->getEmail(),
                 $contact->getPhone(),
                 $contact->getSubject(),

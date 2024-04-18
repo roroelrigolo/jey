@@ -13,10 +13,10 @@
         ]
     }) }}
     {{ component('Admin:Table:Table', {
-        titles: ['Id','Email','Téléphone','Sujet','Date de demande',''],
-        cols: ['col-span-1','col-span-2','col-span-2','col-span-4','col-span-2','col-span-1'],
+        titles: ['Id','Statut','Email','Téléphone','Sujet','Date de demande',''],
+        cols: ['col-span-1','col-span-1','col-span-2','col-span-2','col-span-3','col-span-2','col-span-1'],
         datas: datas,
-        features: ['','','','','','d-flex justify-end'],
+        features: ['','','','','','','d-flex justify-end'],
         url: 'app_admin_contact_edit'
     }) }}
 {% endblock %}

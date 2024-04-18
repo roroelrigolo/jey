@@ -4,105 +4,57 @@
 
 {% block body %}
     {{ component('Admin:TitlePage', { title: 'Tableau de bord' }) }}
-    <div class="table-back mb-4">
-        <div class="header-blue d-flex align-items-center">
-            <h2 class="fs-22">Maillots</h2>
+    <div class="grid gap-y-4">
+        <div class="grid gap-y-4">
+            <h2 class="text-xl font-bold">Maillots</h2>
+            <div class="grid grid-cols-6 gap-x-4 gap-y-4">
+                {% set items = [
+                    ['Annonces','app_admin_product','fa-regular fa-coins'],
+                    ['Sports','app_admin_sport','fa-regular fa-basketball'],
+                    ['Ligues','app_admin_league','fa-regular fa-trophy'],
+                    ['Équipes','app_admin_team','fa-sharp fa-regular fa-people-group'],
+                    ['Joueurs','app_admin_player','fa-regular fa-person-running'],
+                    ['Marques','app_admin_brand','fa-regular fa-tag'],
+                    ['Matières','app_admin_textil','fa-regular fa-reel'],
+                    ['Couleurs','app_admin_color','fa-regular fa-droplet'],
+                ] %}
+                {% for item in items %}
+                    {{ component('Admin:Dashboard:DashboardItem',
+                        { text: item[0],route: item[1],icon: item[2] }) }}
+                {% endfor %}
+            </div>
         </div>
-        <div class="container d-flex flex-wrap w-100 py-3 px-5 m-0">
-            <a href="{{ path('app_admin_product') }}" class="w-25">
-                <p class="element-menu bd-radius-15 fs-16 p-3 my-3">
-                    <i class="fa-regular fa-coins me-3"></i>Annonces
-                </p>
-            </a>
-            <a href="{{ path('app_admin_sport') }}" class="w-25">
-                <p class="element-menu bd-radius-15 fs-16 p-3 my-3">
-                    <i class="fa-regular fa-basketball me-3"></i>Sports
-                </p>
-            </a>
-            <a href="{{ path('app_admin_league') }}" class="w-25">
-                <p class="element-menu bd-radius-15 fs-16 p-3 my-3">
-                    <i class="fa-regular fa-trophy me-3"></i>Ligues
-                </p>
-            </a>
-            <a href="{{ path('app_admin_team') }}" class="w-25">
-                <p class="element-menu bd-radius-15 fs-16 p-3 my-3">
-                    <i class="fa-sharp fa-regular fa-people-group me-3"></i>Équipes
-                </p>
-            </a>
-            <a href="{{ path('app_admin_player') }}" class="w-25">
-                <p class="element-menu bd-radius-15 fs-16 p-3 my-3">
-                    <i class="fa-regular fa-person-running me-3"></i>Joueurs
-                </p>
-            </a>
-            <a href="{{ path('app_admin_brand') }}" class="w-25">
-                <p class="element-menu bd-radius-15 fs-16 p-3 my-3">
-                    <i class="fa-regular fa-tag me-3"></i>Marques
-                </p>
-            </a>
-            <a href="{{ path('app_admin_textil') }}" class="w-25">
-                <p class="element-menu bd-radius-15 fs-16 p-3 my-3">
-                    <i class="fa-regular fa-reel me-3"></i>Matières
-                </p>
-            </a>
-            <a href="{{ path('app_admin_color') }}" class="w-25">
-                <p class="element-menu bd-radius-15 fs-16 p-3 my-3">
-                    <i class="fa-regular fa-droplet me-3"></i>Couleurs
-                </p>
-            </a>
+        <div class="grid gap-y-4">
+            <h2 class="text-xl font-bold">Utilisateurs</h2>
+            <div class="grid grid-cols-6 gap-x-4 gap-y-4">
+                {% set items = [
+                    ['Utilisateurs','app_admin_user','fa-regular fa-user'],
+                    ['Départements','app_admin_department','fa-regular fa-map'],
+                    ['Avis & Réponses','app_admin_assessment','fa-regular fa-star'],
+                    ['Signalements','app_admin_alert','fa-regular fa-circle-exclamation'],
+                    ['Conversations','app_admin_conversation','fa-regular fa-messages'],
+                    ['Abonnements','app_admin_subscription','fa-regular fa-user-plus']
+                ] %}
+                {% for item in items %}
+                    {{ component('Admin:Dashboard:DashboardItem',
+                        { text: item[0],route: item[1],icon: item[2] }) }}
+                {% endfor %}
+            </div>
         </div>
-    </div>
-    <div class="table-back mb-4">
-        <div class="header-blue d-flex align-items-center">
-            <h2 class="fs-22">Utilisateurs</h2>
-        </div>
-        <div class="container d-flex flex-wrap w-100 py-3 px-5 m-0">
-            <a href="{{ path('app_admin_user') }}" class="w-25">
-                <p class="element-menu bd-radius-15 fs-16 p-3 my-3">
-                    <i class="fa-regular fa-user me-3"></i>Utilisateurs
-                </p>
-            </a>
-            <a href="{{ path('app_admin_department') }}" class="w-25">
-                <p class="element-menu bd-radius-15 fs-16 p-3 my-3">
-                    <i class="fa-regular fa-user me-3"></i>Départements
-                </p>
-            </a>
-            <a href="{{ path('app_admin_assessment') }}" class="w-25">
-                <p class="element-menu bd-radius-15 fs-16 p-3 my-3">
-                    <i class="fa-regular fa-star me-3"></i>Avis & Réponses
-                </p>
-            </a>
-            <a href="{{ path('app_admin_conversation') }}" class="w-25">
-                <p class="element-menu bd-radius-15 fs-16 p-3 my-3">
-                    <i class="fa-regular fa-messages me-3"></i>Conversations
-                </p>
-            </a>
-            <a href="{{ path('app_admin_alert') }}" class="w-25">
-                <p class="element-menu bd-radius-15 fs-16 p-3 my-3">
-                    <i class="fa-regular fa-circle-exclamation me-3"></i>Signalements
-                </p>
-            </a>
+        <div class="grid gap-y-4">
+            <h2 class="text-xl font-bold">Administration</h2>
+            <div class="grid grid-cols-6 gap-x-4 gap-y-4">
+                {% set items = [
+                    ['Notifications','app_admin_notification','fa-regular fa-bell'],
+                    ['Types de notifications','app_admin_notification_type','fa-regular fa-bell'],
+                    ['Demandes de contact','app_admin_contact','fa-regular fa-question'],
+                ] %}
+                {% for item in items %}
+                    {{ component('Admin:Dashboard:DashboardItem',
+                        { text: item[0],route: item[1],icon: item[2] }) }}
+                {% endfor %}
+            </div>
         </div>
     </div>
-    <div class="table-back mb-4">
-        <div class="header-blue d-flex align-items-center">
-            <h2 class="fs-22">Administration</h2>
-        </div>
-        <div class="container d-flex flex-wrap w-100 py-3 px-5 m-0">
-            <a href="{{ path('app_admin_notification') }}" class="w-25">
-                <p class="element-menu bd-radius-15 fs-16 p-3 my-3">
-                    <i class="fa-regular fa-bell me-3"></i>Notifications
-                </p>
-            </a>
-            <a href="{{ path('app_admin_notification_type') }}" class="w-25">
-                <p class="element-menu bd-radius-15 fs-16 p-3 my-3">
-                    <i class="fa-regular fa-bell me-3"></i>Types de notifications
-                </p>
-            </a>
-            <a href="{{ path('app_admin_contact') }}" class="w-25">
-                <p class="element-menu bd-radius-15 fs-16 p-3 my-3">
-                    <i class="fa-regular fa-question me-3"></i>Demandes de contact
-                </p>
-            </a>
-        </div>
-    </div>
+
 {% endblock %}

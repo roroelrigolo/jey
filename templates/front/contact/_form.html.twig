@@ -1,0 +1,52 @@
+{{ form_start(form, {'attr' : {'enctype': 'multipart/form-data','class': 'w-full'} }) }}
+<div class="grid gap-y-4 md:gap-y-6">
+    <div class="grid gap-y-4 md:flex md:gap-x-4">
+        <div class="flex flex-col md:w-1/2">
+            {{ form_label(form.lastName) }}
+            {{ form_widget(form.lastName, {'attr': {'class': 'bg-white rounded w-full'}}) }}
+        </div>
+        <div class="flex flex-col md:w-1/2">
+            {{ form_label(form.firstName) }}
+            {{ form_widget(form.firstName, {'attr': {'class': 'bg-white rounded w-full'}}) }}
+        </div>
+    </div>
+    <div class="grid gap-y-4 md:flex md:gap-x-4">
+        <div class="flex flex-col w-full">
+            {{ form_label(form.email) }}
+            {{ form_widget(form.email, {'attr': {'class': 'bg-white rounded w-full'}}) }}
+        </div>
+    </div>
+    <div class="grid gap-y-4 md:flex md:gap-x-4">
+        <div class="flex flex-col w-full">
+            {{ form_label(form.phone) }}
+            {{ form_widget(form.phone, {'attr': {'class': 'bg-white rounded w-full'}}) }}
+        </div>
+    </div>
+    <div class="grid gap-y-4 md:flex md:gap-x-4">
+        <div class="flex flex-col w-full">
+            {{ form_label(form.subject) }}
+            {{ form_widget(form.subject, {'attr': {'class': 'bg-white rounded w-full'}}) }}
+        </div>
+    </div>
+    <div class="grid gap-y-4 md:flex md:gap-x-4">
+        <div class="flex flex-col w-full">
+            {{ form_label(form.content) }}
+            {{ form_widget(form.content, {'attr': {'class': 'bg-white rounded w-full'}}) }}
+        </div>
+    </div>
+    <div class="grid gap-y-4 md:flex md:gap-x-4">
+        <div>
+            <input type="checkbox" required>
+            <label>J’accepte la politique de confidentialité.</label>
+        </div>
+
+    </div>
+</div>
+<div class="flex justify-end mt-4">
+    {{ component('Global:Button',{
+        tag: 'button',
+        text: 'Envoyer',
+        class: 'primary'
+    }) }}
+</div>
+{{ form_end(form) }}
