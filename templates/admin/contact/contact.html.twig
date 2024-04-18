@@ -1,0 +1,22 @@
+{% extends '/admin/base.html.twig' %}
+
+{% block title %}Jey{% endblock %}
+
+{% block body %}
+    {{ component('Admin:TitlePage', { title: 'Demandes de contact' }) }}
+
+    {{ component('Admin:Table:Header', {buttons:[
+        { tag: 'a', text: 'Ajouter une demande de contact', route: 'app_admin_contact_new', class: 'secondaryadmin' },
+        { tag: 'a', text: 'Filtrer', class: 'secondaryadmin' }],
+        sort_filters:[
+            { value: 'id', text: 'ID' }
+        ]
+    }) }}
+    {{ component('Admin:Table:Table', {
+        titles: ['Id','Email','Téléphone','Sujet','Date de demande',''],
+        cols: ['col-span-1','col-span-2','col-span-2','col-span-4','col-span-2','col-span-1'],
+        datas: datas,
+        features: ['','','','','','d-flex justify-end'],
+        url: 'app_admin_contact_edit'
+    }) }}
+{% endblock %}

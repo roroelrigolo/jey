@@ -5,6 +5,7 @@ use App\Entity\Alert;
 use App\Entity\Assessment;
 use App\Entity\Brand;
 use App\Entity\Color;
+use App\Entity\Contact;
 use App\Entity\Conversation;
 use App\Entity\Department;
 use App\Entity\League;
@@ -22,6 +23,7 @@ use App\Repository\AlertRepository;
 use App\Repository\AssessmentRepository;
 use App\Repository\BrandRepository;
 use App\Repository\ColorRepository;
+use App\Repository\ContactRepository;
 use App\Repository\ConversationRepository;
 use App\Repository\DepartmentRepository;
 use App\Repository\LeagueRepository;
@@ -62,6 +64,7 @@ class Header
         private NotificationTypeRepository $notificationTypeRepository,
         private TextilRepository $textilRepository,
         private SubscriptionRepository $subscriptionRepository,
+        private ContactRepository $contactRepository,
     ){
     }
 
@@ -199,5 +202,13 @@ class Header
     public function getSubscription(): Subscription
     {
         return $this->subscriptionRepository->find($this->id_entity);
+    }
+
+    /**
+     * @return Contact
+     */
+    public function getContact(): Contact
+    {
+        return $this->contactRepository->find($this->id_entity);
     }
 }

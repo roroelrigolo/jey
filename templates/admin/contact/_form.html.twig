@@ -1,0 +1,19 @@
+{{ form_start(form) }}
+{{ component('Global:Form:Page', {
+    id: 'general',
+    inputs: [
+        {component:'Global:Form:Input',form:form,input_name:'lastName'},
+        {component:'Global:Form:Input',form:form,input_name:'firstName'},
+        {component:'Global:Form:Input',form:form,input_name:'email'},
+        {component:'Global:Form:Input',form:form,input_name:'phone'},
+        {component:'Global:Form:Input',form:form,input_name:'subject'},
+        {component:'Global:Form:Input',form:form,input_name:'content'},
+    ],
+}) }}
+{{ component('Global:Form:Buttons', {
+    buttons: [
+        { tag: 'input', text: 'Enregistrer', class:'primary' },
+        { tag: 'input', text: 'Enregistrer & rester', class:'primary' }
+    ]
+}) }}
+{{ form_end(form) }}

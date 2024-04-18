@@ -6,7 +6,7 @@
     {{ component('Admin:TitlePage', { title: 'Tableau de bord' }) }}
     <div class="table-back mb-4">
         <div class="header-blue d-flex align-items-center">
-            <h2 class="fs-22">Produits</h2>
+            <h2 class="fs-22">Maillots</h2>
         </div>
         <div class="container d-flex flex-wrap w-100 py-3 px-5 m-0">
             <a href="{{ path('app_admin_product') }}" class="w-25">
@@ -53,7 +53,7 @@
     </div>
     <div class="table-back mb-4">
         <div class="header-blue d-flex align-items-center">
-            <h2 class="fs-22">Administration</h2>
+            <h2 class="fs-22">Utilisateurs</h2>
         </div>
         <div class="container d-flex flex-wrap w-100 py-3 px-5 m-0">
             <a href="{{ path('app_admin_user') }}" class="w-25">
@@ -71,14 +71,36 @@
                     <i class="fa-regular fa-star me-3"></i>Avis & Réponses
                 </p>
             </a>
+            <a href="{{ path('app_admin_conversation') }}" class="w-25">
+                <p class="element-menu bd-radius-15 fs-16 p-3 my-3">
+                    <i class="fa-regular fa-messages me-3"></i>Conversations
+                </p>
+            </a>
             <a href="{{ path('app_admin_alert') }}" class="w-25">
                 <p class="element-menu bd-radius-15 fs-16 p-3 my-3">
                     <i class="fa-regular fa-circle-exclamation me-3"></i>Signalements
                 </p>
             </a>
-            <a href="{{ path('app_admin_conversation') }}" class="w-25">
+        </div>
+    </div>
+    <div class="table-back mb-4">
+        <div class="header-blue d-flex align-items-center">
+            <h2 class="fs-22">Administration</h2>
+        </div>
+        <div class="container d-flex flex-wrap w-100 py-3 px-5 m-0">
+            <a href="{{ path('app_admin_notification') }}" class="w-25">
                 <p class="element-menu bd-radius-15 fs-16 p-3 my-3">
-                    <i class="fa-regular fa-messages me-3"></i>Conversations
+                    <i class="fa-regular fa-bell me-3"></i>Notifications
+                </p>
+            </a>
+            <a href="{{ path('app_admin_notification_type') }}" class="w-25">
+                <p class="element-menu bd-radius-15 fs-16 p-3 my-3">
+                    <i class="fa-regular fa-bell me-3"></i>Types de notifications
+                </p>
+            </a>
+            <a href="{{ path('app_admin_contact') }}" class="w-25">
+                <p class="element-menu bd-radius-15 fs-16 p-3 my-3">
+                    <i class="fa-regular fa-question me-3"></i>Demandes de contact
                 </p>
             </a>
         </div>

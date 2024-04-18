@@ -36,6 +36,8 @@
             {% include 'admin/textil/_delete_form.html.twig' with { textil:this.textil } %}
         {% elseif type == 'subscription' %}
             {% include 'admin/subscription/_delete_form.html.twig' with { subscription:this.subscription } %}
+        {% elseif type == 'contact' %}
+            {% include 'admin/contact/_delete_form.html.twig' with { contact:this.contact } %}
         {% endif %}
     {% endif %}
 </div>
