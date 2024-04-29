@@ -23,7 +23,7 @@
     {% endif %}
     {{ component('Front:Breadcrumb:Breadcrumb', { items: items }) }}
 
-    <div class="container grid grid-cols-12 gap-x-4 mx-auto px-40 my-10">
+    <div class="container grid grid-cols-12 gap-x-4 mx-auto px-2 py-2 lg:my-10 lg:px-40">
         {% if product.statement == "Vendu" or product.statement == "Réservé" %}
             <div class="col-span-12 flex px-1">
                 <div class="w-full bg-secondary text-center p-4 rounded mb-4 font-bold">
@@ -36,7 +36,7 @@
             </div>
         {% endif %}
 
-        <div class="col-span-6 flex px-1">
+        <div class="col-span-6 px-1 hidden md:flex">
             <div class="w-1/4 pe-2">
                 {% if product.images|length < 4 %}
                     {% for image in product.images|slice(1) %}
@@ -65,7 +65,16 @@
                 {% endfor %}
             </div>
         </div>
-        <div class="col-span-6 flex flex-col gap-y-2">
+
+        <div class="col-span-12 px-1 mb-2 md:hidden">
+            <div class="slider-mobile-images-product">
+                {% for image in product.images %}
+                    <img class="w-full object-cover rounded cursor-pointer" height="600" src="/upload/product/img/{{ image.url }}">
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="col-span-12 flex flex-col gap-y-2 md:col-span-6">
             <div class="bg-fullwhite flex justify-between p-4">
                 <div class="flex gap-x-4 items-center">
                     {{ component('Global:User:PictureUser', { user: product.user, size: 'w-[50px] h-[50px]' }) }}
@@ -136,7 +145,7 @@
 
 
     <div id="slider-picture-product" class="fixed top-0 w-full h-full z-50 bg-black/50 hidden">
-        <div id="slider-details" class="w-1/2 relative mx-auto mt-[100px] bg-gray" data-carousel="static">
+        <div id="slider-details" class="w-full px-2 relative mx-auto mt-[100px] bg-gray lg:px-0 lg:w-1/2" data-carousel="static">
             <!-- Carousel wrapper -->
             <div class="relative h-[700px] overflow-hidden rounded-lg">
                 {% for image in product.images %}
@@ -174,7 +183,7 @@
         </div>
     </div>
 
-    <div class="container px-20 mx-auto py-2 mb-20">
+    <div class="container mx-auto px-2 py-2 pb-20 lg:px-20">
         {% set title = 'Autres annonces de <i class="text-primary">'~component('Global:User:LinkUser', { pseudo: product.user.pseudo })~'</i>' %}
         {{ component('Front:Product:ProductListing', { title: title, listing : 'userProducts', user_id : product.user.id, cols: 5 }) }}
     </div>
@@ -201,6 +210,14 @@
                 toggleSliderExecuted = false;
             }
         })
+
+        $('.slider-mobile-images-product').slick({
+            infinite: false,
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            dots: true,
+            arrows: false
+        });
     </script>
 {% endblock %}
 

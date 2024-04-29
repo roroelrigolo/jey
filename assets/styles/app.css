@@ -109,3 +109,25 @@ h1,h2,h3,h4,h5 {
         transform: translateY(0);
     }
 }
+
+/*SLICK CUSTOM*/
+.slider-mobile-images-product .slick-dots {
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+}
+
+.slider-mobile-images-product .slick-dots li {
+    background: rgba(255, 255, 255, 0.5);
+    font-size: 0px;
+    border-radius: 200px;
+    width: 10px;
+    height: 10px;
+}
+
+.slider-mobile-images-product .slick-dots .slick-active {
+    background: rgba(255, 255, 255, 1);
+}
