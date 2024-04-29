@@ -27,7 +27,13 @@
             {{ component('Global:Button', { tag: 'a', text: "Page d'accueil", route: 'app_front_home', class: 'primary', size: 'text-xl' }) }}
         </div>
     {% endif %}
-    <div class="h-full{% if justMobile is defined %} md:hidden{% endif %}">
+    {% if justDesktop is defined %}
+        <div class="bg-secondary h-full w-full items-center flex-col justify-center px-2 text-center flex {% if justDesktop is defined %}md:hidden{% endif %}">
+            <p class="text-2xl font-bold mb-6">Cette page n'est disponible que sur un écran supérieur à 768px</p>
+            {{ component('Global:Button', { tag: 'a', text: "Page d'accueil", route: 'app_front_home', class: 'primary', size: 'text-xl' }) }}
+        </div>
+    {% endif %}
+    <div class="h-full{% if justMobile is defined %} md:hidden{% endif %} {% if justDesktop is defined %} hidden md:block{% endif %}">
         {{ include('front/header.html.twig') }}
         {% block body %}{% endblock %}
 

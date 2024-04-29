@@ -1,0 +1,23 @@
+<a href="{{ path('app_front_conversation_show', {'uuid': conversation.uuid}) }}" class="w-full flex gap-x-2 {% if conversation_display is defined and conversation_display.id == conversation.id %}bg-primarylight{% endif %} hover:bg-primarylight p-4">
+    {% for user in conversation.users %}
+        {% if user.id != app.user.id %}
+            {{ component('Global:User:PictureUser', { user: user, size: 'min-w-[50px] h-[50px]' }) }}
+        {% endif %}
+    {% endfor %}
+    <div class="w-full">
+        <div class="flex justify-between">
+            <p>
+                {% for user in conversation.users %}
+                    {% if user.id != app.user.id %}
+                        {{ user.pseudo }}
+                    {% endif %}
+                {% endfor %}
+            </p>
+            <p>{{ conversation.updatedAt|custom_time }}</p>
+        </div>
+        <p>{{ conversation.product.title }}</p>
+        {% for image in conversation.product.images|slice(0,1) %}
+            <img class="rounded-lg object-cover w-[50px] h-[50px]" src="/upload/product/img/{{ image.url }}">
+        {% endfor %}
+    </div>
+</a>

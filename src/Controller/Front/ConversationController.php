@@ -38,6 +38,17 @@ class ConversationController extends AbstractController
         }
     }
 
+    #[Route('/list', name: 'app_front_conversation_list')]
+    public function list(): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
+        return $this->render('front/conversation/conversation_list.html.twig', [
+            'justMobile' => true,
+            'conversations' => $this->getUser()->getConversations(),
+        ]);
+    }
+
     #[Route('/exit', name: 'app_front_conversation_exit')]
     public function exit(ConversationRepository $conversationRepository): Response
     {
@@ -107,10 +118,10 @@ class ConversationController extends AbstractController
         }
 
         return $this->render('front/conversation/conversation.html.twig', [
-            'conversations' => $this->getUser()->getConversations(),
             'alls_messages' => $alls_messages,
             'conversation_display' => $conversation,
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'justDesktop' => true,
         ]);
     }
 
