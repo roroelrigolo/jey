@@ -9,6 +9,6 @@
     {{ component('Front:Breadcrumb:Breadcrumb', { items: items }) }}
 
     <div class="container mx-auto px-2 my-2 pb-20 md:px-0 md:w-10/12 md:h-[680px] md:my-10 md:pb-0">
-        {{ component('Front:Conversation:ConversationListing', { user:app.user }) }}
+        {{ component('Front:Conversation:ConversationListing', { user:app.user, mobile:true }) }}
     </div>
 {% endblock %}

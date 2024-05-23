@@ -5,10 +5,18 @@
     </div>
     <div class="flex flex-col gap-y-2 h-[595px] overflow-y-scroll">
         {% for conversation in this.conversations|sort((a, b) => b.updatedAt <=> a.updatedAt) %}
-            {% if conversation_display is defined %}
-                {{ component('Front:Conversation:ConversationItem', { conversation: conversation, conversation_display:conversation_display }) }}
+            {% if mobile is defined %}
+                {% if conversation_display is defined %}
+                    {{ component('Front:Conversation:ConversationItemMobile', { conversation: conversation, conversation_display:conversation_display }) }}
+                {% else %}
+                    {{ component('Front:Conversation:ConversationItemMobile', { conversation: conversation }) }}
+                {% endif %}
             {% else %}
-                {{ component('Front:Conversation:ConversationItem', { conversation: conversation }) }}
+                {% if conversation_display is defined %}
+                    {{ component('Front:Conversation:ConversationItem', { conversation: conversation, conversation_display:conversation_display }) }}
+                {% else %}
+                    {{ component('Front:Conversation:ConversationItem', { conversation: conversation }) }}
+                {% endif %}
             {% endif %}
         {% endfor %}
     </div>

@@ -10,7 +10,7 @@ use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 class ConversationListing
 {
     public User $user;
-    public Conversation $conversation_display;
+    public bool $mobile;
 
     public function getConversations()
     {

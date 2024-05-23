@@ -125,4 +125,54 @@ class ConversationController extends AbstractController
         ]);
     }
 
+    #[Route('/mobile/{uuid}', name: 'app_front_conversation_show_mobile')]
+    public function showMobile(Request $request, MessageRepository $messageRepository, ConversationRepository $conversationRepository,
+                         NotificationService $notificationService, $uuid): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+        $conversation = $conversationRepository->findOneBy(['uuid'=>$uuid]);
+
+        $messages = $conversation->getMessages();
+        $messageSteps = $conversation->getMessageSteps();
+
+        $alls_messages = [];
+        foreach ($messages as $message){
+            array_push($alls_messages, ['message',$message->getUpdatedAt(),$message]);
+        }
+        foreach ($messageSteps as $messageStep){
+            array_push($alls_messages, ['messageStep',$messageStep->getUpdatedAt(),$messageStep]);
+        }
+
+        $message = new Message();
+        $form = $this->createForm(MessageFormType::class, $message);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $message->setAuthor($this->getUser());
+            $message->setConversation($conversation);
+            $message->setCreatedAt(new \DateTimeImmutable());
+            $message->setUpdatedAt(new \DateTimeImmutable());
+            $messageRepository->add($message);
+
+            foreach ($conversation->getUsers() as $user){
+                if($user->getId() != $this->getUser()->getId()){
+                    $notificationService->addNotificationMessage($user, $message);
+                }
+            }
+
+            $conversation->setUpdatedAt(new \DateTimeImmutable());
+            $conversation->setRemove(0);
+            $conversationRepository->add($conversation);
+
+            return $this->redirectToRoute('app_front_conversation_show_mobile', ['uuid'=>$uuid], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('front/conversation/conversation_mobile.html.twig', [
+            'alls_messages' => $alls_messages,
+            'conversation_display' => $conversation,
+            'form' => $form->createView(),
+            'justMobile' => true,
+        ]);
+    }
+
 }
